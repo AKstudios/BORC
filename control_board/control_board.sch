@@ -8,34 +8,34 @@
 </settings>
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="yes" active="no"/>
-<layer number="2" name="Route2" color="16" fill="1" visible="yes" active="no"/>
-<layer number="3" name="Route3" color="17" fill="1" visible="yes" active="no"/>
-<layer number="4" name="Route4" color="18" fill="1" visible="yes" active="no"/>
-<layer number="5" name="Route5" color="19" fill="1" visible="yes" active="no"/>
-<layer number="6" name="Route6" color="25" fill="1" visible="yes" active="no"/>
-<layer number="7" name="Route7" color="26" fill="1" visible="yes" active="no"/>
-<layer number="8" name="Route8" color="27" fill="1" visible="yes" active="no"/>
-<layer number="9" name="Route9" color="28" fill="1" visible="yes" active="no"/>
-<layer number="10" name="Route10" color="29" fill="1" visible="yes" active="no"/>
-<layer number="11" name="Route11" color="30" fill="1" visible="yes" active="no"/>
-<layer number="12" name="Route12" color="20" fill="1" visible="yes" active="no"/>
-<layer number="13" name="Route13" color="21" fill="1" visible="yes" active="no"/>
-<layer number="14" name="Route14" color="22" fill="1" visible="yes" active="no"/>
-<layer number="15" name="Route15" color="23" fill="1" visible="yes" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="no"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="no"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="no"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="no"/>
-<layer number="20" name="Dimension" color="24" fill="1" visible="yes" active="no"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="no"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="no"/>
+<layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
+<layer number="2" name="Route2" color="16" fill="1" visible="no" active="no"/>
+<layer number="3" name="Route3" color="17" fill="1" visible="no" active="no"/>
+<layer number="4" name="Route4" color="18" fill="1" visible="no" active="no"/>
+<layer number="5" name="Route5" color="19" fill="1" visible="no" active="no"/>
+<layer number="6" name="Route6" color="25" fill="1" visible="no" active="no"/>
+<layer number="7" name="Route7" color="26" fill="1" visible="no" active="no"/>
+<layer number="8" name="Route8" color="27" fill="1" visible="no" active="no"/>
+<layer number="9" name="Route9" color="28" fill="1" visible="no" active="no"/>
+<layer number="10" name="Route10" color="29" fill="1" visible="no" active="no"/>
+<layer number="11" name="Route11" color="30" fill="1" visible="no" active="no"/>
+<layer number="12" name="Route12" color="20" fill="1" visible="no" active="no"/>
+<layer number="13" name="Route13" color="21" fill="1" visible="no" active="no"/>
+<layer number="14" name="Route14" color="22" fill="1" visible="no" active="no"/>
+<layer number="15" name="Route15" color="23" fill="1" visible="no" active="no"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="no"/>
+<layer number="20" name="Dimension" color="24" fill="1" visible="no" active="no"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="no" active="no"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="no" active="no"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="no"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="no"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="no" active="no"/>
@@ -44,8 +44,8 @@
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="no"/>
 <layer number="35" name="tGlue" color="7" fill="4" visible="no" active="no"/>
 <layer number="36" name="bGlue" color="7" fill="5" visible="no" active="no"/>
-<layer number="37" name="tTest" color="7" fill="1" visible="yes" active="no"/>
-<layer number="38" name="bTest" color="7" fill="1" visible="yes" active="no"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="no"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="no"/>
 <layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="no"/>
 <layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="no"/>
 <layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="no"/>
@@ -53,19 +53,19 @@
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="no"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="no"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="no"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="no"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="no"/>
-<layer number="48" name="Document" color="7" fill="1" visible="yes" active="no"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="no"/>
-<layer number="50" name="dxf" color="7" fill="1" visible="yes" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="53" name="tGND_GNDA" color="7" fill="9" visible="yes" active="no"/>
-<layer number="54" name="bGND_GNDA" color="1" fill="9" visible="yes" active="no"/>
-<layer number="56" name="wert" color="7" fill="1" visible="yes" active="no"/>
-<layer number="57" name="tCAD" color="7" fill="1" visible="yes" active="no"/>
-<layer number="59" name="tCarbon" color="7" fill="1" visible="yes" active="no"/>
-<layer number="60" name="bCarbon" color="7" fill="1" visible="yes" active="no"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="no"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="no"/>
+<layer number="48" name="Document" color="7" fill="1" visible="no" active="no"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="no" active="no"/>
+<layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="53" name="tGND_GNDA" color="7" fill="9" visible="no" active="no"/>
+<layer number="54" name="bGND_GNDA" color="1" fill="9" visible="no" active="no"/>
+<layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
+<layer number="57" name="tCAD" color="7" fill="1" visible="no" active="no"/>
+<layer number="59" name="tCarbon" color="7" fill="1" visible="no" active="no"/>
+<layer number="60" name="bCarbon" color="7" fill="1" visible="no" active="no"/>
 <layer number="88" name="SimResults" color="9" fill="1" visible="yes" active="yes"/>
 <layer number="89" name="SimProbes" color="9" fill="1" visible="yes" active="yes"/>
 <layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
@@ -6306,96 +6306,96 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </class>
 </classes>
 <parts>
-<part name="IC1" library="ATMEGA1284P-MU" deviceset="ATMEGA1284P-MU" device=""/>
-<part name="U1" library="SparkFun-RF" library_urn="urn:adsk.eagle:library:531" deviceset="RFM69H" device="CW-915" package3d_urn="urn:adsk.eagle:package:39566/1" value="915MHz"/>
+<part name="IC1" library="ATMEGA1284P-MU" deviceset="ATMEGA1284P-MU" device="" override_package3d_urn="urn:adsk.eagle:package:24879864/2" override_package_urn="urn:adsk.eagle:footprint:24879865/1"/>
+<part name="U1" library="SparkFun-RF" library_urn="urn:adsk.eagle:library:531" deviceset="RFM69H" device="CW-915" package3d_urn="urn:adsk.eagle:package:39566/1" override_package3d_urn="urn:adsk.eagle:package:24879983/2" override_package_urn="urn:adsk.eagle:footprint:39514/1" value="915MHz"/>
 <part name="SUPPLY8" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
 <part name="P+4" library="SparkFun" deviceset="VCC" device="" value="3.3V"/>
 <part name="P+5" library="SparkFun" deviceset="VCC" device="" value="3.3V"/>
-<part name="U7" library="LowPowerLab" deviceset="AT25F512B" device="JEDEC_3.9MM" value="AT25F512BJEDEC_3.9MM"/>
-<part name="U8" library="ftdi_ft231xq-r" deviceset="FT231XQ-R" device=""/>
-<part name="J1" library="SparkFun-Connectors" deviceset="USB_C" device="" value="USB Female Type C Connector"/>
+<part name="U7" library="LowPowerLab" deviceset="AT25F512B" device="JEDEC_3.9MM" override_package3d_urn="urn:adsk.eagle:package:24877226/2" override_package_urn="urn:adsk.eagle:footprint:24877227/1" value="AT25F512BJEDEC_3.9MM"/>
+<part name="U8" library="ftdi_ft231xq-r" deviceset="FT231XQ-R" device="" override_package3d_urn="urn:adsk.eagle:package:24879808/2" override_package_urn="urn:adsk.eagle:footprint:24879809/1"/>
+<part name="J1" library="SparkFun-Connectors" deviceset="USB_C" device="" override_package3d_urn="urn:adsk.eagle:package:24877297/2" override_package_urn="urn:adsk.eagle:footprint:24877298/1" value="USB Female Type C Connector"/>
 <part name="SUPPLY3" library="SparkFun" deviceset="VCC" device="" value="3.3V"/>
-<part name="U4" library="linear" deviceset="MCP1703" device="CB"/>
+<part name="U4" library="linear" deviceset="MCP1703" device="CB" override_package3d_urn="urn:adsk.eagle:package:24879829/2" override_package_urn="urn:adsk.eagle:footprint:24879831/1"/>
 <part name="SUPPLY13" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
-<part name="XTAL1" library="SparkFun" deviceset="RESONATOR" device="SMD" value="16 MHz"/>
+<part name="XTAL1" library="SparkFun" deviceset="RESONATOR" device="SMD" override_package3d_urn="urn:adsk.eagle:package:24879867/2" override_package_urn="urn:adsk.eagle:footprint:24879868/1" value="16 MHz"/>
 <part name="TC1" library="TagConnect" deviceset="TC2030-IDC" device="-NL"/>
-<part name="U2" library="SHT31" deviceset="SHT3X" device=""/>
-<part name="SW1" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="SPST_TACT" device="-KMR2" package3d_urn="urn:adsk.eagle:package:6240885/1"/>
-<part name="U3" library="SparkFun-IC-Power" deviceset="MCP73833" device="" value="MCP73833"/>
+<part name="U2" library="SHT31" deviceset="SHT3X" device="" override_package3d_urn="urn:adsk.eagle:package:24877210/2" override_package_urn="urn:adsk.eagle:footprint:24877211/1"/>
+<part name="SW1" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="SPST_TACT" device="-KMR2" package3d_urn="urn:adsk.eagle:package:6240885/1" override_package3d_urn="urn:adsk.eagle:package:24879888/2" override_package_urn="urn:adsk.eagle:footprint:6240242/1"/>
+<part name="U3" library="SparkFun-IC-Power" deviceset="MCP73833" device="" override_package3d_urn="urn:adsk.eagle:package:24877282/2" override_package_urn="urn:adsk.eagle:footprint:24877283/1" value="MCP73833"/>
 <part name="SUPPLY1" library="SparkFun-PowerSymbols" deviceset="VDD" device="" value="VIN"/>
 <part name="GND3" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND4" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="J2" library="SparkFun-Connectors" deviceset="JST_2MM_MALE" device=""/>
+<part name="J2" library="SparkFun-Connectors" deviceset="JST_2MM_MALE" device="" override_package3d_urn="urn:adsk.eagle:package:24877259/2" override_package_urn="urn:adsk.eagle:footprint:24877260/1"/>
 <part name="U$2" library="ADS1x15" deviceset="MOUNTINGHOLE" device="2.5"/>
 <part name="U$3" library="ADS1x15" deviceset="MOUNTINGHOLE" device="2.5"/>
-<part name="U5" library="59453-081110EDHLF" deviceset="59453-081110EDHLF" device=""/>
+<part name="U5" library="59453-081110EDHLF" deviceset="59453-081110EDHLF" device="" override_package3d_urn="urn:adsk.eagle:package:24879959/2" override_package_urn="urn:adsk.eagle:footprint:24879960/1"/>
 <part name="GND8" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="SUPPLY4" library="SparkFun" deviceset="VCC" device="" value="VCC"/>
-<part name="J7" library="Amphenol" deviceset="20021311-00010T4LF" device=""/>
-<part name="J6" library="Amphenol" deviceset="20021311-00010T4LF" device=""/>
-<part name="J5" library="Amphenol" deviceset="20021311-00010T4LF" device=""/>
-<part name="MT1" library="PEC11R-4215F-S0024" deviceset="PEC11R-4215F-S0024" device=""/>
-<part name="R30" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="330">
+<part name="J7" library="Amphenol" deviceset="20021311-00010T4LF" device="" override_package3d_urn="urn:adsk.eagle:package:24879892/2" override_package_urn="urn:adsk.eagle:footprint:24879893/1"/>
+<part name="J6" library="Amphenol" deviceset="20021311-00010T4LF" device="" override_package3d_urn="urn:adsk.eagle:package:24877214/2" override_package_urn="urn:adsk.eagle:footprint:24877215/1"/>
+<part name="J5" library="Amphenol" deviceset="20021311-00010T4LF" device="" override_package3d_urn="urn:adsk.eagle:package:24877268/2" override_package_urn="urn:adsk.eagle:footprint:24877269/1"/>
+<part name="MT1" library="PEC11R-4215F-S0024" deviceset="PEC11R-4215F-S0024" device="" override_package3d_urn="urn:adsk.eagle:package:24877253/2" override_package_urn="urn:adsk.eagle:footprint:24877254/1"/>
+<part name="R30" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877295/2" override_package_urn="urn:adsk.eagle:footprint:24877296/1" value="330">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
-<part name="R1" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="330">
+<part name="R1" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877293/2" override_package_urn="urn:adsk.eagle:footprint:24877294/1" value="330">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
-<part name="R3" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="1K">
+<part name="R3" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877291/2" override_package_urn="urn:adsk.eagle:footprint:24877292/1" value="1K">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
-<part name="R5" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="10K">
+<part name="R5" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877288/2" override_package_urn="urn:adsk.eagle:footprint:24877289/1" value="10K">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
-<part name="C6" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" value="0.1uF">
+<part name="C6" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24879813/2" override_package_urn="urn:adsk.eagle:footprint:24879815/1" value="0.1uF">
 <attribute name="MPN" value="GRM155R71C104KA88J"/>
 </part>
-<part name="C8" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" value="1uF">
+<part name="C8" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24879833/2" override_package_urn="urn:adsk.eagle:footprint:24879834/1" value="1uF">
 <attribute name="MPN" value="GRM155R71C104KA88J"/>
 </part>
 <part name="J3" library="SparkFun-Connectors" library_urn="urn:adsk.eagle:library:513" deviceset="CONN_02" device="" package3d_urn="urn:adsk.eagle:package:38039/1"/>
-<part name="C3" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" value="0.1uF">
+<part name="C3" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24879796/2" override_package_urn="urn:adsk.eagle:footprint:24879797/1" value="0.1uF">
 <attribute name="MPN" value="GRM155R71C104KA88J"/>
 </part>
-<part name="R6" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="330">
+<part name="R6" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24879786/2" override_package_urn="urn:adsk.eagle:footprint:24879787/1" value="330">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
-<part name="R7" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="330">
+<part name="R7" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24879788/2" override_package_urn="urn:adsk.eagle:footprint:24879789/1" value="330">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
-<part name="C4" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" value="0.1uF">
+<part name="C4" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24879849/2" override_package_urn="urn:adsk.eagle:footprint:24879850/1" value="0.1uF">
 <attribute name="MPN" value="GRM155R71C104KA88J"/>
 </part>
-<part name="R8" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="10K">
+<part name="R8" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24879884/2" override_package_urn="urn:adsk.eagle:footprint:24879885/1" value="10K">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
-<part name="C12" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" value="0.1uF">
+<part name="C12" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24879886/2" override_package_urn="urn:adsk.eagle:footprint:24879887/1" value="0.1uF">
 <attribute name="MPN" value="GRM155R71C104KA88J"/>
 </part>
-<part name="R9" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="4.7K">
+<part name="R9" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24879835/2" override_package_urn="urn:adsk.eagle:footprint:24879836/1" value="4.7K">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
-<part name="R10" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="4.7K">
+<part name="R10" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24879837/2" override_package_urn="urn:adsk.eagle:footprint:24879838/1" value="4.7K">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
-<part name="C10" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" value="0.1uF">
+<part name="C10" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877205/2" override_package_urn="urn:adsk.eagle:footprint:24877206/1" value="0.1uF">
 <attribute name="MPN" value="GRM155R71C104KA88J"/>
 </part>
-<part name="R11" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="5.1K">
+<part name="R11" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877312/2" override_package_urn="urn:adsk.eagle:footprint:24877313/1" value="5.1K">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
-<part name="R12" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="5.1K">
+<part name="R12" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877319/2" override_package_urn="urn:adsk.eagle:footprint:24877320/1" value="5.1K">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
 <part name="GND1" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="R13" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="27">
+<part name="R13" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877316/2" override_package_urn="urn:adsk.eagle:footprint:24877317/1" value="27">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
-<part name="R14" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="27">
+<part name="R14" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877314/2" override_package_urn="urn:adsk.eagle:footprint:24877315/1" value="27">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
 <part name="GND2" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="R2" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="10K">
+<part name="R2" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24879784/2" override_package_urn="urn:adsk.eagle:footprint:24879785/1" value="10K">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
 <part name="P+1" library="SparkFun" deviceset="VCC" device="" value="3.3V"/>
@@ -6403,7 +6403,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="P+3" library="SparkFun" deviceset="VCC" device="" value="3.3V"/>
 <part name="GND5" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND6" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="R4" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="100">
+<part name="R4" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24879882/2" override_package_urn="urn:adsk.eagle:footprint:24879883/1" value="100">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
 <part name="GND7" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
@@ -6415,46 +6415,46 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND10" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND11" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="J4" library="SparkFun-Connectors" deviceset="CONN_01" device=""/>
-<part name="Q2" library="MOSFETs" deviceset="MOSFET-PCH" device="-BSS84" value="BSS84-7-F"/>
-<part name="R16" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="10K">
+<part name="Q2" library="MOSFETs" deviceset="MOSFET-PCH" device="-BSS84" override_package3d_urn="urn:adsk.eagle:package:24879827/2" override_package_urn="urn:adsk.eagle:footprint:24879828/1" value="BSS84-7-F"/>
+<part name="R16" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24879821/2" override_package_urn="urn:adsk.eagle:footprint:24879822/1" value="10K">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
-<part name="D1" library="SCHOTTKY_0805" deviceset="DIODE_SCHOTTKY" device="0805-RES"/>
+<part name="D1" library="SCHOTTKY_0805" deviceset="DIODE_SCHOTTKY" device="0805-RES" override_package3d_urn="urn:adsk.eagle:package:24879806/2" override_package_urn="urn:adsk.eagle:footprint:24879807/1"/>
 <part name="GND13" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND12" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND14" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="R17" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="10M">
+<part name="R17" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877275/2" override_package_urn="urn:adsk.eagle:footprint:24877276/1" value="10M">
 <attribute name="MPN" value="RC0402JR-0710KL"/>
 </part>
-<part name="R18" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="10M">
+<part name="R18" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877273/2" override_package_urn="urn:adsk.eagle:footprint:24877274/1" value="10M">
 <attribute name="MPN" value="RC0402JR-0710KL"/>
 </part>
-<part name="C9" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" value="0.1uF">
+<part name="C9" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877271/2" override_package_urn="urn:adsk.eagle:footprint:24877272/1" value="0.1uF">
 <attribute name="MPN" value="GRM155R71C104KA88J"/>
 </part>
 <part name="GND15" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
-<part name="C11" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" value="0.1uF">
+<part name="C11" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877239/2" override_package_urn="urn:adsk.eagle:footprint:24877240/1" value="0.1uF">
 <attribute name="MPN" value="GRM155R71C104KA88J"/>
 </part>
-<part name="C13" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" value="0.1uF">
+<part name="C13" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877237/2" override_package_urn="urn:adsk.eagle:footprint:24877238/1" value="0.1uF">
 <attribute name="MPN" value="GRM155R71C104KA88J"/>
 </part>
-<part name="R19" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="10K">
+<part name="R19" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877245/2" override_package_urn="urn:adsk.eagle:footprint:24877246/1" value="10K">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
-<part name="R20" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="10K">
+<part name="R20" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877243/2" override_package_urn="urn:adsk.eagle:footprint:24877244/1" value="10K">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
 <part name="SUPPLY2" library="SparkFun" deviceset="VCC" device="" value="3.3V"/>
 <part name="GND16" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND17" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="R21" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="10K">
+<part name="R21" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877247/2" override_package_urn="urn:adsk.eagle:footprint:24877248/1" value="10K">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
-<part name="R22" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="10K">
+<part name="R22" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877241/2" override_package_urn="urn:adsk.eagle:footprint:24877242/1" value="10K">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
-<part name="R23" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" value="10K">
+<part name="R23" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24879880/2" override_package_urn="urn:adsk.eagle:footprint:24879881/1" value="10K">
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
 <part name="GND18" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
@@ -6464,17 +6464,17 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="SUPPLY5" library="SparkFun" deviceset="VCC" device="" value="VCC"/>
 <part name="U$8" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="FIDUCIAL" device="" package3d_urn="urn:adsk.eagle:package:6240632/1"/>
 <part name="U$9" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="FIDUCIAL" device="" package3d_urn="urn:adsk.eagle:package:6240632/1"/>
-<part name="C14" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" value="10uF">
+<part name="C14" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877278/2" override_package_urn="urn:adsk.eagle:footprint:24877279/1" value="10uF">
 <attribute name="MPN" value="GRM155R71C104KA88J"/>
 </part>
-<part name="C5" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" value="10uF">
+<part name="C5" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_CAP_CERAMIC" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877280/2" override_package_urn="urn:adsk.eagle:footprint:24877281/1" value="10uF">
 <attribute name="MPN" value="GRM155R71C104KA88J"/>
 </part>
-<part name="Q3" library="MOSFETs" deviceset="MOSFET-NCH" device="-BSS138PW,115" value="BSS138PW,115"/>
-<part name="LED1" library="adafruit" deviceset="LED" device="CHIPLED_0603"/>
-<part name="LED2" library="adafruit" deviceset="LED" device="CHIPLED_0603"/>
-<part name="C1" library="SparkFun-Capacitors" deviceset="0.33UF/330NF" device="-0805-50V-10%" value="10µF"/>
-<part name="C7" library="SparkFun-Capacitors" deviceset="0.33UF/330NF" device="-0805-50V-10%" value="10µF"/>
+<part name="Q3" library="MOSFETs" deviceset="MOSFET-NCH" device="-BSS138PW,115" override_package3d_urn="urn:adsk.eagle:package:24877326/2" override_package_urn="urn:adsk.eagle:footprint:24877328/1" value="BSS138PW,115"/>
+<part name="LED1" library="adafruit" deviceset="LED" device="CHIPLED_0603" override_package3d_urn="urn:adsk.eagle:package:24879791/2" override_package_urn="urn:adsk.eagle:footprint:24879792/1"/>
+<part name="LED2" library="adafruit" deviceset="LED" device="CHIPLED_0603" override_package3d_urn="urn:adsk.eagle:package:24879794/2" override_package_urn="urn:adsk.eagle:footprint:24879795/1"/>
+<part name="C1" library="SparkFun-Capacitors" deviceset="0.33UF/330NF" device="-0805-50V-10%" override_package3d_urn="urn:adsk.eagle:package:24879823/2" override_package_urn="urn:adsk.eagle:footprint:24879824/1" value="10µF"/>
+<part name="C7" library="SparkFun-Capacitors" deviceset="0.33UF/330NF" device="-0805-50V-10%" override_package3d_urn="urn:adsk.eagle:package:24879912/2" override_package_urn="urn:adsk.eagle:footprint:24879913/1" value="10µF"/>
 </parts>
 <sheets>
 <sheet>
@@ -7974,8 +7974,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <approved hash="209,1,-25.4,7.62,SS,,,,,"/>
 <approved hash="113,1,243.84,68.7959,U2,,,,,"/>
 <approved hash="113,1,252.137,130.564,J2,,,,,"/>
-<approved hash="113,1,252.137,142.181,J3,,,,,"/>
-<approved hash="113,1,15.9173,1.10744,J4,,,,,"/>
+<approved hash="113,1,252.137,142.15,J3,,,,,"/>
+<approved hash="113,1,15.9173,1.13792,J4,,,,,"/>
 <approved hash="113,1,162.56,67.2567,D1,,,,,"/>
 <approved hash="113,1,133.35,-73.9817,LED1,,,,,"/>
 <approved hash="113,1,138.43,-68.7476,LED2,,,,,"/>
