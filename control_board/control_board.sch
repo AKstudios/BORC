@@ -6475,6 +6475,10 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="LED2" library="adafruit" deviceset="LED" device="CHIPLED_0603" override_package3d_urn="urn:adsk.eagle:package:24879794/2" override_package_urn="urn:adsk.eagle:footprint:24879795/1"/>
 <part name="C1" library="SparkFun-Capacitors" deviceset="0.33UF/330NF" device="-0805-50V-10%" override_package3d_urn="urn:adsk.eagle:package:24879823/2" override_package_urn="urn:adsk.eagle:footprint:24879824/1" value="10µF"/>
 <part name="C7" library="SparkFun-Capacitors" deviceset="0.33UF/330NF" device="-0805-50V-10%" override_package3d_urn="urn:adsk.eagle:package:24879912/2" override_package_urn="urn:adsk.eagle:footprint:24879913/1" value="10µF"/>
+<part name="R15" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877243/2" override_package_urn="urn:adsk.eagle:footprint:24877244/1" value="10K">
+<attribute name="MPN" value="RC0402FR-7W10KL"/>
+</part>
+<part name="P+7" library="SparkFun" deviceset="VCC" device="" value="3.3V"/>
 </parts>
 <sheets>
 <sheet>
@@ -6873,6 +6877,14 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <attribute name="NAME" x="-39.624" y="9.779" size="1.778" layer="95" font="vector" rot="R180"/>
 <attribute name="VALUE" x="-39.624" y="14.859" size="1.778" layer="96" font="vector" rot="R180"/>
 </instance>
+<instance part="R15" gate="G$1" x="-50.8" y="12.7" smashed="yes" rot="R270">
+<attribute name="MPN" x="-50.8" y="12.7" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="NAME" x="-48.26" y="12.7" size="1.4224" layer="95" rot="R270" align="center"/>
+<attribute name="VALUE" x="-53.34" y="12.7" size="1.4224" layer="96" ratio="15" rot="R270" align="center"/>
+</instance>
+<instance part="P+7" gate="1" x="-50.8" y="25.4" smashed="yes">
+<attribute name="VALUE" x="-51.816" y="28.956" size="1.778" layer="96"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -7001,8 +7013,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pinref part="GND2" gate="1" pin="GND"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="7.62" x2="-38.1" y2="0" width="0.1524" layer="91"/>
 <pinref part="GND10" gate="1" pin="GND"/>
+<wire x1="-38.1" y1="7.62" x2="-38.1" y2="0" width="0.1524" layer="91"/>
 <pinref part="C7" gate="G$1" pin="1"/>
 </segment>
 <segment>
@@ -7198,6 +7210,11 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pinref part="SUPPLY5" gate="1" pin="VCC"/>
 <wire x1="210.82" y1="10.16" x2="203.2" y2="10.16" width="0.1524" layer="91"/>
 <junction x="210.82" y="10.16"/>
+</segment>
+<segment>
+<pinref part="P+7" gate="1" pin="VCC"/>
+<pinref part="R15" gate="G$1" pin="1"/>
+<wire x1="-50.8" y1="25.4" x2="-50.8" y2="17.78" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="VIN" class="1">
@@ -7514,6 +7531,11 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pinref part="U1" gate="G$1" pin="NSS"/>
 <wire x1="-25.4" y1="7.62" x2="-33.02" y2="7.62" width="0.1524" layer="91"/>
 <label x="-33.02" y="7.62" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="R15" gate="G$1" pin="2"/>
+<wire x1="-50.8" y1="7.62" x2="-50.8" y2="0" width="0.1524" layer="91"/>
+<label x="-50.8" y="0" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="MOSI" class="0">
@@ -7970,12 +7992,10 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <approved hash="104,1,-25.4,22.86,U1,3.3V,VCC,,,"/>
 <approved hash="104,1,256.54,71.12,U2,VDD,TEMP_SENSOR_POWER,,,"/>
 <approved hash="104,1,231.14,63.5,U2,VSS,GND,,,"/>
-<approved hash="209,1,91.44,93.98,SS,,,,,"/>
-<approved hash="209,1,-25.4,7.62,SS,,,,,"/>
 <approved hash="113,1,243.84,68.7959,U2,,,,,"/>
 <approved hash="113,1,252.137,130.564,J2,,,,,"/>
-<approved hash="113,1,252.137,142.15,J3,,,,,"/>
-<approved hash="113,1,15.9173,1.13792,J4,,,,,"/>
+<approved hash="113,1,252.137,142.181,J3,,,,,"/>
+<approved hash="113,1,15.9173,1.10744,J4,,,,,"/>
 <approved hash="113,1,162.56,67.2567,D1,,,,,"/>
 <approved hash="113,1,133.35,-73.9817,LED1,,,,,"/>
 <approved hash="113,1,138.43,-68.7476,LED2,,,,,"/>
