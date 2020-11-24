@@ -7231,6 +7231,20 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pinref part="Q2" gate="PMOS" pin="S1"/>
 <wire x1="157.48" y1="55.88" x2="167.64" y2="55.88" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="J5" gate="G$1" pin="7"/>
+<pinref part="J5" gate="G$1" pin="8"/>
+<wire x1="236.22" y1="-22.86" x2="236.22" y2="-20.32" width="0.1524" layer="91"/>
+<pinref part="J5" gate="G$1" pin="9"/>
+<wire x1="236.22" y1="-20.32" x2="236.22" y2="-17.78" width="0.1524" layer="91"/>
+<junction x="236.22" y="-20.32"/>
+<pinref part="J5" gate="G$1" pin="10"/>
+<wire x1="236.22" y1="-17.78" x2="236.22" y2="-15.24" width="0.1524" layer="91"/>
+<junction x="236.22" y="-17.78"/>
+<wire x1="236.22" y1="-15.24" x2="243.84" y2="-15.24" width="0.1524" layer="91"/>
+<junction x="236.22" y="-15.24"/>
+<label x="238.76" y="-15.24" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="PROG" class="0">
 <segment>
@@ -7424,20 +7438,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="121.92" y1="137.16" x2="104.14" y2="137.16" width="0.1524" layer="91"/>
 <label x="104.14" y="137.16" size="1.778" layer="95"/>
 <pinref part="R17" gate="G$1" pin="2"/>
-</segment>
-<segment>
-<pinref part="J5" gate="G$1" pin="7"/>
-<pinref part="J5" gate="G$1" pin="8"/>
-<wire x1="236.22" y1="-22.86" x2="236.22" y2="-20.32" width="0.1524" layer="91"/>
-<pinref part="J5" gate="G$1" pin="9"/>
-<wire x1="236.22" y1="-20.32" x2="236.22" y2="-17.78" width="0.1524" layer="91"/>
-<junction x="236.22" y="-20.32"/>
-<pinref part="J5" gate="G$1" pin="10"/>
-<wire x1="236.22" y1="-17.78" x2="236.22" y2="-15.24" width="0.1524" layer="91"/>
-<junction x="236.22" y="-17.78"/>
-<wire x1="236.22" y1="-15.24" x2="243.84" y2="-15.24" width="0.1524" layer="91"/>
-<junction x="236.22" y="-15.24"/>
-<label x="238.76" y="-15.24" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="VBAT_CHG" class="0">
