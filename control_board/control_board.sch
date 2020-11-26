@@ -6479,6 +6479,10 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <attribute name="MPN" value="RC0402FR-7W10KL"/>
 </part>
 <part name="P+7" library="SparkFun" deviceset="VCC" device="" value="3.3V"/>
+<part name="R24" library="Adafruit Feather 32u4 Bluefruit LE" deviceset="MICROBUILDER_RESISTOR" device="_0402MP" override_package3d_urn="urn:adsk.eagle:package:24877243/2" override_package_urn="urn:adsk.eagle:footprint:24877244/1" value="10K">
+<attribute name="MPN" value="RC0402FR-7W10KL"/>
+</part>
+<part name="P+8" library="SparkFun" deviceset="VCC" device="" value="3.3V"/>
 </parts>
 <sheets>
 <sheet>
@@ -6885,6 +6889,14 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <instance part="P+7" gate="1" x="-50.8" y="25.4" smashed="yes">
 <attribute name="VALUE" x="-51.816" y="28.956" size="1.778" layer="96"/>
 </instance>
+<instance part="R24" gate="G$1" x="137.16" y="27.94" smashed="yes" rot="R270">
+<attribute name="MPN" x="137.16" y="27.94" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="NAME" x="139.7" y="27.94" size="1.4224" layer="95" rot="R270" align="center"/>
+<attribute name="VALUE" x="134.62" y="27.94" size="1.4224" layer="96" ratio="15" rot="R270" align="center"/>
+</instance>
+<instance part="P+8" gate="1" x="137.16" y="35.56" smashed="yes">
+<attribute name="VALUE" x="136.144" y="39.116" size="1.778" layer="96"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -7215,6 +7227,11 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pinref part="P+7" gate="1" pin="VCC"/>
 <pinref part="R15" gate="G$1" pin="1"/>
 <wire x1="-50.8" y1="25.4" x2="-50.8" y2="17.78" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R24" gate="G$1" pin="1"/>
+<pinref part="P+8" gate="1" pin="VCC"/>
+<wire x1="137.16" y1="33.02" x2="137.16" y2="35.56" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="VIN" class="1">
@@ -7780,9 +7797,13 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </net>
 <net name="CS" class="0">
 <segment>
-<wire x1="143.51" y1="21.59" x2="135.89" y2="21.59" width="0.1524" layer="91"/>
+<wire x1="143.51" y1="21.59" x2="137.16" y2="21.59" width="0.1524" layer="91"/>
 <label x="138.43" y="21.59" size="1.778" layer="95"/>
 <pinref part="U7" gate="G$1" pin="CS"/>
+<pinref part="R24" gate="G$1" pin="2"/>
+<wire x1="137.16" y1="21.59" x2="135.89" y2="21.59" width="0.1524" layer="91"/>
+<wire x1="137.16" y1="22.86" x2="137.16" y2="21.59" width="0.1524" layer="91"/>
+<junction x="137.16" y="21.59"/>
 </segment>
 <segment>
 <pinref part="IC1" gate="G$1" pin="PC7_[TOSC2/PCINT23]"/>
