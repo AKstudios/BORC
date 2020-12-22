@@ -1,4 +1,4 @@
-// BORC firmware v2020.12.22.1
+// BORC firmware v2020.12.22.2
 // Updated 12/22/2020
 
 // Developed by AKstudios

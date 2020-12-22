@@ -12,27 +12,28 @@ void runMotor()
   pinMode(MOTOR_IN2, OUTPUT);
   pinMode(MOTOR_CONTROL_PIN, OUTPUT);
   digitalWrite(MOTOR_CONTROL_PIN, HIGH);
+  delay(5);
 
   // turn motor in small increments in manual mode
   if(manualMode == true)  
   { 
     Serial.println("manual true");
-    if(knobDirection == 1)  // motor left
+    if(knobDirection == 1)  // motor left (open valve)
     {
       Serial.println("motor left");
-      digitalWrite(MOTOR_IN1, LOW);
-      digitalWrite(MOTOR_IN2, HIGH);
-      delay(50);
+      digitalWrite(MOTOR_IN1, HIGH);
+      digitalWrite(MOTOR_IN2, LOW);
+      delay(100);
       digitalWrite(MOTOR_IN1, LOW);
       digitalWrite(MOTOR_IN2, LOW);
     }
 
-    else if(knobDirection == 2) // motor right
+    else if(knobDirection == 2) // motor right (close valve)
     {
       Serial.println("motor right");
-      digitalWrite(MOTOR_IN1, HIGH);
-      digitalWrite(MOTOR_IN2, LOW);
-      delay(50);
+      digitalWrite(MOTOR_IN1, LOW);
+      digitalWrite(MOTOR_IN2, HIGH);
+      delay(100);
       digitalWrite(MOTOR_IN1, LOW);
       digitalWrite(MOTOR_IN2, LOW);
     }
