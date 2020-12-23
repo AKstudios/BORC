@@ -23,7 +23,7 @@ void runMotor()
       Serial.println("motor left");
       digitalWrite(MOTOR_IN1, HIGH);
       digitalWrite(MOTOR_IN2, LOW);
-      delay(100);
+      delay(200);
       digitalWrite(MOTOR_IN1, LOW);
       digitalWrite(MOTOR_IN2, LOW);
     }
@@ -33,7 +33,7 @@ void runMotor()
       Serial.println("motor right");
       digitalWrite(MOTOR_IN1, LOW);
       digitalWrite(MOTOR_IN2, HIGH);
-      delay(100);
+      delay(200);
       digitalWrite(MOTOR_IN1, LOW);
       digitalWrite(MOTOR_IN2, LOW);
     }

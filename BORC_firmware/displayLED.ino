@@ -17,7 +17,7 @@ void displayLED(char choice)
     else
       errorCode &= ~(1<<LED_DRV_ERR);
   }
-  ledmatrix.setTextColor(200);
+  ledmatrix.setTextColor(255);
   ledmatrix.clear();
   ledmatrix.setCursor(2,0);
 
@@ -75,7 +75,7 @@ void displayLED(char choice)
   // show manual mode menu option
   else if(choice == 'M')
   {
-    displayText = "M";
+    displayText = "Ma";
     ledmatrix.print(displayText);
   }
 

@@ -1,4 +1,4 @@
-// BORC firmware v2020.12.22.2
+// BORC firmware v2020.12.22.3
 // Updated 12/22/2020
 
 // Developed by AKstudios
@@ -151,10 +151,6 @@ void setup()
     errorCode |= (1<<LED_DRV_ERR);
   else
     errorCode &= ~(1<<LED_DRV_ERR);
-  ledmatrix.setTextWrap(false);
-  ledmatrix.setTextColor(200); // quarter brightness
-  ledmatrix.setTextSize(1);
-  ledmatrix.clear();
 
   // enable current sensor
   currentSense();
