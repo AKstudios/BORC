@@ -7395,9 +7395,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <label x="233.68" y="-63.5" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="IC1" gate="G$1" pin="PC2_[PCINT18/TCK]"/>
-<wire x1="91.44" y1="76.2" x2="101.6" y2="76.2" width="0.1524" layer="91"/>
-<label x="96.52" y="76.2" size="1.778" layer="95"/>
+<pinref part="IC1" gate="G$1" pin="PB3_[AIN1/OC0A/PCINT11]"/>
+<wire x1="91.44" y1="96.52" x2="101.6" y2="96.52" width="0.1524" layer="91"/>
+<label x="96.52" y="96.52" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="BLUE" class="0">
@@ -8049,6 +8049,18 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pinref part="C2" gate="G$1" pin="1"/>
 </segment>
 </net>
+<net name="DRIVER_POWER" class="0">
+<segment>
+<pinref part="IC1" gate="G$1" pin="PC2_[PCINT18/TCK]"/>
+<wire x1="91.44" y1="76.2" x2="101.6" y2="76.2" width="0.1524" layer="91"/>
+<label x="96.52" y="76.2" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="J6" gate="G$1" pin="5"/>
+<wire x1="210.82" y1="0" x2="203.2" y2="0" width="0.1524" layer="91"/>
+<label x="190.5" y="0" size="1.778" layer="95"/>
+</segment>
+</net>
 </nets>
 </sheet>
 </sheets>
@@ -8061,7 +8073,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <approved hash="202,1,25.4,86.36,IC1,AREF,,,,"/>
 <approved hash="104,1,25.4,45.72,IC1,GND_2,GND,,,"/>
 <approved hash="104,1,25.4,99.06,IC1,AVCC,VCC,,,"/>
-<approved hash="202,1,91.44,96.52,IC1,PB3_[AIN1/OC0A/PCINT11],,,,"/>
 <approved hash="104,1,25.4,43.18,IC1,GND_3,GND,,,"/>
 <approved hash="104,1,25.4,91.44,IC1,VCC_2,VCC,,,"/>
 <approved hash="202,1,25.4,71.12,IC1,PA1_[ADC1/PCINT1],,,,"/>
