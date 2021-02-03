@@ -1,5 +1,5 @@
 // Sleep function for BORC
-// Updated 12/22/2020
+// Updated 01/20/2021
 
 // =================================================================
 // Sleep function
@@ -15,11 +15,11 @@ void sleep()
   // turn off all devices to be sure
   digitalWrite(CURRENT_SENSE_POWER_PIN, LOW);
   digitalWrite(LED_SCREEN_POWER_PIN, LOW);
-  digitalWrite(MOTOR_CONTROL_PIN, LOW);
+  digitalWrite(SERVO_POWER_PIN, LOW);
   digitalWrite(TEMP_SENSOR_POWER_PIN, LOW);
   pinMode(LED_SCREEN_POWER_PIN, INPUT);
   pinMode(CURRENT_SENSE_POWER_PIN, INPUT);
-  pinMode(MOTOR_CONTROL_PIN, INPUT);
+  pinMode(SERVO_POWER_PIN, INPUT);
   pinMode(TEMP_SENSOR_POWER_PIN, INPUT);
   pinMode(MOTOR_IN1, INPUT);
   pinMode(MOTOR_IN2, INPUT);

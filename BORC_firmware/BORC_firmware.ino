@@ -1,17 +1,20 @@
-// BORC firmware v2020.12.22.3
-// Updated 12/22/2020
+
+
+// BORC firmware v2021.01.21.1
+// Updated 01/20/2021
 
 // Developed by AKstudios
 
 // =================================================================
 // Libraries
 // =================================================================
-#include <RFM69.h>                //https://www.github.com/lowpowerlab/rfm69
-#include <SPIFlash.h>             //https://github.com/LowPowerLab/SPIFlash          
-#include <Adafruit_GFX.h>         //https://github.com/adafruit/Adafruit-GFX-Library
-#include <Adafruit_SHT31.h>       //https://github.com/adafruit/Adafruit_SHT31
-#include <Adafruit_INA219.h>      //https://github.com/adafruit/Adafruit_INA219
-#include <Adafruit_IS31FL3731.h>  //https://github.com/adafruit/Adafruit_IS31FL3731
+#include <RFM69.h>                    //https://www.github.com/lowpowerlab/rfm69
+#include <SPIFlash.h>                 //https://github.com/LowPowerLab/SPIFlash          
+#include <Adafruit_GFX.h>             //https://github.com/adafruit/Adafruit-GFX-Library
+#include <Adafruit_SHT31.h>           //https://github.com/adafruit/Adafruit_SHT31
+#include <Adafruit_INA219.h>          //https://github.com/adafruit/Adafruit_INA219
+#include <Adafruit_IS31FL3731.h>      //https://github.com/adafruit/Adafruit_IS31FL3731
+#include <Adafruit_PWMServoDriver.h>  //https://github.com/adafruit/Adafruit-PWM-Servo-Driver-Library
 #include <avr/sleep.h>
 #include <avr/power.h>
 #include <avr/wdt.h>
@@ -107,7 +110,7 @@ void setup()
   
   // set pin modes
   pinMode(CURRENT_SENSE_POWER_PIN, OUTPUT);
-  pinMode(MOTOR_CONTROL_PIN, OUTPUT);
+  pinMode(SERVO_POWER_PIN, OUTPUT);
   pinMode(TEMP_SENSOR_POWER_PIN, OUTPUT);
   pinMode(LED_SCREEN_POWER_PIN, OUTPUT);
   pinMode(MOTOR_IN1, OUTPUT);
@@ -118,7 +121,7 @@ void setup()
   // turn on all devices
   digitalWrite(CURRENT_SENSE_POWER_PIN, HIGH);
   digitalWrite(LED_SCREEN_POWER_PIN, HIGH);
-  digitalWrite(MOTOR_CONTROL_PIN, HIGH);
+  digitalWrite(SERVO_POWER_PIN, HIGH);
   digitalWrite(TEMP_SENSOR_POWER_PIN, HIGH);
 
   // Read the initial state of A
@@ -189,8 +192,8 @@ void loop()
     {
       Serial.print("actions counter: ");
       Serial.println(actionsIntervalCounter);
-      pinMode(MOTOR_CONTROL_PIN, OUTPUT);
-      digitalWrite(MOTOR_CONTROL_PIN, HIGH);
+      pinMode(SERVO_POWER_PIN, OUTPUT);
+      digitalWrite(SERVO_POWER_PIN, HIGH);
       readTempRH();
       currentSense();
       Serial.print("Temp: ");

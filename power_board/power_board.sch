@@ -2374,65 +2374,6 @@ part number 2062-2P from STA</description>
 </deviceset>
 </devicesets>
 </library>
-<library name="Pololu U3V70x Step Up">
-<packages>
-<package name="POLOLU_12V_STEPUP_U3V70F12">
-<wire x1="0" y1="0" x2="0" y2="40.6" width="0.1524" layer="21"/>
-<wire x1="0" y1="40.6" x2="15.2" y2="40.6" width="0.1524" layer="21"/>
-<wire x1="15.2" y1="40.6" x2="15.2" y2="0" width="0.1524" layer="21"/>
-<wire x1="15.2" y1="0" x2="0" y2="0" width="0.1524" layer="21"/>
-<pad name="VIN@2" x="13.93" y="5.08" drill="1" diameter="1.9304"/>
-<pad name="VIN@1" x="11.39" y="5.08" drill="1" diameter="1.9304"/>
-<pad name="GND@2" x="8.85" y="5.08" drill="1" diameter="1.9304"/>
-<pad name="GND@1" x="6.31" y="5.08" drill="1" diameter="1.9304"/>
-<pad name="EN" x="3.77" y="5.08" drill="1" diameter="1.9304"/>
-<pad name="GND@3" x="1.27" y="35.52" drill="1" diameter="1.9304"/>
-<pad name="GND@4" x="3.77" y="35.52" drill="1" diameter="1.9304"/>
-<pad name="VOUT@1" x="6.31" y="35.52" drill="1" diameter="1.9304"/>
-<pad name="VOUT@2" x="8.85" y="35.52" drill="1" diameter="1.9304"/>
-<text x="0" y="41.4" size="1.016" layer="25" font="vector">&gt;NAME</text>
-<text x="0" y="-1.7" size="1.016" layer="27" font="vector">&gt;VALUE</text>
-</package>
-</packages>
-<symbols>
-<symbol name="POLOLU_12V_STEPUP_U3V70F12">
-<pin name="VIN" x="-7.62" y="10.16" length="middle"/>
-<pin name="EN" x="-7.62" y="7.62" length="middle"/>
-<pin name="GND" x="17.78" y="7.62" length="middle" rot="R180"/>
-<pin name="VOUT" x="17.78" y="10.16" length="middle" rot="R180"/>
-<wire x1="-2.54" y1="12.7" x2="12.7" y2="12.7" width="0.1524" layer="94"/>
-<wire x1="12.7" y1="12.7" x2="12.7" y2="5.08" width="0.1524" layer="94"/>
-<wire x1="12.7" y1="5.08" x2="-2.54" y2="5.08" width="0.1524" layer="94"/>
-<wire x1="-2.54" y1="5.08" x2="-2.54" y2="12.7" width="0.1524" layer="94"/>
-<text x="0.508" y="12.954" size="0.8128" layer="94">Pololu 12V Step-Up</text>
-<text x="-2.54" y="15.24" size="1.016" layer="95">&gt;NAME</text>
-<text x="-2.54" y="2.54" size="1.016" layer="96">&gt;VALUE</text>
-<wire x1="-2.54" y1="12.7" x2="-2.54" y2="13.97" width="0.1524" layer="94"/>
-<wire x1="-2.54" y1="13.97" x2="12.7" y2="13.97" width="0.1524" layer="94"/>
-<wire x1="12.7" y1="13.97" x2="12.7" y2="12.7" width="0.1524" layer="94"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="POLOLU_12V_STEPUP_U3V70F12">
-<gates>
-<gate name="G$1" symbol="POLOLU_12V_STEPUP_U3V70F12" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="POLOLU_12V_STEPUP_U3V70F12">
-<connects>
-<connect gate="G$1" pin="EN" pad="EN"/>
-<connect gate="G$1" pin="GND" pad="GND@1 GND@2 GND@3 GND@4"/>
-<connect gate="G$1" pin="VIN" pad="VIN@1 VIN@2"/>
-<connect gate="G$1" pin="VOUT" pad="VOUT@1 VOUT@2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="SparkFun-Aesthetics">
 <description>&lt;h3&gt;SparkFun Electronics' preferred foot prints&lt;/h3&gt;
 In this library you'll find non-functional items- supply symbols, logos, notations, frame blocks, etc.&lt;br&gt;&lt;br&gt;
@@ -5397,6 +5338,60 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="Pololu Step Up Vregs">
+<packages>
+<package name="POLOLU_STEPUP_U1V11X">
+<wire x1="0" y1="0" x2="0" y2="15.24" width="0.1524" layer="21"/>
+<wire x1="0" y1="15.24" x2="11.43" y2="15.24" width="0.1524" layer="21"/>
+<wire x1="11.43" y1="15.24" x2="11.43" y2="0" width="0.1524" layer="21"/>
+<wire x1="11.43" y1="0" x2="0" y2="0" width="0.1524" layer="21"/>
+<pad name="VOUT" x="9.525" y="1.27" drill="1" diameter="1.9304"/>
+<pad name="VIN" x="4.445" y="1.27" drill="1" diameter="1.9304"/>
+<pad name="EN" x="1.905" y="1.27" drill="1" diameter="1.9304"/>
+<pad name="GND" x="6.985" y="1.27" drill="1" diameter="1.9304"/>
+<text x="0" y="15.746" size="1.016" layer="25" font="vector">&gt;NAME</text>
+<text x="0" y="-1.446" size="1.016" layer="27" font="vector">&gt;VALUE</text>
+</package>
+</packages>
+<symbols>
+<symbol name="POLOLU_STEPUP_VREG">
+<pin name="VIN" x="-7.62" y="10.16" length="middle"/>
+<pin name="EN" x="-7.62" y="7.62" length="middle"/>
+<pin name="GND" x="17.78" y="7.62" length="middle" rot="R180"/>
+<pin name="VOUT" x="17.78" y="10.16" length="middle" rot="R180"/>
+<wire x1="-2.54" y1="12.7" x2="12.7" y2="12.7" width="0.1524" layer="94"/>
+<wire x1="12.7" y1="12.7" x2="12.7" y2="5.08" width="0.1524" layer="94"/>
+<wire x1="12.7" y1="5.08" x2="-2.54" y2="5.08" width="0.1524" layer="94"/>
+<wire x1="-2.54" y1="5.08" x2="-2.54" y2="12.7" width="0.1524" layer="94"/>
+<text x="-0.762" y="12.954" size="0.8128" layer="94">Pololu Step-Up VREG</text>
+<text x="-2.54" y="15.24" size="1.016" layer="95">&gt;NAME</text>
+<text x="-2.54" y="2.54" size="1.016" layer="96">&gt;VALUE</text>
+<wire x1="-2.54" y1="12.7" x2="-2.54" y2="13.97" width="0.1524" layer="94"/>
+<wire x1="-2.54" y1="13.97" x2="12.7" y2="13.97" width="0.1524" layer="94"/>
+<wire x1="12.7" y1="13.97" x2="12.7" y2="12.7" width="0.1524" layer="94"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="POLOLU_STEPUP_U1V11X">
+<gates>
+<gate name="G$1" symbol="POLOLU_STEPUP_VREG" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="POLOLU_STEPUP_U1V11X">
+<connects>
+<connect gate="G$1" pin="EN" pad="EN"/>
+<connect gate="G$1" pin="GND" pad="GND"/>
+<connect gate="G$1" pin="VIN" pad="VIN"/>
+<connect gate="G$1" pin="VOUT" pad="VOUT"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -5423,7 +5418,6 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <part name="SUPPLY5" library="SparkFun" deviceset="VCC" device="" value="VCC"/>
 <part name="U$8" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="FIDUCIAL" device="" package3d_urn="urn:adsk.eagle:package:6240632/1"/>
 <part name="U$9" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="FIDUCIAL" device="" package3d_urn="urn:adsk.eagle:package:6240632/1"/>
-<part name="U$1" library="Pololu U3V70x Step Up" deviceset="POLOLU_12V_STEPUP_U3V70F12" device="" override_package3d_urn="urn:adsk.eagle:package:24880035/2" override_package_urn="urn:adsk.eagle:footprint:24880036/1"/>
 <part name="Q4" library="NTMD4184PFR2G" deviceset="NTMD4184PFR2G" device="" override_package3d_urn="urn:adsk.eagle:package:24547728/2" override_package_urn="urn:adsk.eagle:footprint:24547729/1">
 <attribute name="MPN" value="NTMD4184PFR2G"/>
 </part>
@@ -5492,6 +5486,11 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <part name="U4" library="PCA9685" deviceset="PCA9685" device="HVQFN28"/>
 <part name="C3" library="SparkFun-Passives" deviceset="CAP" device="0805" value="10uF"/>
 <part name="C4" library="SparkFun-Passives" deviceset="CAP" device="1206" value="2.2uF"/>
+<part name="U5" library="Pololu Step Up Vregs" deviceset="POLOLU_STEPUP_U1V11X" device=""/>
+<part name="C1" library="SparkFun-Passives" deviceset="CAP" device="1206" value="2.2uF"/>
+<part name="C5" library="SparkFun-Passives" deviceset="CAP" device="1206" value="10uF"/>
+<part name="C6" library="SparkFun-Passives" deviceset="CAP" device="1206" value="10uF"/>
+<part name="GND5" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -5535,10 +5534,6 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 </instance>
 <instance part="U$8" gate="G$1" x="152.4" y="-5.08" smashed="yes"/>
 <instance part="U$9" gate="G$1" x="160.02" y="-5.08" smashed="yes"/>
-<instance part="U$1" gate="G$1" x="190.5" y="114.3" smashed="yes">
-<attribute name="NAME" x="187.96" y="129.54" size="1.016" layer="95"/>
-<attribute name="VALUE" x="187.96" y="116.84" size="1.016" layer="96"/>
-</instance>
 <instance part="Q4" gate="G$1" x="276.86" y="99.06" smashed="yes" rot="R90">
 <attribute name="NAME" x="289.56" y="104.14" size="1.778" layer="95" font="vector" rot="R180"/>
 <attribute name="VALUE" x="289.56" y="101.6" size="1.778" layer="96" font="vector" rot="R180"/>
@@ -5578,8 +5573,8 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <attribute name="VALUE" x="286.004" y="88.9" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
 <attribute name="MPN" x="284.48" y="88.9" size="1.4224" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="GND2" gate="1" x="215.9" y="116.84" smashed="yes">
-<attribute name="VALUE" x="213.36" y="114.3" size="1.4224" layer="96"/>
+<instance part="GND2" gate="1" x="215.9" y="111.76" smashed="yes">
+<attribute name="VALUE" x="213.36" y="109.22" size="1.4224" layer="96"/>
 </instance>
 <instance part="U11" gate="G$1" x="116.84" y="76.2" smashed="yes">
 <attribute name="NAME" x="106.68" y="94.488" size="1.27" layer="95"/>
@@ -5621,10 +5616,10 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <instance part="U$5" gate="G$1" x="162.56" y="17.78" smashed="yes">
 <attribute name="VALUE" x="161.036" y="15.24" size="1.27" layer="96"/>
 </instance>
-<instance part="C18" gate="G$1" x="170.18" y="27.94" smashed="yes" rot="R90">
-<attribute name="NAME" x="173.895" y="31.32" size="1.4224" layer="95" align="bottom-center"/>
-<attribute name="VALUE" x="172.725" y="27.025" size="1.4224" layer="96" rot="R270" align="bottom-center"/>
-<attribute name="MPN" x="170.18" y="27.94" size="1.4224" layer="96" rot="R90" display="off"/>
+<instance part="C18" gate="G$1" x="175.26" y="27.94" smashed="yes" rot="R90">
+<attribute name="NAME" x="178.975" y="31.32" size="1.4224" layer="95" align="bottom-center"/>
+<attribute name="VALUE" x="177.805" y="27.025" size="1.4224" layer="96" rot="R270" align="bottom-center"/>
+<attribute name="MPN" x="175.26" y="27.94" size="1.4224" layer="96" rot="R90" display="off"/>
 </instance>
 <instance part="SUPPLY6" gate="G$1" x="185.42" y="71.12" smashed="yes">
 <attribute name="VALUE" x="184.404" y="74.676" size="1.778" layer="96"/>
@@ -5667,13 +5662,32 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <attribute name="NAME" x="93.98" y="20.32" size="1.778" layer="95"/>
 <attribute name="VALUE" x="93.98" y="18.288" size="1.778" layer="96"/>
 </instance>
-<instance part="C3" gate="G$1" x="165.1" y="27.94" smashed="yes">
-<attribute name="NAME" x="166.624" y="30.861" size="1.778" layer="95"/>
-<attribute name="VALUE" x="167.259" y="21.844" size="1.778" layer="96" rot="R90"/>
+<instance part="C3" gate="G$1" x="170.18" y="27.94" smashed="yes">
+<attribute name="NAME" x="171.704" y="30.861" size="1.778" layer="95"/>
+<attribute name="VALUE" x="172.339" y="21.844" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="C4" gate="G$1" x="160.02" y="27.94" smashed="yes">
 <attribute name="NAME" x="161.544" y="30.861" size="1.778" layer="95"/>
 <attribute name="VALUE" x="162.179" y="21.844" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="U5" gate="G$1" x="190.5" y="114.3" smashed="yes">
+<attribute name="NAME" x="187.96" y="129.54" size="1.016" layer="95"/>
+<attribute name="VALUE" x="187.96" y="116.84" size="1.016" layer="96"/>
+</instance>
+<instance part="C1" gate="G$1" x="165.1" y="27.94" smashed="yes">
+<attribute name="NAME" x="166.624" y="30.861" size="1.778" layer="95"/>
+<attribute name="VALUE" x="167.259" y="21.844" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="C5" gate="G$1" x="175.26" y="119.38" smashed="yes">
+<attribute name="NAME" x="176.784" y="122.301" size="1.778" layer="95"/>
+<attribute name="VALUE" x="177.419" y="113.284" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="C6" gate="G$1" x="170.18" y="119.38" smashed="yes">
+<attribute name="NAME" x="171.704" y="122.301" size="1.778" layer="95"/>
+<attribute name="VALUE" x="172.339" y="113.284" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="GND5" gate="1" x="170.18" y="111.76" smashed="yes">
+<attribute name="VALUE" x="167.64" y="109.22" size="1.4224" layer="96"/>
 </instance>
 </instances>
 <busses>
@@ -5724,10 +5738,10 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <wire x1="284.48" y1="73.66" x2="284.48" y2="68.58" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="GND"/>
 <wire x1="208.28" y1="121.92" x2="215.9" y2="121.92" width="0.1524" layer="91"/>
-<wire x1="215.9" y1="121.92" x2="215.9" y2="119.38" width="0.1524" layer="91"/>
+<wire x1="215.9" y1="121.92" x2="215.9" y2="114.3" width="0.1524" layer="91"/>
 <pinref part="GND2" gate="1" pin="GND"/>
+<pinref part="U5" gate="G$1" pin="GND"/>
 </segment>
 <segment>
 <wire x1="104.14" y1="66.04" x2="101.6" y2="66.04" width="0.1524" layer="91"/>
@@ -5779,17 +5793,30 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <wire x1="154.94" y1="20.32" x2="149.86" y2="20.32" width="0.1524" layer="91"/>
 <wire x1="162.56" y1="20.32" x2="165.1" y2="20.32" width="0.1524" layer="91"/>
 <wire x1="165.1" y1="20.32" x2="170.18" y2="20.32" width="0.1524" layer="91"/>
-<wire x1="170.18" y1="20.32" x2="170.18" y2="25.4" width="0.1524" layer="91"/>
+<wire x1="170.18" y1="20.32" x2="175.26" y2="20.32" width="0.1524" layer="91"/>
+<wire x1="175.26" y1="20.32" x2="175.26" y2="25.4" width="0.1524" layer="91"/>
 <junction x="162.56" y="20.32"/>
 <pinref part="C3" gate="G$1" pin="2"/>
-<wire x1="165.1" y1="25.4" x2="165.1" y2="20.32" width="0.1524" layer="91"/>
-<junction x="165.1" y="20.32"/>
+<wire x1="170.18" y1="25.4" x2="170.18" y2="20.32" width="0.1524" layer="91"/>
+<junction x="170.18" y="20.32"/>
 <pinref part="C4" gate="G$1" pin="2"/>
 <wire x1="160.02" y1="25.4" x2="160.02" y2="20.32" width="0.1524" layer="91"/>
 <junction x="160.02" y="20.32"/>
 <pinref part="C2" gate="G$1" pin="2"/>
 <wire x1="154.94" y1="25.4" x2="154.94" y2="20.32" width="0.1524" layer="91"/>
 <junction x="154.94" y="20.32"/>
+<pinref part="C1" gate="G$1" pin="2"/>
+<wire x1="165.1" y1="25.4" x2="165.1" y2="20.32" width="0.1524" layer="91"/>
+<junction x="165.1" y="20.32"/>
+</segment>
+<segment>
+<pinref part="C6" gate="G$1" pin="2"/>
+<pinref part="GND5" gate="1" pin="GND"/>
+<wire x1="170.18" y1="116.84" x2="170.18" y2="114.3" width="0.1524" layer="91"/>
+<pinref part="C5" gate="G$1" pin="2"/>
+<wire x1="175.26" y1="116.84" x2="175.26" y2="114.3" width="0.1524" layer="91"/>
+<wire x1="175.26" y1="114.3" x2="170.18" y2="114.3" width="0.1524" layer="91"/>
+<junction x="170.18" y="114.3"/>
 </segment>
 </net>
 <net name="VCC" class="0">
@@ -5883,20 +5910,6 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <pinref part="J2" gate="G$1" pin="1"/>
 </segment>
 </net>
-<net name="IN2" class="0">
-<segment>
-<pinref part="J7" gate="G$1" pin="2"/>
-<wire x1="210.82" y1="33.02" x2="203.2" y2="33.02" width="0.1524" layer="91"/>
-<label x="203.2" y="33.02" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="IN1" class="0">
-<segment>
-<pinref part="J7" gate="G$1" pin="1"/>
-<wire x1="210.82" y1="35.56" x2="203.2" y2="35.56" width="0.1524" layer="91"/>
-<label x="203.2" y="35.56" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="MOTOR_CONTROL" class="0">
 <segment>
 <pinref part="J7" gate="G$1" pin="8"/>
@@ -5964,9 +5977,15 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <pinref part="R43" gate="G$1" pin="2"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="VIN"/>
-<wire x1="182.88" y1="124.46" x2="162.56" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="182.88" y1="124.46" x2="175.26" y2="124.46" width="0.1524" layer="91"/>
 <label x="162.56" y="124.46" size="1.778" layer="95"/>
+<pinref part="U5" gate="G$1" pin="VIN"/>
+<pinref part="C5" gate="G$1" pin="1"/>
+<wire x1="175.26" y1="124.46" x2="170.18" y2="124.46" width="0.1524" layer="91"/>
+<junction x="175.26" y="124.46"/>
+<pinref part="C6" gate="G$1" pin="1"/>
+<wire x1="170.18" y1="124.46" x2="162.56" y2="124.46" width="0.1524" layer="91"/>
+<junction x="170.18" y="124.46"/>
 </segment>
 </net>
 <net name="N$11" class="0">
@@ -5997,15 +6016,19 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <junction x="154.94" y="38.1"/>
 <pinref part="C3" gate="G$1" pin="1"/>
 <wire x1="160.02" y1="38.1" x2="165.1" y2="38.1" width="0.1524" layer="91"/>
-<wire x1="165.1" y1="38.1" x2="165.1" y2="33.02" width="0.1524" layer="91"/>
-<junction x="160.02" y="38.1"/>
-<pinref part="C18" gate="G$1" pin="+"/>
 <wire x1="165.1" y1="38.1" x2="170.18" y2="38.1" width="0.1524" layer="91"/>
 <wire x1="170.18" y1="38.1" x2="170.18" y2="33.02" width="0.1524" layer="91"/>
-<junction x="165.1" y="38.1"/>
+<junction x="160.02" y="38.1"/>
+<pinref part="C18" gate="G$1" pin="+"/>
 <wire x1="170.18" y1="38.1" x2="175.26" y2="38.1" width="0.1524" layer="91"/>
+<wire x1="175.26" y1="38.1" x2="175.26" y2="33.02" width="0.1524" layer="91"/>
 <junction x="170.18" y="38.1"/>
+<wire x1="175.26" y1="38.1" x2="180.34" y2="38.1" width="0.1524" layer="91"/>
+<junction x="175.26" y="38.1"/>
 <label x="167.64" y="38.1" size="1.778" layer="95"/>
+<pinref part="C1" gate="G$1" pin="1"/>
+<wire x1="165.1" y1="33.02" x2="165.1" y2="38.1" width="0.1524" layer="91"/>
+<junction x="165.1" y="38.1"/>
 </segment>
 </net>
 <net name="VIN+" class="0">
@@ -6061,8 +6084,8 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 </segment>
 <segment>
 <pinref part="JP1" gate="A" pin="3"/>
-<wire x1="147.32" y1="40.64" x2="175.26" y2="40.64" width="0.1524" layer="91"/>
-<label x="167.64" y="40.64" size="1.778" layer="95"/>
+<wire x1="147.32" y1="40.64" x2="180.34" y2="40.64" width="0.1524" layer="91"/>
+<label x="172.72" y="40.64" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="DRIVER_CONTROL" class="0">
@@ -6087,9 +6110,9 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 </net>
 <net name="5V" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="VOUT"/>
 <wire x1="208.28" y1="124.46" x2="228.6" y2="124.46" width="0.1524" layer="91"/>
 <label x="223.52" y="124.46" size="1.778" layer="95"/>
+<pinref part="U5" gate="G$1" pin="VOUT"/>
 </segment>
 <segment>
 <pinref part="R39" gate="G$1" pin="2"/>
@@ -6105,10 +6128,8 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 </sheet>
 </sheets>
 <errors>
-<approved hash="106,1,210.82,35.56,IN1,,,,,"/>
-<approved hash="106,1,210.82,33.02,IN2,,,,,"/>
-<approved hash="113,1,208.957,65.8774,J2,,,,,"/>
-<approved hash="113,1,147.083,36.6039,JP1,,,,,"/>
+<approved hash="113,1,208.957,65.9079,J2,,,,,"/>
+<approved hash="113,1,147.083,36.6344,JP1,,,,,"/>
 <approved hash="113,1,102.87,1.02616,U4,,,,,"/>
 </errors>
 </schematic>

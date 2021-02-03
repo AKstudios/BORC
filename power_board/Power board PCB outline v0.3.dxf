@@ -489,19 +489,19 @@ $SKPOLY
   9
 $TDCREATE
  40
-2459172.157060185
+2459249.041921296
   9
 $TDUCREATE
  40
-2459172.157060185
+2459249.041921296
   9
 $TDUPDATE
  40
-2459172.157060185
+2459249.041921296
   9
 $TDUUPDATE
  40
-2459172.157060185
+2459249.041921296
   9
 $TDINDWG
  40
@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-9D
+A6
   9
 $SURFTAB1
  70
@@ -929,11 +929,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{1D55B2B8-BBA4-B44B-88CC-16180C774968}
+{94A57139-D6F9-6B4A-8F5B-D3D65C8112E3}
   9
 $VERSIONGUID
   2
-{82C6B1BB-053C-F04B-9364-27B1CE5A9F72}
+{81C6862D-C861-FE41-9568-77400D9E5454}
   9
 $EXTNAMES
 290
@@ -1519,7 +1519,7 @@ LAYER
 100
 AcDbSymbolTable
  70
-     4
+     5
   0
 LAYER
   5
@@ -1557,7 +1557,7 @@ AcDbSymbolTableRecord
 100
 AcDbLayerTableRecord
   2
-Power board v3_Sketch1
+Power board PCB outline 2021 v2_Sketch1
  70
      0
  62
@@ -1587,7 +1587,7 @@ AcDbSymbolTableRecord
 100
 AcDbLayerTableRecord
   2
-Power board v3_Sketch2
+Power board PCB outline 2021 v2_Sketch2
  70
      0
  62
@@ -1609,7 +1609,7 @@ NFusion_SketchTransform
   0
 LAYER
   5
-8E
+95
 330
 2
 100
@@ -1617,7 +1617,37 @@ AcDbSymbolTableRecord
 100
 AcDbLayerTableRecord
   2
-Power board v3_Sketch3
+Power board PCB outline 2021 v2_Sketch3
+ 70
+     0
+ 62
+     7
+  6
+Continuous
+370
+    -3
+390
+F
+347
+21
+348
+0
+1001
+NFusion_SketchTransform
+1000
+1.000000;0.000000;0.000000;0.000000;0.000000;1.000000;0.000000;0.000000;0.000000;0.000000;1.000000;0.000000;0.000000;0.000000;0.000000;1.000000
+  0
+LAYER
+  5
+97
+330
+2
+100
+AcDbSymbolTableRecord
+100
+AcDbLayerTableRecord
+  2
+Power board PCB outline 2021 v2_Sketch4
  70
      0
  62
@@ -2097,7 +2127,7 @@ POINT
 100
 AcDbEntity
   8
-Power board v3_Sketch1
+Power board PCB outline 2021 v2_Sketch1
 100
 AcDbPoint
  10
@@ -2115,7 +2145,7 @@ POINT
 100
 AcDbEntity
   8
-Power board v3_Sketch2
+Power board PCB outline 2021 v2_Sketch2
 100
 AcDbPoint
  10
@@ -2133,31 +2163,7 @@ LINE
 100
 AcDbEntity
   8
-Power board v3_Sketch2
-100
-AcDbLine
- 10
--30.0
- 20
-6.0
- 30
-0.0
- 11
--34.48187929913335
- 21
-6.0
- 31
-0.0
-  0
-LINE
-  5
-7F
-330
-70
-100
-AcDbEntity
-  8
-Power board v3_Sketch2
+Power board PCB outline 2021 v2_Sketch2
 100
 AcDbLine
  10
@@ -2167,7 +2173,7 @@ AcDbLine
  30
 0.0
  11
-28.0
+17.00001
  21
 20.0
  31
@@ -2175,31 +2181,55 @@ AcDbLine
   0
 ARC
   5
+7F
+330
+70
+100
+AcDbEntity
+  8
+Power board PCB outline 2021 v2_Sketch2
+100
+AcDbCircle
+ 10
+17.00000025331974
+ 20
+-21.00000031292438
+ 30
+0.0
+ 40
+1.000000312924417
+100
+AcDbArc
+ 50
+359.9390267352175
+ 51
+90.00001451414744
+  0
+LINE
+  5
 80
 330
 70
 100
 AcDbEntity
   8
-Power board v3_Sketch2
+Power board PCB outline 2021 v2_Sketch2
 100
-AcDbCircle
+AcDbLine
  10
--30.0
+4.0
  20
-10.0
+20.00034556499979
  30
 0.0
- 40
+ 11
 4.0
-100
-AcDbArc
- 50
-270.0
- 51
-90.0
+ 21
+19.99965503104151
+ 31
+0.0
   0
-ARC
+LINE
   5
 81
 330
@@ -2207,25 +2237,23 @@ ARC
 100
 AcDbEntity
   8
-Power board v3_Sketch2
+Power board PCB outline 2021 v2_Sketch2
 100
-AcDbCircle
+AcDbLine
  10
-2.000000029802322
+15.0
  20
-20.00000029802322
+-18.0
  30
 0.0
- 40
-2.0
-100
-AcDbArc
- 50
-359.9901088295222
- 51
-0.0098911703305835
+ 11
+15.0
+ 21
+0.0
+ 31
+0.0
   0
-LINE
+ARC
   5
 82
 330
@@ -2233,31 +2261,7 @@ LINE
 100
 AcDbEntity
   8
-Power board v3_Sketch2
-100
-AcDbLine
- 10
-18.0
- 20
--23.0
- 30
-0.0
- 11
-18.0
- 21
--20.99893612856609
- 31
-0.0
-  0
-ARC
-  5
-83
-330
-70
-100
-AcDbEntity
-  8
-Power board v3_Sketch2
+Power board PCB outline 2021 v2_Sketch2
 100
 AcDbCircle
  10
@@ -2277,25 +2281,49 @@ AcDbArc
   0
 LINE
   5
+83
+330
+70
+100
+AcDbEntity
+  8
+Power board PCB outline 2021 v2_Sketch2
+100
+AcDbLine
+ 10
+17.99999999999971
+ 20
+20.99999999995
+ 30
+0.0
+ 11
+17.99999999999964
+ 21
+30.01666203960749
+ 31
+0.0
+  0
+LINE
+  5
 84
 330
 70
 100
 AcDbEntity
   8
-Power board v3_Sketch2
+Power board PCB outline 2021 v2_Sketch2
 100
 AcDbLine
  10
-28.0
+-30.0
  20
-20.0
+14.0
  30
 0.0
  11
-28.00000000000001
+-32.07802986469088
  21
-21.0
+14.0
  31
 0.0
   0
@@ -2307,7 +2335,7 @@ LINE
 100
 AcDbEntity
   8
-Power board v3_Sketch2
+Power board PCB outline 2021 v2_Sketch2
 100
 AcDbLine
  10
@@ -2331,19 +2359,19 @@ LINE
 100
 AcDbEntity
   8
-Power board v3_Sketch2
+Power board PCB outline 2021 v2_Sketch2
 100
 AcDbLine
  10
-15.0
+-30.0
  20
--18.0
+6.0
  30
 0.0
  11
-15.0
+-34.48187929913335
  21
-0.0
+6.0
  31
 0.0
   0
@@ -2355,7 +2383,59 @@ ARC
 100
 AcDbEntity
   8
-Power board v3_Sketch2
+Power board PCB outline 2021 v2_Sketch2
+100
+AcDbCircle
+ 10
+-30.0
+ 20
+10.0
+ 30
+0.0
+ 40
+4.0
+100
+AcDbArc
+ 50
+270.0
+ 51
+90.0
+  0
+ARC
+  5
+88
+330
+70
+100
+AcDbEntity
+  8
+Power board PCB outline 2021 v2_Sketch2
+100
+AcDbCircle
+ 10
+2.000000029802322
+ 20
+20.00000029802322
+ 30
+0.0
+ 40
+2.0
+100
+AcDbArc
+ 50
+359.9901088295222
+ 51
+0.0098911703305835
+  0
+ARC
+  5
+89
+330
+70
+100
+AcDbEntity
+  8
+Power board PCB outline 2021 v2_Sketch2
 100
 AcDbCircle
  10
@@ -2375,79 +2455,27 @@ AcDbArc
   0
 LINE
   5
-88
-330
-70
-100
-AcDbEntity
-  8
-Power board v3_Sketch2
-100
-AcDbLine
- 10
--30.0
- 20
-14.0
- 30
-0.0
- 11
--32.07802986469088
- 21
-14.0
- 31
-0.0
-  0
-ARC
-  5
-89
-330
-70
-100
-AcDbEntity
-  8
-Power board v3_Sketch2
-100
-AcDbCircle
- 10
-17.00000025331974
- 20
--21.00000031292438
- 30
-0.0
- 40
-1.000000312924417
-100
-AcDbArc
- 50
-359.9390267352175
- 51
-90.00001451414744
-  0
-ARC
-  5
 8A
 330
 70
 100
 AcDbEntity
   8
-Power board v3_Sketch2
+Power board PCB outline 2021 v2_Sketch2
 100
-AcDbCircle
+AcDbLine
  10
-0.0
+18.0
  20
-0.0
+-23.0
  30
 0.0
- 40
-35.00000000000002
-100
-AcDbArc
- 50
-170.1291103938605
- 51
-300.919912896343
+ 11
+18.0
+ 21
+-20.99893612856609
+ 31
+0.0
   0
 LINE
   5
@@ -2457,7 +2485,7 @@ LINE
 100
 AcDbEntity
   8
-Power board v3_Sketch2
+Power board PCB outline 2021 v2_Sketch2
 100
 AcDbLine
  10
@@ -2481,19 +2509,19 @@ LINE
 100
 AcDbEntity
   8
-Power board v3_Sketch2
+Power board PCB outline 2021 v2_Sketch2
 100
 AcDbLine
  10
-4.0
+-8.999999999999998
  20
-20.00034556499979
+-33.82306905057554
  30
 0.0
  11
-4.0
+-9.0
  21
-19.99965503104151
+-20.0
  31
 0.0
   0
@@ -2505,7 +2533,109 @@ ARC
 100
 AcDbEntity
   8
-Power board v3_Sketch2
+Power board PCB outline 2021 v2_Sketch2
+100
+AcDbCircle
+ 10
+-10.99999999999999
+ 20
+-20.0
+ 30
+0.0
+ 40
+1.999999999999996
+100
+AcDbArc
+ 50
+0.0
+ 51
+90.0000000000001
+  0
+LINE
+  5
+8E
+330
+70
+100
+AcDbEntity
+  8
+Power board PCB outline 2021 v2_Sketch2
+100
+AcDbLine
+ 10
+-20.0
+ 20
+-19.99999999999999
+ 30
+0.0
+ 11
+-20.0
+ 21
+-28.72281323269016
+ 31
+0.0
+  0
+ARC
+  5
+8F
+330
+70
+100
+AcDbEntity
+  8
+Power board PCB outline 2021 v2_Sketch2
+100
+AcDbCircle
+ 10
+0.0
+ 20
+0.0
+ 30
+0.0
+ 40
+35.00000000000002
+100
+AcDbArc
+ 50
+170.1291103938605
+ 51
+235.1500954209535
+  0
+ARC
+  5
+90
+330
+70
+100
+AcDbEntity
+  8
+Power board PCB outline 2021 v2_Sketch2
+100
+AcDbCircle
+ 10
+-18.0
+ 20
+-20.00000000000001
+ 30
+0.0
+ 40
+2.000000000000007
+100
+AcDbArc
+ 50
+90.0000000000001
+ 51
+179.9999999999996
+  0
+ARC
+  5
+91
+330
+70
+100
+AcDbEntity
+  8
+Power board PCB outline 2021 v2_Sketch2
 100
 AcDbCircle
  10
@@ -2519,19 +2649,113 @@ AcDbCircle
 100
 AcDbArc
  50
-36.86989764584402
+59.05027692114135
  51
 156.4218215217981
   0
-POINT
+ARC
   5
-8F
+92
 330
 70
 100
 AcDbEntity
   8
-Power board v3_Sketch3
+Power board PCB outline 2021 v2_Sketch2
+100
+AcDbCircle
+ 10
+0.0
+ 20
+0.0
+ 30
+0.0
+ 40
+35.00000000000002
+100
+AcDbArc
+ 50
+255.0994033121701
+ 51
+300.919912896343
+  0
+ARC
+  5
+93
+330
+70
+100
+AcDbEntity
+  8
+Power board PCB outline 2021 v2_Sketch2
+100
+AcDbCircle
+ 10
+16.9999999999997
+ 20
+20.99999999995
+ 30
+0.0
+ 40
+1.000000000000002
+100
+AcDbArc
+ 50
+270.0005729578122
+ 51
+359.9999999999996
+  0
+LINE
+  5
+94
+330
+70
+100
+AcDbEntity
+  8
+Power board PCB outline 2021 v2_Sketch2
+100
+AcDbLine
+ 10
+-11.0
+ 20
+-18.0
+ 30
+0.0
+ 11
+-18.0
+ 21
+-18.0
+ 31
+0.0
+  0
+POINT
+  5
+96
+330
+70
+100
+AcDbEntity
+  8
+Power board PCB outline 2021 v2_Sketch3
+100
+AcDbPoint
+ 10
+0.0
+ 20
+0.0
+ 30
+0.0
+  0
+POINT
+  5
+98
+330
+70
+100
+AcDbEntity
+  8
+Power board PCB outline 2021 v2_Sketch4
 100
 AcDbPoint
  10
@@ -2611,11 +2835,11 @@ ACAD_VISUALSTYLE
   3
 ACDB_RECOMPOSE_DATA
 350
-98
+A1
   3
 AcDbVariableDictionary
 350
-90
+99
   0
 DICTIONARY
   5
@@ -3043,7 +3267,7 @@ X-Ray
   0
 XRECORD
   5
-98
+A1
 102
 {ACAD_REACTORS
 330
@@ -3063,7 +3287,7 @@ AcDbXrecord
   0
 DICTIONARY
   5
-90
+99
 102
 {ACAD_REACTORS
 330
@@ -3079,23 +3303,23 @@ AcDbDictionary
   3
 CANNOSCALE
 350
-95
+9E
   3
 CMLEADERSTYLE
 350
-92
+9B
   3
 CTABLESTYLE
 350
-91
+9A
   3
 CVIEWDETAILSTYLE
 350
-93
+9C
   3
 CVIEWSECTIONSTYLE
 350
-94
+9D
   0
 ACDBDETAILVIEWSTYLE
   5
@@ -3103,7 +3327,7 @@ ACDBDETAILVIEWSTYLE
 102
 {ACAD_XDICTIONARY
 360
-9B
+A4
 102
 }
 102
@@ -4827,7 +5051,7 @@ ACDBSECTIONVIEWSTYLE
 102
 {ACAD_XDICTIONARY
 360
-99
+A2
 102
 }
 102
@@ -4953,7 +5177,7 @@ TABLESTYLE
 102
 {ACAD_XDICTIONARY
 360
-96
+9F
 102
 }
 102
@@ -11583,15 +11807,15 @@ AcDbSavedByObjectVersion
   0
 DICTIONARYVAR
   5
-95
+9E
 102
 {ACAD_REACTORS
 330
-90
+99
 102
 }
 330
-90
+99
 100
 DictionaryVariables
 280
@@ -11601,15 +11825,15 @@ DictionaryVariables
   0
 DICTIONARYVAR
   5
-92
+9B
 102
 {ACAD_REACTORS
 330
-90
+99
 102
 }
 330
-90
+99
 100
 DictionaryVariables
 280
@@ -11619,15 +11843,15 @@ STANDARD
   0
 DICTIONARYVAR
   5
-91
+9A
 102
 {ACAD_REACTORS
 330
-90
+99
 102
 }
 330
-90
+99
 100
 DictionaryVariables
 280
@@ -11637,15 +11861,15 @@ STANDARD
   0
 DICTIONARYVAR
   5
-93
+9C
 102
 {ACAD_REACTORS
 330
-90
+99
 102
 }
 330
-90
+99
 100
 DictionaryVariables
 280
@@ -11655,15 +11879,15 @@ Imperial24
   0
 DICTIONARYVAR
   5
-94
+9D
 102
 {ACAD_REACTORS
 330
-90
+99
 102
 }
 330
-90
+99
 100
 DictionaryVariables
 280
@@ -11673,7 +11897,7 @@ Imperial24
   0
 DICTIONARY
   5
-9B
+A4
 330
 6B
 100
@@ -11685,7 +11909,7 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-9C
+A5
   0
 DICTIONARY
   5
@@ -11797,7 +12021,7 @@ SPECULARTILE
   0
 DICTIONARY
   5
-99
+A2
 330
 69
 100
@@ -11809,11 +12033,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-9A
+A3
   0
 DICTIONARY
   5
-96
+9F
 330
 65
 100
@@ -11825,19 +12049,19 @@ AcDbDictionary
   3
 ACAD_ROUNDTRIP_2008_TABLESTYLE_CELLSTYLEMAP
 360
-97
+A0
   0
 XRECORD
   5
-9C
+A5
 102
 {ACAD_REACTORS
 330
-9B
+A4
 102
 }
 330
-9B
+A4
 100
 AcDbXrecord
 280
@@ -12213,15 +12437,15 @@ AcDbXrecord
   0
 XRECORD
   5
-9A
+A3
 102
 {ACAD_REACTORS
 330
-99
+A2
 102
 }
 330
-99
+A2
 100
 AcDbXrecord
 280
@@ -12237,15 +12461,15 @@ FLAGS
   0
 CELLSTYLEMAP
   5
-97
+A0
 102
 {ACAD_REACTORS
 330
-96
+9F
 102
 }
 330
-96
+9F
 100
 AcDbCellStyleMap
  90

@@ -1,5 +1,5 @@
 // Knob UX functions for BORC
-// Updated 12/22/2020
+// Updated 01/20/2021
 
 // =================================================================
 // Function to check knob status

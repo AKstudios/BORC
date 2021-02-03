@@ -1,5 +1,5 @@
 // Motor control functions for BORC
-// Updated 12/22/2020
+// Updated 01/20/2021
 
 // =================================================================
 // Run motor for a specified time interval and in a given direction
@@ -10,8 +10,8 @@ void runMotor()
   // enable motor power
   pinMode(MOTOR_IN1, OUTPUT);
   pinMode(MOTOR_IN2, OUTPUT);
-  pinMode(MOTOR_CONTROL_PIN, OUTPUT);
-  digitalWrite(MOTOR_CONTROL_PIN, HIGH);
+  pinMode(SERVO_POWER_PIN, OUTPUT);
+  digitalWrite(SERVO_POWER_PIN, HIGH);
   delay(5);
 
   // turn motor in small increments in manual mode
@@ -49,8 +49,8 @@ void runMotor()
 
   Serial.println("turning motor off");
   // turn motor off
-  digitalWrite(MOTOR_CONTROL_PIN, LOW);
-  pinMode(MOTOR_CONTROL_PIN, INPUT);
+  digitalWrite(SERVO_POWER_PIN, LOW);
+  pinMode(SERVO_POWER_PIN, INPUT);
   pinMode(MOTOR_IN1, INPUT);
   pinMode(MOTOR_IN2, INPUT);
 }

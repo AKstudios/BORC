@@ -1,5 +1,5 @@
 // Configuration file for BORC
-// Updated 12/22/2020
+// Updated 01/20/2021
 
 // =================================================================
 // Global variables
@@ -29,23 +29,23 @@ String displayText;
 #define IS_RFM69HW_HCW            //uncomment only for RFM69HW/HCW! Leave out if you have RFM69W/CW!
 
 // Pin mapping -----------------------------------------------------
-#define FLASH_SS                  23
+#define KNOB_CLICK                0
+#define GREEN                     3
+#define CHANNEL_B                 10
+#define CHANNEL_A                 11
+#define MOTOR_IN1                 12
+#define MOTOR_IN2                 13
+#define RED                       14
+#define BLUE                      15
+#define DRIVER_POWER_PIN          18
 #define LED_SCREEN_POWER_PIN      19
 #define TEMP_SENSOR_POWER_PIN     20
 #define CURRENT_SENSE_POWER_PIN   21
-#define MOTOR_CONTROL_PIN         22
-#define CHANNEL_A                 11
-#define CHANNEL_B                 10
-#define MOTOR_IN1                 12
-#define MOTOR_IN2                 13
-#define LED                       15
-#define RED                       14
-#define BLUE                      15
-#define GREEN                     18
+#define SERVO_POWER_PIN           22
+#define FLASH_SS                  23
 #define VBUS_SENSE                A0
 #define TEMP_SENSE                A3
 #define VBAT_SENSE                A7
-#define KNOB_CLICK                0
 
 // Define error code bits ------------------------------------------
 #define BATT_ERR                  0   // battery low/bad voltage
