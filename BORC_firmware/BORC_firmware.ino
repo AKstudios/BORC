@@ -1,7 +1,5 @@
-
-
-// BORC firmware v2021.01.21.1
-// Updated 01/20/2021
+// BORC firmware
+// Updated 02/18/2021
 
 // Developed by AKstudios
 
@@ -18,6 +16,7 @@
 #include <avr/sleep.h>
 #include <avr/power.h>
 #include <avr/wdt.h>
+#include <EEPROM.h>
 #include <Wire.h>
 #include <SPI.h>
 #include "config.h"
@@ -25,6 +24,7 @@
 // =================================================================
 // Library objects
 // =================================================================
+Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x47);
 Adafruit_IS31FL3731_Wing ledmatrix = Adafruit_IS31FL3731_Wing();
 Adafruit_SHT31 sht31 = Adafruit_SHT31();
 Adafruit_INA219 ina219;
@@ -77,6 +77,7 @@ void encoderISR()  // Interrupt Service Routine for encoder
         displayMin = true;
       }
     }
+    manualOverride = 1;
     last_A_state = current_A_state;
   }
   else if (knobFlag == false)
@@ -106,64 +107,67 @@ void setup()
 {
   Serial.begin(SERIAL_BAUD);
   Serial.println("Power on");
-  fadeLED(BLUE);    // this indicates a power up
   
-  // set pin modes
-  pinMode(CURRENT_SENSE_POWER_PIN, OUTPUT);
-  pinMode(SERVO_POWER_PIN, OUTPUT);
-  pinMode(TEMP_SENSOR_POWER_PIN, OUTPUT);
-  pinMode(LED_SCREEN_POWER_PIN, OUTPUT);
-  pinMode(MOTOR_IN1, OUTPUT);
-  pinMode(MOTOR_IN2, OUTPUT);
-//  pinMode(A, INPUT);
-//  pinMode(B, INPUT);
+  fadeLED(BLUE);    // this indicates a power up
 
-  // turn on all devices
-  digitalWrite(CURRENT_SENSE_POWER_PIN, HIGH);
-  digitalWrite(LED_SCREEN_POWER_PIN, HIGH);
-  digitalWrite(SERVO_POWER_PIN, HIGH);
-  digitalWrite(TEMP_SENSOR_POWER_PIN, HIGH);
+  // check device configuration status
+  EEPROM.get(CONFIGFLAGADDRESS, configFlag);
+  if (configFlag == true) // if device not configured, use default values
+  {
+    Serial.println("Device configured, using EEPROM variables to init radio");
+    getNodeParams(); // this will update default variables using data stored in EEPROM
+  }
+  else if (configFlag == false)
+  {
+    Serial.println("Device not configured, using default variables to init radio");
+  }
 
-  // Read the initial state of A
-  last_A_state = digitalRead(CHANNEL_A);  
-
-  // setup interrupts
-  attachInterrupt(0, encoderISR, CHANGE);
-  attachInterrupt(1, encoderISR, CHANGE);
+  Serial.println(NODEID);
+  Serial.println(NETWORKID);
+  Serial.println(ENCRYPTKEY);
 
   // initialize radio
-  if(!radio.initialize(FREQUENCY,NODEID,NETWORKID))
-    errorCode |= (1<<RADIO_ERR);
-  else
-    errorCode &= ~(1<<RADIO_ERR);
-#ifdef IS_RFM69HW_HCW
-  radio.setHighPower(); //must include this only for RFM69HW/HCW!
-#endif
-  radio.encrypt(ENCRYPTKEY);
-  radio.sleep();
-
+  initializeRadio();
+  
   // initialize flash
   if(!flash.initialize())
     errorCode |= (1<<FLASH_ERR);
   else
     errorCode &= ~(1<<FLASH_ERR);
-  flash.sleep();
+  
+  // get UID from flash
+  uint8_t* MACID = flash.readUniqueId();  // get unique 64-bit ID from flash
+  for (int i=0; i<8; i++)
+    _MACID +=  String(MACID[i], HEX); // convert uint8_t* to HEX String
+  _MACID.toCharArray(UID, _MACID.length()+1); // convert String to char array to use in datapackets
+  Serial.println(UID);
 
-  // setup LED matrix
-  if(!ledmatrix.begin())
-    errorCode |= (1<<LED_DRV_ERR);
-  else
-    errorCode &= ~(1<<LED_DRV_ERR);
+  // enable all hardware devices
+  controlAllDevices(1);  
+
+  // initialize LED matrix
+  initializeLEDmatrix();
 
   // enable current sensor
   currentSense();
 
   // enable temp/RH sensor
   readTempRH();
+  
+  // enable servo driver and set servo to min
+  enableServo();
+  pwm.setPWM(0, 0, servoPosition);// start position
+
+  // Read the initial state of A
+  last_A_state = digitalRead(CHANNEL_A);
+
+  // setup interrupts
+  attachInterrupt(0, encoderISR, CHANGE);
+  attachInterrupt(1, encoderISR, CHANGE);
 
   // get initial time
   last_time = millis();
-
+  
   Serial.println("Ready");
 }
 
@@ -172,150 +176,101 @@ void setup()
 // =================================================================
 void loop()
 {
-  last_time = millis(); // keep the last millis time in memory
-  wdt_reset();
-
-  // Go to sleep ---------------------------------------------------
-  if(knobFlag == false && knobClickFlag == false && WDTflag == false && knobDirection == 0)
+  // device not configured -----------------------------------------
+  if (configFlag == false)
   {
-    last_time = millis(); // save last millis time
-    Serial.println("00 sleep");
-    delay(5);
-    debug();
-    sleep(); // sleep every loop
+    configurationMode();  // go back to config mode if knob clicked once
+    sleep('f'); // sleep forever
+    if(knobFlag == true && knobClickFlag == true)
+    {
+      last_time = millis();
+      while(digitalRead(KNOB_CLICK) == 0) // button still pressed
+      {
+        current_time = millis();
+        
+        // enable demo mode when pressed and held for 1.5 secs
+        if(current_time - last_time >= 1500 && current_time - last_time <= 4000)
+        {
+          Serial.println("now in demo mode");
+          configFlag = true;  // temporarily set configFlag to true. Actual value still in EEPROM, resets on reboot
+          blinkLED(1,1,0,30);
+          blinkLED(1,1,0,30); // blink orange LED twice to indicate temporary demo mode active
+          delay(3000);
+          break;
+        }
+
+        if(current_time - last_time >= 4000)  // timeout
+        {
+          Serial.println("timeout of button press");
+          break;
+        }
+
+        // if knob is no longer being held, exit
+        if(digitalRead(KNOB_CLICK) == 1)
+        {
+          break;
+        }
+      }
+    }
+    delay(1000);
   }
 
-  // WDT triggered, knob untouched ---------------------------------
-  else if(knobFlag == false && knobClickFlag == false && WDTflag == true && knobDirection == 0)
+  // device already configured -------------------------------------
+  else if(configFlag == true)
   {
-    if(actionsIntervalCounter == 3) // if enough time has passed, do actions (3 intervals = ~32 seconds),
+    last_time = millis(); // keep the last millis time in memory
+    wdt_reset();
+  
+    // Go to sleep ---------------------------------------------------
+    if(knobFlag == false && knobClickFlag == false && WDTflag == false && knobDirection == 0)
+    {
+      last_time = millis(); // save last millis time
+      Serial.println("00 sleep");
+      delay(5);
+      debug();
+      sleep('w'); // sleep every loop
+    }
+  
+    // WDT triggered, knob untouched ---------------------------------
+    else if(knobFlag == false && knobClickFlag == false && WDTflag == true && knobDirection == 0)
     {
       Serial.print("actions counter: ");
       Serial.println(actionsIntervalCounter);
-      pinMode(SERVO_POWER_PIN, OUTPUT);
-      digitalWrite(SERVO_POWER_PIN, HIGH);
-      readTempRH();
-      currentSense();
-      Serial.print("Temp: ");
-      Serial.println(temp);
-      Serial.print("RH: ");
-      Serial.println(rh);
-      Serial.print("Bus voltage: ");
-      Serial.println(busVoltage);
-      Serial.print("current: ");
-      Serial.println(motorCurrent);
-      actionsIntervalCounter = 0; // reset watchdog counter to 0
-    }
-    else if(actionsIntervalCounter < 3)
-    {
-      Serial.print("actions counter: ");
-      Serial.println(actionsIntervalCounter);
-      actionsIntervalCounter++;
-    }
-    
-    if(transmitIntervalCounter == 6) // send data every ~54 secs
-    {
-      Serial.println("sending data, resetting to 0");
-      transmitIntervalCounter = 0;
-    }
-    else if(transmitIntervalCounter < 6)
-    {
       Serial.print("transmit counter: ");
       Serial.println(transmitIntervalCounter);
-      transmitIntervalCounter++;
+      if(actionsIntervalCounter == 3) // if enough time has passed, do actions (3 intervals = ~32 seconds),
+      {
+        readTempRH();
+        Serial.print("Temp: ");
+        Serial.println(temp);
+        Serial.print("RH: ");
+        Serial.println(rh);
+        // do automatic servo control here
+        actionsIntervalCounter = 0; // reset watchdog counter to 0
+      }
+      else if(actionsIntervalCounter < 3)
+      {
+        actionsIntervalCounter++;
+      }
+      
+      if(transmitIntervalCounter == (transmitInterval/8)-1) // send data every ~56 secs
+      {
+        Serial.println("sending data");
+        createDataPacket('s');  // create a configuration packet
+        sendData(true);   // true argument waits for ACK to come back
+        transmitIntervalCounter = 0;
+      }
+      else if(transmitIntervalCounter < (transmitInterval/8)-1)
+      {
+        transmitIntervalCounter++;
+      }
+      last_time = millis(); // save last millis time
+      WDTflag = false;
     }
-    last_time = millis(); // save last millis time
-    WDTflag = false;
-  }
-
-  // knob interacted with ------------------------------------------
-  else
-    checkKnobStatus();
-}
-
-// =================================================================
-// Blink LED
-// =================================================================
-void blinkLED(byte R, byte G, byte B, int DELAY_MS)
-{
-  // set pin modes to output
-  pinMode(RED, OUTPUT);
-  pinMode(GREEN, OUTPUT);
-  pinMode(BLUE, OUTPUT);
-
-  // write requested LED value
-  digitalWrite(RED,R);
-  digitalWrite(GREEN,G);
-  digitalWrite(BLUE,B);
-
-  // delay requested time
-  delay(DELAY_MS);
-
-  // turn LEDs off
-  digitalWrite(RED, LOW);
-  digitalWrite(GREEN, LOW);
-  digitalWrite(BLUE, LOW);
-
-  // set pin modes back to input
-  pinMode(RED, INPUT);
-  pinMode(GREEN, INPUT);
-  pinMode(BLUE, INPUT);
-}
-
-// =================================================================
-// Fade LED
-// =================================================================
-void fadeLED(int pin)
-{
-  int brightness = 0;
-  int fadeAmount = 5;
-  for(int i=0; i<510; i=i+5)  // 255 is max analog value, 255 * 2 = 510
-  {
-    analogWrite(pin, brightness);  // pin 9 is LED
   
-    // change the brightness for next time through the loop:
-    brightness = brightness + fadeAmount;  // increment brightness level by 5 each time (0 is lowest, 255 is highest)
-  
-    // reverse the direction of the fading at the ends of the fade:
-    if (brightness <= 0 || brightness >= 255)
-    {
-      fadeAmount = -fadeAmount;
-    }
-    // wait for 20-30 milliseconds to see the dimming effect
-    delay(10);
-  }
-  digitalWrite(pin, LOW); // switch LED off at the end of fade
-}
-
-// =================================================================
-// Toggle LEDs manually
-// =================================================================
-void toggleLED(byte R, byte G, byte B)
-{
-  if (R==0 && G==0 && B==0) // set pin modes and turn off LEDs
-  {
-    // turn LEDs off
-    digitalWrite(RED, LOW);
-    digitalWrite(GREEN, LOW);
-    digitalWrite(BLUE, LOW);
-
-    // set pin modes back to input
-    pinMode(RED, INPUT);
-    pinMode(GREEN, INPUT);
-    pinMode(BLUE, INPUT);
-  }
-
-  else  // set pin modes and toggle LEDs
-  {
-    // set pin modes to output
-    pinMode(RED, OUTPUT);
-    pinMode(GREEN, OUTPUT);
-    pinMode(BLUE, OUTPUT);
-  
-    // write requested LED value
-    digitalWrite(RED,R);
-    digitalWrite(GREEN,G);
-    digitalWrite(BLUE,B);
+    // knob interacted with ------------------------------------------
+    else
+      checkKnobStatus();
   }
 }
 

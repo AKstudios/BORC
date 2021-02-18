@@ -1,40 +1,67 @@
 // Configuration file for BORC
-// Updated 01/20/2021
+// Updated 02/18/2021
 
 // =================================================================
 // Global variables
 // =================================================================
+char _UID[17], _NODEID[5], _NETWORKID[4], _ENCRYPTKEY[17], _setpoint[3], _interval[6];
+long transmitInterval = 56; // transmit interval for radio messages in seconds
+#define FWVERSION "1001"
 #define SERIAL_BAUD 115200
-byte setpointMaxValue = 90;
-byte setpointMinValue = 55;
-int setpoint = 72;
-int knobDirection = 0;
-byte errorCode = 0;
-float busVoltage, motorCurrent;
-float temp, temp_f, rh;
+float batteryVoltage;
 unsigned long last_time, current_time;
 boolean current_A_state, last_A_state;
 byte transmitIntervalCounter = 0;
 byte actionsIntervalCounter = 0;
+byte errorCode = 0;
 int displayTimeout = 5000;
+int configurationTimeout = 30000;
 int knobCounter = 0;
+int knobDirection = 0;
 String displayText;
 
+// Servo configuration ---------------------------------------------
+#define SERVO_FREQ 60
+int servoPosition = 150;
+int servoMinPosition = 90;
+int servoMaxPosition = 550;
+byte servoIncrements = 10;
+
+// Sensor values ---------------------------------------------------
+float temp, temp_f, rh;
+float busVoltage, current;
+byte setpointMaxValue = 90;
+byte setpointMinValue = 55;
+int setpoint = 72;
+byte manualOverride = 0;
+
 // Node configuration ----------------------------------------------
-#define NODEID                    999 // 999 = node not configured; 1000 = node currently being configured (limit: 1023)
-#define NETWORKID                 10  // set by gateway (up to 255)
-#define GATEWAYID                 1   // for main gateway
+char UID[17];                     // unique 8-byte (64-bit) ID for node
+String _MACID;
+char dataPacket[100];             // store data packet to send
+char dataReceived[100];           // store received data packets
+uint16_t NODEID = 999;            // 999 = node not configured; 1000 = node currently being configured (limit: 1023)
+uint8_t NETWORKID = 99;           // 99 = configuration network, 10 = sensor network (up to 255)
+char ENCRYPTKEY[17] = "sampleEncryptKey"; // 16 bytes + null character at the end
+
+#define CONFIGFLAGADDRESS         10    // config flag's address in EEPROM
+#define NODEIDADDRESS             100   // Node ID's address in EEPROM
+#define NETWORKIDADDRESS          200   // Encrypt Key's address in EEPROM
+#define ENCRYPTKEYADDRESS         300   // Encrypt Key's address in EEPROM
+#define NODETYPE                  "ARC" // 3 letter node type identifier
+#define GATEWAYID                 1     // for main gateway
 #define FREQUENCY                 RF69_915MHZ // 915 Mhz for NA region
-#define ENCRYPTKEY                "sampleEncryptKey" // 16 bytes, set by gateway
 #define IS_RFM69HW_HCW            //uncomment only for RFM69HW/HCW! Leave out if you have RFM69W/CW!
+#define ACKTIMEOUT                100
+//#define NODEID                    999 // 999 = node not configured; 1000 = node currently being configured (limit: 1023)
+//#define NETWORKID                 10    // set by gateway (up to 255)
+//#define ENCRYPTKEY                "sampleEncryptKey" // 16 bytes, set by gateway
 
 // Pin mapping -----------------------------------------------------
 #define KNOB_CLICK                0
 #define GREEN                     3
 #define CHANNEL_B                 10
 #define CHANNEL_A                 11
-#define MOTOR_IN1                 12
-#define MOTOR_IN2                 13
 #define RED                       14
 #define BLUE                      15
 #define DRIVER_POWER_PIN          18
@@ -52,10 +79,10 @@ String displayText;
 #define TEMP_SENSE_ERR            1   // temp sensor not working
 #define LED_DRV_ERR               2   // LED driver not working
 #define CURRENT_SENSE_ERR         3   // current sensor not working
-#define MOTOR_POWER_ERR           4   // 12V power not present
+#define SERVO_POWER_ERR           4   // servo voltage not correct
 #define FLASH_ERR                 5   // SPI flash error
 #define RADIO_ERR                 6   // Radio error
-#define MOTOR_ERR                 7   // motor error (0 current or very high current)
+#define SERVO_ERR                 7   // servo error (0 current or very high current)
 
 // All flags -------------------------------------------------------
 boolean displayMax = false;
@@ -67,5 +94,6 @@ boolean knobClickFlag = false;
 boolean advancedOptions = false;
 boolean manualMode = false;
 boolean calibrationMode = false;
+boolean demoMode = false;
 
 // =================================================================

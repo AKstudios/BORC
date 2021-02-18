@@ -1,5 +1,18 @@
-// LED matrix function for BORC
-// Updated 01/20/2021
+// LED matrix functions for BORC
+// Updated 02/14/2021
+
+// =================================================================
+// Initialize LED matrix
+// =================================================================
+void initializeLEDmatrix()
+{
+  pinMode(LED_SCREEN_POWER_PIN, OUTPUT);
+  digitalWrite(LED_SCREEN_POWER_PIN, HIGH);
+  if(!ledmatrix.begin())
+    errorCode |= (1<<LED_DRV_ERR);
+  else
+    errorCode &= ~(1<<LED_DRV_ERR);
+}
 
 // =================================================================
 // Display LED matrix
@@ -10,18 +23,13 @@ void displayLED(char choice)
   if(knobCounter <= 10)   // to account for initial bounces in rotary encoder
   {
     knobCounter = 11; // set it arbritarily higher so don't have to initialize display again
-    pinMode(LED_SCREEN_POWER_PIN, OUTPUT);
-    digitalWrite(LED_SCREEN_POWER_PIN, HIGH);
-    if(!ledmatrix.begin())
-      errorCode |= (1<<LED_DRV_ERR);
-    else
-      errorCode &= ~(1<<LED_DRV_ERR);
+    initializeLEDmatrix();
   }
   ledmatrix.setTextColor(255);
   ledmatrix.clear();
   ledmatrix.setCursor(2,0);
 
-  // print setpoint on LED display
+  // print setpoint on LED display ---------------------------------
   if(choice == 's')
   {
     displayText = String(setpoint);
@@ -64,7 +72,7 @@ void displayLED(char choice)
     }
   }
 
-  // print current room temp on LED display
+  // print current room temp on LED display ------------------------
   else if(choice == 't')
   {
     int display_temp = (int)(temp_f + 0.5); // round up to integer
@@ -72,28 +80,28 @@ void displayLED(char choice)
     ledmatrix.print(displayText);
   }
 
-  // show manual mode menu option
+  // show manual mode menu option ----------------------------------
   else if(choice == 'M')
   {
     displayText = "Ma";
     ledmatrix.print(displayText);
   }
 
-  // show calibration menu option
+  // show calibration menu option ----------------------------------
   else if(choice == 'C')
   {
     displayText = "Ca";
     ledmatrix.print(displayText);
   }
 
-  // show setpoint mode menu option
+  // show setpoint mode menu option --------------------------------
   else if(choice == 'S')
   {
     displayText = "Se";
     ledmatrix.print(displayText);
   }
 
-  // show manual controls on screen
+  // show manual controls on screen --------------------------------
   else if(choice == '<')
   {
     ledmatrix.setCursor(0,0);
@@ -104,7 +112,7 @@ void displayLED(char choice)
     ledmatrix.print(displayText);
   }
 
-  // fade out display
+  // fade out display ----------------------------------------------
   else if(choice == 'f')
   {
     for(int i=200; i>=0; i=i-10)
@@ -129,7 +137,7 @@ void displayLED(char choice)
     ledmatrix.clear();  // turn off display
   }
 
-  // clear display
+  // clear display -------------------------------------------------
   else if(choice == 'x')
   {
     ledmatrix.clear();  // turn off display

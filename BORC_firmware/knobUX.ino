@@ -1,5 +1,5 @@
 // Knob UX functions for BORC
-// Updated 01/20/2021
+// Updated 02/12/2021
 
 // =================================================================
 // Function to check knob status
@@ -20,7 +20,7 @@ void checkKnobStatus()
     {
       displayLED('<');
       toggleLED(0,0,0); // turn LEDs off
-      runMotor();
+      runServo();
       knobDirection = 0;    // reset knob direction
     }
     last_time = millis();
@@ -126,7 +126,7 @@ void checkKnobStatus()
         displayLED('M');
         if(digitalRead(KNOB_CLICK) == 0)
         {
-          Serial.println("m set");
+          Serial.println("Manual mode set");
           advancedOptions = false;
           manualMode = true;
           calibrationMode = false;
@@ -143,7 +143,7 @@ void checkKnobStatus()
         displayLED('S');
         if(digitalRead(KNOB_CLICK) == 0)
         {
-          Serial.println("s set");
+          Serial.println("setpoint mode set");
           advancedOptions = false;
           manualMode = false;
           calibrationMode = false;
@@ -162,7 +162,7 @@ void checkKnobStatus()
       displayLED('C');
       if(digitalRead(KNOB_CLICK) == 0)
       {
-        Serial.println("c set");
+        Serial.println("calibration mode set");
         advancedOptions = false;
         calibrationMode = true;
         manualMode = false;
@@ -184,6 +184,18 @@ void checkKnobStatus()
       displayLED('f');    // fade out display
       break;
     }
+  }
+
+  // Calibration mode ----------------------------------------------
+  while(calibrationMode == true)
+  {
+    displayLED('C');
+    calibrateServo();
+    calibrationMode = false;
+    advancedOptions = false;
+    displayLED('f');
+    toggleLED(0,0,0);
+    break;
   }
 }
 
