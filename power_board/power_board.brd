@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="1" altunitdist="mil" altunit="mil"/>
+<grid distance="10" unitdist="mil" unit="mil" style="lines" multiple="1" display="yes" altdistance="1" altunitdist="mil" altunit="mil"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="no" active="no"/>
@@ -204,11 +204,11 @@
 <dimension x1="45.5" y1="16.5" x2="35" y2="16.5" x3="40.25" y3="-7.4" textsize="1.778" layer="49" dtype="horizontal"/>
 <text x="35" y="67" size="1.27" layer="21" font="vector" ratio="20" align="bottom-center">BORC</text>
 <text x="35" y="66" size="0.8128" layer="21" font="vector" align="bottom-center">Power Board</text>
-<text x="35" y="63" size="0.6096" layer="21" font="vector" align="bottom-center">v0.3
-2021-02-02</text>
-<text x="20.854" y="21.21" size="0.6096" layer="21" font="vector" rot="SR90" align="bottom-center">RED</text>
+<text x="35" y="63" size="0.6096" layer="21" font="vector" align="bottom-center">v0.4
+2021-02-14</text>
+<text x="20.854" y="22.48" size="0.6096" layer="21" font="vector" rot="SR90" align="bottom-center">RED</text>
 <text x="35" y="28" size="0.6096" layer="22" font="vector" rot="MR0" align="bottom-center">Designed by Akram Ali</text>
-<text x="17.721" y="20.718" size="0.6096" layer="21" font="vector" rot="R270" align="bottom-center">BLACK</text>
+<text x="17.721" y="21.988" size="0.6096" layer="21" font="vector" rot="R270" align="bottom-center">BLACK</text>
 <text x="40.513" y="1.905" size="0.6096" layer="21" font="vector" rot="SR0" align="bottom-center">&lt;- 10K NTC
          Thermistor</text>
 <dimension x1="12" y1="51" x2="0" y2="35" x3="6" y3="80.7" textsize="1.778" layer="49" dtype="horizontal"/>
@@ -219,7 +219,7 @@
 <dimension x1="53" y1="5" x2="35" y2="1.5" x3="44" y3="-17.1" textsize="1.778" layer="49" dtype="horizontal"/>
 <dimension x1="48" y1="8" x2="35" y2="7" x3="41.5" y3="-12.3" textsize="1.778" layer="49" dtype="horizontal"/>
 <dimension x1="48" y1="8" x2="35" y2="0" x3="59.1" y3="4" textsize="1.778" layer="49" dtype="vertical"/>
-<text x="23.454" y="20.71" size="0.6096" layer="21" font="vector" rot="SR90" align="bottom-center">WHITE</text>
+<text x="23.454" y="21.98" size="0.6096" layer="21" font="vector" rot="SR90" align="bottom-center">WHITE</text>
 <wire x1="53" y1="14.001059375" x2="52" y2="15" width="0.01" layer="20" curve="89.939302"/>
 <wire x1="50" y1="17" x2="52" y2="15" width="0.01" layer="20" curve="90"/>
 <wire x1="53" y1="56" x2="53" y2="65.016659375" width="0.01" layer="20"/>
@@ -239,7 +239,7 @@
 <wire x1="26" y1="1.17693125" x2="52.98438125" y2="4.97398125" width="0.01" layer="20" curve="45.820512"/>
 <wire x1="52" y1="55" x2="53" y2="56" width="0.01" layer="20" curve="89.999463"/>
 <wire x1="24" y1="17" x2="17" y2="17" width="0.01" layer="20"/>
-<wire x1="15.748" y1="22.606" x2="15.748" y2="24.892" width="0.508" layer="21"/>
+<wire x1="15.748" y1="23.876" x2="15.748" y2="26.162" width="0.508" layer="21"/>
 <rectangle x1="33.3349" y1="58.6425" x2="33.3603" y2="58.6679" layer="22" rot="R180"/>
 <rectangle x1="36.0527" y1="58.6679" x2="36.1289" y2="58.6933" layer="22" rot="R180"/>
 <rectangle x1="33.3095" y1="58.6679" x2="33.3857" y2="58.6933" layer="22" rot="R180"/>
@@ -1625,9 +1625,9 @@ Please make sure your boards conform to these design rules.
 <attribute name="MPN" value="INA219AIDCNR" x="20.955" y="55.038" size="1.778" layer="27" font="vector" display="off"/>
 <attribute name="NAME" x="21.725" y="52.959" size="0.6096" layer="25" font="vector" rot="R180"/>
 </element>
-<element name="R39" library="microbuilder" package="2512" override_package3d_urn="urn:adsk.eagle:package:22384351/2" override_package_urn="urn:adsk.eagle:footprint:22384352/1" value="0.1/1%/2W" x="14.238" y="36.73" smashed="yes" rot="R90">
-<attribute name="MPN" value="RCWE2512R100FKEA" x="17.238" y="36.73" size="1.778" layer="27" font="vector" rot="R90" display="off"/>
-<attribute name="NAME" x="15.086" y="41.416" size="0.6096" layer="25" font="vector" rot="R180"/>
+<element name="R39" library="microbuilder" package="2512" override_package3d_urn="urn:adsk.eagle:package:22384351/2" override_package_urn="urn:adsk.eagle:footprint:22384352/1" value="0.1/1%/2W" x="14.238" y="37.492" smashed="yes" rot="R90">
+<attribute name="MPN" value="RCWE2512R100FKEA" x="17.238" y="37.492" size="1.778" layer="27" font="vector" rot="R90" display="off"/>
+<attribute name="NAME" x="15.086" y="42.178" size="0.6096" layer="25" font="vector" rot="R180"/>
 </element>
 <element name="C21" library="Adafruit Feather 32u4 Bluefruit LE" package="MICROBUILDER__0402MP" override_package3d_urn="urn:adsk.eagle:package:24547813/3" override_package_urn="urn:adsk.eagle:footprint:24547814/1" value="0.1uF" x="23.749" y="49.276" smashed="yes" rot="R270">
 <attribute name="MPN" value="GRM155R71C104KA88J" x="24.749" y="49.276" size="1.778" layer="27" font="vector" rot="R270" display="off"/>
@@ -1645,23 +1645,23 @@ Please make sure your boards conform to these design rules.
 <attribute name="MPN" value="RC0402FR-0710RL" x="23.114" y="51.863" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
 <attribute name="NAME" x="22.479" y="45.6883" size="0.6096" layer="25" font="vector"/>
 </element>
-<element name="C2" library="microbuilder" package="0805-NO" override_package3d_urn="urn:adsk.eagle:package:24880593/2" override_package_urn="urn:adsk.eagle:footprint:24880594/1" value="0.1uF/50V" x="10.68" y="35.29" smashed="yes" rot="R90">
-<attribute name="NAME" x="11.111" y="37.904" size="0.6096" layer="25" font="vector" rot="R180"/>
+<element name="C2" library="microbuilder" package="0805-NO" override_package3d_urn="urn:adsk.eagle:package:24880593/2" override_package_urn="urn:adsk.eagle:footprint:24880594/1" value="0.1uF/50V" x="10.68" y="36.052" smashed="yes" rot="R90">
+<attribute name="NAME" x="11.111" y="38.666" size="0.6096" layer="25" font="vector" rot="R180"/>
 </element>
-<element name="C18" library="860160672011_Eagle_WCAP-ATLL_rev20a" package="WCAP-ATLL_5X11(DXL)" package3d_urn="urn:adsk.eagle:package:18353776/2" override_package3d_urn="urn:adsk.eagle:package:22384232/4" override_package_urn="urn:adsk.eagle:footprint:18353754/1" value="22uF" x="11.649" y="29.178" smashed="yes" rot="R180">
-<attribute name="DATASHEET-URL" value="https://www.we-online.com/catalog/datasheet/860160672011.pdf" x="19.649" y="20.178" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
-<attribute name="DF" value="10%" x="19.649" y="20.178" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
-<attribute name="DIAMETER" value="5mm" x="19.649" y="20.178" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
-<attribute name="I-LEAK" value="11uA" x="19.649" y="20.178" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
-<attribute name="I-RIPPLE" value="162mA" x="19.649" y="20.178" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
-<attribute name="L" value="11mm" x="19.649" y="20.178" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
-<attribute name="MPN" value="860160672011" x="19.649" y="20.178" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
-<attribute name="NAME" x="11.662" y="25.898" size="0.6096" layer="25" font="vector" rot="R180" align="bottom-center"/>
-<attribute name="OPERATING-TEMPERATURE" value="-55 °C up to +105 °C" x="19.649" y="20.178" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
-<attribute name="PART-NUMBER" value=" 860160672011 " x="19.649" y="20.178" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
-<attribute name="PITCH" value="2mm" x="19.649" y="20.178" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
-<attribute name="TECHNICAL-REFERENCE" value="ATEC110220M050DSPA3C000" x="19.649" y="20.178" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
-<attribute name="VR" value="50V(DC)" x="19.649" y="20.178" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
+<element name="C18" library="860160672011_Eagle_WCAP-ATLL_rev20a" package="WCAP-ATLL_5X11(DXL)" package3d_urn="urn:adsk.eagle:package:18353776/2" override_package3d_urn="urn:adsk.eagle:package:22384232/4" override_package_urn="urn:adsk.eagle:footprint:18353754/1" value="22uF" x="11.649" y="29.94" smashed="yes" rot="R180">
+<attribute name="DATASHEET-URL" value="https://www.we-online.com/catalog/datasheet/860160672011.pdf" x="19.649" y="20.94" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
+<attribute name="DF" value="10%" x="19.649" y="20.94" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
+<attribute name="DIAMETER" value="5mm" x="19.649" y="20.94" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
+<attribute name="I-LEAK" value="11uA" x="19.649" y="20.94" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
+<attribute name="I-RIPPLE" value="162mA" x="19.649" y="20.94" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
+<attribute name="L" value="11mm" x="19.649" y="20.94" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
+<attribute name="MPN" value="860160672011" x="19.649" y="20.94" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
+<attribute name="NAME" x="11.662" y="26.66" size="0.6096" layer="25" font="vector" rot="R180" align="bottom-center"/>
+<attribute name="OPERATING-TEMPERATURE" value="-55 °C up to +105 °C" x="19.649" y="20.94" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
+<attribute name="PART-NUMBER" value=" 860160672011 " x="19.649" y="20.94" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
+<attribute name="PITCH" value="2mm" x="19.649" y="20.94" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
+<attribute name="TECHNICAL-REFERENCE" value="ATEC110220M050DSPA3C000" x="19.649" y="20.94" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
+<attribute name="VR" value="50V(DC)" x="19.649" y="20.94" size="1.778" layer="27" font="vector" rot="R180" display="off"/>
 </element>
 <element name="R22" library="Adafruit Feather 32u4 Bluefruit LE" package="MICROBUILDER__0402MP" override_package3d_urn="urn:adsk.eagle:package:24880654/2" override_package_urn="urn:adsk.eagle:footprint:24880655/1" value="10K 0.1%" x="33.175" y="6.81" smashed="yes">
 <attribute name="MPN" value="RC0402JR-0727RL" x="27.175" y="14.61" size="1.778" layer="27" font="vector" display="off"/>
@@ -1680,9 +1680,9 @@ Please make sure your boards conform to these design rules.
 <attribute name="NAME" x="37.032" y="9.894" size="0.6096" layer="25" font="vector" align="bottom-center"/>
 <attribute name="PROD_ID" value="TRANS-08049" x="37.032" y="7.889" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
-<element name="JP1" library="adafruit" library_urn="urn:adsk.eagle:library:420" package="1X03" package3d_urn="urn:adsk.eagle:package:6240710/1" value="" x="20.5" y="23.7" smashed="yes">
-<attribute name="NAME" x="17.3138" y="25.3288" size="0.6096" layer="25" font="vector"/>
-<attribute name="VALUE" x="16.69" y="20.525" size="1.27" layer="27"/>
+<element name="JP1" library="adafruit" library_urn="urn:adsk.eagle:library:420" package="1X03" package3d_urn="urn:adsk.eagle:package:6240710/1" value="" x="20.5" y="24.97" smashed="yes">
+<attribute name="NAME" x="17.3138" y="26.5988" size="0.6096" layer="25" font="vector"/>
+<attribute name="VALUE" x="16.69" y="21.795" size="1.27" layer="27"/>
 </element>
 <element name="R2" library="Adafruit Feather 32u4 Bluefruit LE" package="MICROBUILDER__0402MP" value="220" x="22.5" y="42.2" smashed="yes" rot="R180">
 <attribute name="MPN" value="RC0402JR-071KL" x="22.5" y="30.5" size="1.778" layer="27" rot="R180" display="off"/>
@@ -1692,23 +1692,27 @@ Please make sure your boards conform to these design rules.
 <attribute name="NAME" x="18.21105" y="40.49751875" size="0.6096" layer="25" font="vector"/>
 <attribute name="VALUE" x="14.46213125" y="40.7424" size="1.783940625" layer="27" rot="R270"/>
 </element>
-<element name="C3" library="SparkFun-Passives" package="0805" value="10uF" x="21.7" y="27.7" smashed="yes">
-<attribute name="NAME" x="21.338" y="28.7255" size="0.6096" layer="25" font="vector"/>
+<element name="C3" library="SparkFun-Passives" package="0805" value="10uF" x="21.7" y="28.462" smashed="yes">
+<attribute name="NAME" x="21.338" y="29.4875" size="0.6096" layer="25" font="vector"/>
 </element>
-<element name="C4" library="SparkFun-Passives" package="1206" value="2.2uF" x="18.5" y="29" smashed="yes" rot="R90">
-<attribute name="NAME" x="18.8954" y="32.2586" size="0.6096" layer="25" font="vector" rot="R180"/>
+<element name="C4" library="SparkFun-Passives" package="1206" value="2.2uF" x="18.5" y="29.762" smashed="yes" rot="R90">
+<attribute name="NAME" x="18.8954" y="33.0206" size="0.6096" layer="25" font="vector" rot="R180"/>
 </element>
 <element name="U5" library="Pololu Step Up Vregs" package="POLOLU_STEPUP_U1V11X" value="POLOLU_STEPUP_U1V11X" x="40" y="40" smashed="yes" rot="R180">
 <attribute name="NAME" x="40" y="24.254" size="0.6096" layer="25" font="vector" rot="R180"/>
 </element>
-<element name="C1" library="SparkFun-Passives" package="1206" value="2.2uF" x="16" y="29" smashed="yes" rot="R90">
-<attribute name="NAME" x="16.397" y="32.238" size="0.6096" layer="25" font="vector" rot="R180"/>
+<element name="C1" library="SparkFun-Passives" package="1206" value="2.2uF" x="16" y="29.762" smashed="yes" rot="R90">
+<attribute name="NAME" x="16.397" y="33" size="0.6096" layer="25" font="vector" rot="R180"/>
 </element>
 <element name="C5" library="SparkFun-Passives" package="1206" value="10uF" x="34.2" y="45" smashed="yes" rot="R180">
 <attribute name="NAME" x="37.043" y="45.37" size="0.6096" layer="25" font="vector" rot="R270"/>
 </element>
 <element name="C6" library="SparkFun-Passives" package="1206" value="10uF" x="34.2" y="42" smashed="yes" rot="R180">
 <attribute name="NAME" x="37.043" y="42.27" size="0.6096" layer="25" font="vector" rot="R270"/>
+</element>
+<element name="R1" library="Adafruit Feather 32u4 Bluefruit LE" package="MICROBUILDER__0402MP" override_package3d_urn="urn:adsk.eagle:package:24880645/2" override_package_urn="urn:adsk.eagle:footprint:24880646/1" value="10K" x="17" y="53" smashed="yes">
+<attribute name="MPN" value="RC0402FR-7W10KL" x="17" y="53" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="16.619" y="51.6983" size="0.6096" layer="25" font="vector"/>
 </element>
 </elements>
 <signals>
@@ -1751,7 +1755,6 @@ Please make sure your boards conform to these design rules.
 <contactref element="R27" pad="2"/>
 <contactref element="LED1" pad="MINUS"/>
 <contactref element="U11" pad="3"/>
-<contactref element="U11" pad="7"/>
 <contactref element="U11" pad="8"/>
 <contactref element="C21" pad="1"/>
 <via x="24" y="54.635" extent="1-16" drill="0.35"/>
@@ -1812,7 +1815,7 @@ Please make sure your boards conform to these design rules.
 <via x="41.671" y="11.455" extent="1-16" drill="0.35"/>
 <via x="43.576" y="5.613" extent="1-16" drill="0.35"/>
 <via x="40.147" y="13.741" extent="1-16" drill="0.35"/>
-<via x="17.033" y="51.333" extent="1-16" drill="0.35"/>
+<via x="17.922" y="50.46" extent="1-16" drill="0.35"/>
 <contactref element="Q1" pad="2"/>
 <contactref element="U4" pad="20"/>
 <contactref element="U4" pad="22"/>
@@ -1965,6 +1968,9 @@ Please make sure your boards conform to these design rules.
 <wire x1="10.668" y1="41.402" x2="10.668" y2="43.942" width="0.3048" layer="1"/>
 <wire x1="14.351" y1="46.482" x2="13.208" y2="46.482" width="0.3048" layer="1"/>
 <wire x1="13.208" y1="46.482" x2="10.668" y2="43.942" width="0.3048" layer="1"/>
+<contactref element="R1" pad="1"/>
+<wire x1="16.492" y1="53" x2="16.492" y2="48.623" width="0.254" layer="1"/>
+<wire x1="16.492" y1="48.623" x2="14.351" y2="46.482" width="0.254" layer="1"/>
 </signal>
 <signal name="N$32">
 <contactref element="Q4" pad="4"/>
@@ -2039,23 +2045,23 @@ Please make sure your boards conform to these design rules.
 <contactref element="C18" pad="1"/>
 <wire x1="22.713" y1="42.787" x2="13.587" y2="42.787" width="0.3048" layer="16"/>
 <wire x1="13.587" y1="42.787" x2="10.7" y2="39.9" width="0.3048" layer="16"/>
-<wire x1="10.7" y1="39.9" x2="10.7" y2="29.22899375" width="0.3048" layer="16"/>
-<wire x1="10.7" y1="29.22899375" x2="10.649" y2="29.178" width="0.3048" layer="16"/>
+<wire x1="10.7" y1="39.9" x2="10.7" y2="29.99099375" width="0.3048" layer="16"/>
+<wire x1="10.7" y1="29.99099375" x2="10.649" y2="29.94" width="0.3048" layer="16"/>
 <polygon width="0.1524" layer="1" thermals="no">
-<vertex x="9.9" y="35"/>
+<vertex x="9.9" y="35.762"/>
 <vertex x="9.9" y="28.1"/>
-<vertex x="11.2" y="26.8"/>
-<vertex x="18.9" y="26.8"/>
-<vertex x="19.7" y="26"/>
-<vertex x="19.7" y="22.9"/>
-<vertex x="21.3" y="22.9"/>
-<vertex x="21.3" y="28.4"/>
-<vertex x="11.7" y="28.4"/>
-<vertex x="11.4" y="28.7"/>
-<vertex x="11.4" y="31.7"/>
-<vertex x="12.6" y="32.9"/>
-<vertex x="16" y="32.9"/>
-<vertex x="16" y="35"/>
+<vertex x="10.438" y="27.562"/>
+<vertex x="18.646" y="27.562"/>
+<vertex x="19.7" y="26.508"/>
+<vertex x="19.7" y="23.916"/>
+<vertex x="21.3" y="23.916"/>
+<vertex x="21.3" y="29.162"/>
+<vertex x="12.208" y="29.162"/>
+<vertex x="11.4" y="29.97"/>
+<vertex x="11.4" y="32.462"/>
+<vertex x="12.6" y="33.662"/>
+<vertex x="16" y="33.662"/>
+<vertex x="16" y="35.762"/>
 </polygon>
 <contactref element="C1" pad="1"/>
 </signal>
@@ -2097,7 +2103,7 @@ Please make sure your boards conform to these design rules.
 <wire x1="24.611" y1="42.1" x2="23.8" y2="41.289" width="0.3048" layer="16"/>
 <wire x1="23.8" y1="41.289" x2="23.8" y2="26.66" width="0.3048" layer="16"/>
 <wire x1="23.8" y1="26.66" x2="23.04" y2="25.9" width="0.3048" layer="16"/>
-<wire x1="23.04" y1="25.9" x2="23.04" y2="23.7" width="0.3048" layer="16"/>
+<wire x1="23.04" y1="25.9" x2="23.04" y2="24.97" width="0.3048" layer="16"/>
 </signal>
 <signal name="DRIVER_CONTROL">
 <contactref element="U4" pad="25"/>
@@ -2125,7 +2131,7 @@ Please make sure your boards conform to these design rules.
 <contactref element="R41" pad="1"/>
 <wire x1="17.145" y1="46.863" x2="17.145" y2="44.45" width="0.3048" layer="1"/>
 <wire x1="17.145" y1="44.45" x2="14.238" y2="41.543" width="0.3048" layer="1"/>
-<wire x1="14.238" y1="41.543" x2="14.238" y2="39.53" width="0.3048" layer="1"/>
+<wire x1="14.238" y1="41.543" x2="14.238" y2="40.292" width="0.3048" layer="1"/>
 <contactref element="U5" pad="VOUT"/>
 <polygon width="0.1524" layer="1" thermals="no">
 <vertex x="12.573" y="38.608"/>
@@ -2142,6 +2148,13 @@ Please make sure your boards conform to these design rules.
 <vertex x="12.573" y="42.164"/>
 </polygon>
 </signal>
+<signal name="N$1" class="1">
+<contactref element="U11" pad="7"/>
+<contactref element="R1" pad="2"/>
+<wire x1="20.63" y1="51.338" x2="20.63" y2="52.395" width="0.254" layer="1"/>
+<wire x1="20.025" y1="53" x2="17.508" y2="53" width="0.254" layer="1"/>
+<wire x1="20.63" y1="52.395" x2="20.025" y2="53" width="0.254" layer="1"/>
+</signal>
 </signals>
 <mfgpreviewcolors>
 <mfgpreviewcolor name="soldermaskcolor" color="0xC8008000"/>
@@ -2154,11 +2167,14 @@ Please make sure your boards conform to these design rules.
 <approved hash="5,1,4d87cf44016b64d4"/>
 <approved hash="5,1,6108fbc4e16b9cdb"/>
 <approved hash="5,1,40f5cf44114f6986"/>
-<approved hash="5,1,0a51e5440bc41784"/>
 <approved hash="5,1,38be50a348bad559"/>
 <approved hash="5,1,a548d67e40a2ceea"/>
 <approved hash="5,1,207c566540b8cbdf"/>
 <approved hash="5,1,26d2d2c411c41687"/>
+<approved hash="5,1,3770a2c40f4f6f83"/>
+<approved hash="3,1,5a4680397f1fa560"/>
+<approved hash="3,1,064f83b183e0061e"/>
+<approved hash="3,1,b33df64118408a7d"/>
 </errors>
 </board>
 </drawing>
