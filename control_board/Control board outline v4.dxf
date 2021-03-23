@@ -489,19 +489,19 @@ $SKPOLY
   9
 $TDCREATE
  40
-2459171.535671296
+2459297.525509259
   9
 $TDUCREATE
  40
-2459171.535671296
+2459297.525509259
   9
 $TDUPDATE
  40
-2459171.535671296
+2459297.525509259
   9
 $TDUUPDATE
  40
-2459171.535671296
+2459297.525509259
   9
 $TDINDWG
  40
@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-9E
+A8
   9
 $SURFTAB1
  70
@@ -929,11 +929,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{27BCB0FC-A59E-7B4C-B972-BD8E08527F39}
+{A8D29FDB-63D7-5740-9F3F-478348212A7D}
   9
 $VERSIONGUID
   2
-{B5119D6A-8FEF-D847-B245-00567B09BAAA}
+{EAFF6496-136D-3942-98B5-39A49D643B33}
   9
 $EXTNAMES
 290
@@ -1519,7 +1519,7 @@ LAYER
 100
 AcDbSymbolTable
  70
-     3
+     4
   0
 LAYER
   5
@@ -1557,7 +1557,7 @@ AcDbSymbolTableRecord
 100
 AcDbLayerTableRecord
   2
-Control board outline v2_Sketch1
+Control board outline v3 v1_Control board outline v2_Sketch1
  70
      0
  62
@@ -1587,7 +1587,37 @@ AcDbSymbolTableRecord
 100
 AcDbLayerTableRecord
   2
-Control board outline v2_Sketch2
+Control board outline v3 v1_Control board outline v2_Sketch2
+ 70
+     0
+ 62
+     7
+  6
+Continuous
+370
+    -3
+390
+F
+347
+21
+348
+0
+1001
+NFusion_SketchTransform
+1000
+1.000000;0.000000;0.000000;0.000000;0.000000;1.000000;0.000000;0.000000;0.000000;0.000000;1.000000;0.000000;0.000000;0.000000;0.000000;1.000000
+  0
+LAYER
+  5
+99
+330
+2
+100
+AcDbSymbolTableRecord
+100
+AcDbLayerTableRecord
+  2
+Control board outline v3 v1_Sketch3
  70
      0
  62
@@ -2067,7 +2097,7 @@ POINT
 100
 AcDbEntity
   8
-Control board outline v2_Sketch1
+Control board outline v3 v1_Control board outline v2_Sketch1
 100
 AcDbPoint
  10
@@ -2085,7 +2115,7 @@ POINT
 100
 AcDbEntity
   8
-Control board outline v2_Sketch2
+Control board outline v3 v1_Control board outline v2_Sketch2
 100
 AcDbPoint
  10
@@ -2103,7 +2133,129 @@ LINE
 100
 AcDbEntity
   8
-Control board outline v2_Sketch2
+Control board outline v3 v1_Control board outline v2_Sketch2
+100
+AcDbLine
+ 10
+28.0
+ 20
+-20.0
+ 30
+0.0
+ 11
+28.0
+ 21
+-21.0
+ 31
+0.0
+  0
+ARC
+  5
+7F
+330
+70
+100
+AcDbEntity
+  8
+Control board outline v3 v1_Control board outline v2_Sketch2
+100
+AcDbCircle
+ 10
+17.0
+ 20
+-18.0
+ 30
+0.0
+ 40
+2.0
+100
+AcDbArc
+ 50
+180.0
+ 51
+270.0
+  0
+LINE
+  5
+80
+330
+70
+100
+AcDbEntity
+  8
+Control board outline v3 v1_Control board outline v2_Sketch2
+100
+AcDbLine
+ 10
+28.0
+ 20
+20.0
+ 30
+0.0
+ 11
+28.00000000000001
+ 21
+21.0
+ 31
+0.0
+  0
+LINE
+  5
+81
+330
+70
+100
+AcDbEntity
+  8
+Control board outline v3 v1_Control board outline v2_Sketch2
+100
+AcDbLine
+ 10
+5.299999999999998
+ 20
+-34.59638709460859
+ 30
+0.0
+ 11
+5.299999999999999
+ 21
+-38.5
+ 31
+0.0
+  0
+LINE
+  5
+82
+330
+70
+100
+AcDbEntity
+  8
+Control board outline v3 v1_Control board outline v2_Sketch2
+100
+AcDbLine
+ 10
+15.0
+ 20
+-18.0
+ 30
+0.0
+ 11
+15.0
+ 21
+0.0
+ 31
+0.0
+  0
+LINE
+  5
+83
+330
+70
+100
+AcDbEntity
+  8
+Control board outline v3 v1_Control board outline v2_Sketch2
 100
 AcDbLine
  10
@@ -2121,17 +2273,17 @@ AcDbLine
   0
 LINE
   5
-7F
+84
 330
 70
 100
 AcDbEntity
   8
-Control board outline v2_Sketch2
+Control board outline v3 v1_Control board outline v2_Sketch2
 100
 AcDbLine
  10
-2.000000029802322
+2.000000029802321
  20
 18.00000029802322
  30
@@ -2145,61 +2297,89 @@ AcDbLine
   0
 LINE
   5
-80
+85
 330
 70
 100
 AcDbEntity
   8
-Control board outline v2_Sketch2
+Control board outline v3 v1_Control board outline v2_Sketch2
 100
 AcDbLine
  10
--3.999999999999999
+-5.299999999999985
  20
-20.0
+-34.5963870946086
  30
 0.0
  11
--4.0
+-5.299999999999999
  21
-34.77067730142742
+-38.5
  31
 0.0
   0
-LINE
+ARC
   5
-81
+86
 330
 70
 100
 AcDbEntity
   8
-Control board outline v2_Sketch2
+Control board outline v3 v1_Control board outline v2_Sketch2
 100
-AcDbLine
+AcDbCircle
  10
-15.0
+0.0
  20
 0.0
  30
 0.0
- 11
-15.0
- 21
-18.0
- 31
-0.0
+ 40
+35.00000000000001
+100
+AcDbArc
+ 50
+36.86989764584401
+ 51
+83.43757213136584
   0
-LINE
+ARC
   5
-82
+87
 330
 70
 100
 AcDbEntity
   8
-Control board outline v2_Sketch2
+Control board outline v3 v1_Control board outline v2_Sketch2
+100
+AcDbCircle
+ 10
+2.000000029802321
+ 20
+20.00000029802322
+ 30
+0.0
+ 40
+2.0
+100
+AcDbArc
+ 50
+270.0
+ 51
+0.0098911703304817
+  0
+LINE
+  5
+88
+330
+70
+100
+AcDbEntity
+  8
+Control board outline v3 v1_Control board outline v2_Sketch2
 100
 AcDbLine
  10
@@ -2217,13 +2397,141 @@ AcDbLine
   0
 ARC
   5
-83
+89
 330
 70
 100
 AcDbEntity
   8
-Control board outline v2_Sketch2
+Control board outline v3 v1_Control board outline v2_Sketch2
+100
+AcDbCircle
+ 10
+17.0
+ 20
+18.0
+ 30
+0.0
+ 40
+2.0
+100
+AcDbArc
+ 50
+90.0
+ 51
+180.0
+  0
+ARC
+  5
+8A
+330
+70
+100
+AcDbEntity
+  8
+Control board outline v3 v1_Control board outline v2_Sketch2
+100
+AcDbCircle
+ 10
+13.0
+ 20
+-27.0
+ 30
+0.0
+ 40
+3.0
+100
+AcDbArc
+ 50
+0.0
+ 51
+180.0
+  0
+LINE
+  5
+8B
+330
+70
+100
+AcDbEntity
+  8
+Control board outline v3 v1_Control board outline v2_Sketch2
+100
+AcDbLine
+ 10
+-19.0
+ 20
+26.0
+ 30
+0.0
+ 11
+-19.0
+ 21
+29.39387691339815
+ 31
+0.0
+  0
+ARC
+  5
+8C
+330
+70
+100
+AcDbEntity
+  8
+Control board outline v3 v1_Control board outline v2_Sketch2
+100
+AcDbCircle
+ 10
+0.0
+ 20
+0.0
+ 30
+0.0
+ 40
+35.00000000000001
+100
+AcDbArc
+ 50
+297.2028944122144
+ 51
+323.130102354156
+  0
+ARC
+  5
+8D
+330
+70
+100
+AcDbEntity
+  8
+Control board outline v3 v1_Control board outline v2_Sketch2
+100
+AcDbCircle
+ 10
+0.0
+ 20
+0.0
+ 30
+0.0
+ 40
+35.00000000000001
+100
+AcDbArc
+ 50
+96.56242786863415
+ 51
+122.8783495643774
+  0
+ARC
+  5
+8E
+330
+70
+100
+AcDbEntity
+  8
+Control board outline v3 v1_Control board outline v2_Sketch2
 100
 AcDbCircle
  10
@@ -2237,19 +2545,115 @@ AcDbCircle
 100
 AcDbArc
  50
-96.56242786863415
+145.1500954209535
  51
 261.29027656147
   0
-ARC
+LINE
   5
-84
+8F
 330
 70
 100
 AcDbEntity
   8
-Control board outline v2_Sketch2
+Control board outline v3 v1_Control board outline v2_Sketch2
+100
+AcDbLine
+ 10
+-3.999999999999998
+ 20
+20.0
+ 30
+0.0
+ 11
+-3.99999999999999
+ 21
+34.77067730142742
+ 31
+0.0
+  0
+LINE
+  5
+90
+330
+70
+100
+AcDbEntity
+  8
+Control board outline v3 v1_Control board outline v2_Sketch2
+100
+AcDbLine
+ 10
+28.0
+ 20
+-20.0
+ 30
+0.0
+ 11
+17.0
+ 21
+-20.0
+ 31
+0.0
+  0
+LINE
+  5
+91
+330
+70
+100
+AcDbEntity
+  8
+Control board outline v3 v1_Control board outline v2_Sketch2
+100
+AcDbLine
+ 10
+16.0
+ 20
+-27.0
+ 30
+0.0
+ 11
+16.0
+ 21
+-31.12876483254677
+ 31
+0.0
+  0
+LINE
+  5
+92
+330
+70
+100
+AcDbEntity
+  8
+Control board outline v3 v1_Control board outline v2_Sketch2
+100
+AcDbLine
+ 10
+15.0
+ 20
+0.0
+ 30
+0.0
+ 11
+15.0
+ 21
+18.0
+ 31
+0.0
+  0
+ARC
+  5
+93
+330
+70
+100
+AcDbEntity
+  8
+Control board outline v3 v1_Control board outline v2_Sketch2
 100
 AcDbCircle
  10
@@ -2269,47 +2673,23 @@ AcDbArc
   0
 LINE
   5
-85
+94
 330
 70
 100
 AcDbEntity
   8
-Control board outline v2_Sketch2
+Control board outline v3 v1_Control board outline v2_Sketch2
 100
 AcDbLine
  10
--5.3
+-5.299999999999999
  20
 -38.5
  30
 0.0
  11
-5.3
- 21
--38.5
- 31
-0.0
-  0
-LINE
-  5
-86
-330
-70
-100
-AcDbEntity
-  8
-Control board outline v2_Sketch2
-100
-AcDbLine
- 10
--5.3
- 20
--34.5963870946086
- 30
-0.0
- 11
--5.3
+5.299999999999999
  21
 -38.5
  31
@@ -2317,61 +2697,61 @@ AcDbLine
   0
 LINE
   5
-87
+95
 330
 70
 100
 AcDbEntity
   8
-Control board outline v2_Sketch2
+Control board outline v3 v1_Control board outline v2_Sketch2
 100
 AcDbLine
  10
-15.0
+-25.0
  20
--18.0
+20.0
  30
 0.0
  11
-15.0
+-28.72281323269014
  21
-0.0
+20.0
  31
 0.0
   0
 LINE
   5
-88
+96
 330
 70
 100
 AcDbEntity
   8
-Control board outline v2_Sketch2
+Control board outline v3 v1_Control board outline v2_Sketch2
 100
 AcDbLine
  10
-28.0
+-19.0
  20
--20.0
+26.0
  30
 0.0
  11
-17.0
+-25.0
  21
--20.0
+20.0
  31
 0.0
   0
 ARC
   5
-89
+97
 330
 70
 100
 AcDbEntity
   8
-Control board outline v2_Sketch2
+Control board outline v3 v1_Control board outline v2_Sketch2
 100
 AcDbCircle
  10
@@ -2387,182 +2767,48 @@ AcDbArc
  50
 278.70972343853
  51
-323.130102354156
-  0
-ARC
-  5
-8A
-330
-70
-100
-AcDbEntity
-  8
-Control board outline v2_Sketch2
-100
-AcDbCircle
- 10
-0.0
- 20
-0.0
- 30
-0.0
- 40
-35.00000000000001
-100
-AcDbArc
- 50
-36.86989764584402
- 51
-83.43757213136585
-  0
-ARC
-  5
-8B
-330
-70
-100
-AcDbEntity
-  8
-Control board outline v2_Sketch2
-100
-AcDbCircle
- 10
-17.0
- 20
--18.0
- 30
-0.0
- 40
-2.0
-100
-AcDbArc
- 50
-180.0
- 51
-270.0
+286.6015495990202
   0
 LINE
   5
-8C
+98
 330
 70
 100
 AcDbEntity
   8
-Control board outline v2_Sketch2
+Control board outline v3 v1_Control board outline v2_Sketch2
 100
 AcDbLine
  10
-5.299999999999998
+10.0
  20
--34.59638709460859
+-27.0
  30
 0.0
  11
-5.3
+10.0
  21
--38.5
+-33.54101966249685
  31
 0.0
   0
-ARC
+POINT
   5
-8D
+9A
 330
 70
 100
 AcDbEntity
   8
-Control board outline v2_Sketch2
+Control board outline v3 v1_Sketch3
 100
-AcDbCircle
+AcDbPoint
  10
-17.0
+0.0
  20
-18.0
+0.0
  30
-0.0
- 40
-2.0
-100
-AcDbArc
- 50
-90.0
- 51
-180.0
-  0
-LINE
-  5
-8E
-330
-70
-100
-AcDbEntity
-  8
-Control board outline v2_Sketch2
-100
-AcDbLine
- 10
-28.0
- 20
--20.0
- 30
-0.0
- 11
-28.0
- 21
--21.0
- 31
-0.0
-  0
-ARC
-  5
-8F
-330
-70
-100
-AcDbEntity
-  8
-Control board outline v2_Sketch2
-100
-AcDbCircle
- 10
-2.000000029802322
- 20
-20.00000029802322
- 30
-0.0
- 40
-2.0
-100
-AcDbArc
- 50
-270.0
- 51
-0.0098911703304817
-  0
-LINE
-  5
-90
-330
-70
-100
-AcDbEntity
-  8
-Control board outline v2_Sketch2
-100
-AcDbLine
- 10
-28.0
- 20
-20.0
- 30
-0.0
- 11
-28.00000000000001
- 21
-21.0
- 31
 0.0
   0
 ENDSEC
@@ -2635,11 +2881,11 @@ ACAD_VISUALSTYLE
   3
 ACDB_RECOMPOSE_DATA
 350
-99
+A3
   3
 AcDbVariableDictionary
 350
-91
+9B
   0
 DICTIONARY
   5
@@ -3067,7 +3313,7 @@ X-Ray
   0
 XRECORD
   5
-99
+A3
 102
 {ACAD_REACTORS
 330
@@ -3087,7 +3333,7 @@ AcDbXrecord
   0
 DICTIONARY
   5
-91
+9B
 102
 {ACAD_REACTORS
 330
@@ -3103,23 +3349,23 @@ AcDbDictionary
   3
 CANNOSCALE
 350
-96
+A0
   3
 CMLEADERSTYLE
 350
-93
+9D
   3
 CTABLESTYLE
 350
-92
+9C
   3
 CVIEWDETAILSTYLE
 350
-94
+9E
   3
 CVIEWSECTIONSTYLE
 350
-95
+9F
   0
 ACDBDETAILVIEWSTYLE
   5
@@ -3127,7 +3373,7 @@ ACDBDETAILVIEWSTYLE
 102
 {ACAD_XDICTIONARY
 360
-9C
+A6
 102
 }
 102
@@ -4851,7 +5097,7 @@ ACDBSECTIONVIEWSTYLE
 102
 {ACAD_XDICTIONARY
 360
-9A
+A4
 102
 }
 102
@@ -4977,7 +5223,7 @@ TABLESTYLE
 102
 {ACAD_XDICTIONARY
 360
-97
+A1
 102
 }
 102
@@ -11607,15 +11853,15 @@ AcDbSavedByObjectVersion
   0
 DICTIONARYVAR
   5
-96
+A0
 102
 {ACAD_REACTORS
 330
-91
+9B
 102
 }
 330
-91
+9B
 100
 DictionaryVariables
 280
@@ -11625,15 +11871,15 @@ DictionaryVariables
   0
 DICTIONARYVAR
   5
-93
+9D
 102
 {ACAD_REACTORS
 330
-91
+9B
 102
 }
 330
-91
+9B
 100
 DictionaryVariables
 280
@@ -11643,15 +11889,15 @@ STANDARD
   0
 DICTIONARYVAR
   5
-92
+9C
 102
 {ACAD_REACTORS
 330
-91
+9B
 102
 }
 330
-91
+9B
 100
 DictionaryVariables
 280
@@ -11661,15 +11907,15 @@ STANDARD
   0
 DICTIONARYVAR
   5
-94
+9E
 102
 {ACAD_REACTORS
 330
-91
+9B
 102
 }
 330
-91
+9B
 100
 DictionaryVariables
 280
@@ -11679,15 +11925,15 @@ Imperial24
   0
 DICTIONARYVAR
   5
-95
+9F
 102
 {ACAD_REACTORS
 330
-91
+9B
 102
 }
 330
-91
+9B
 100
 DictionaryVariables
 280
@@ -11697,7 +11943,7 @@ Imperial24
   0
 DICTIONARY
   5
-9C
+A6
 330
 6B
 100
@@ -11709,7 +11955,7 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-9D
+A7
   0
 DICTIONARY
   5
@@ -11821,7 +12067,7 @@ SPECULARTILE
   0
 DICTIONARY
   5
-9A
+A4
 330
 69
 100
@@ -11833,11 +12079,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-9B
+A5
   0
 DICTIONARY
   5
-97
+A1
 330
 65
 100
@@ -11849,19 +12095,19 @@ AcDbDictionary
   3
 ACAD_ROUNDTRIP_2008_TABLESTYLE_CELLSTYLEMAP
 360
-98
+A2
   0
 XRECORD
   5
-9D
+A7
 102
 {ACAD_REACTORS
 330
-9C
+A6
 102
 }
 330
-9C
+A6
 100
 AcDbXrecord
 280
@@ -12237,15 +12483,15 @@ AcDbXrecord
   0
 XRECORD
   5
-9B
+A5
 102
 {ACAD_REACTORS
 330
-9A
+A4
 102
 }
 330
-9A
+A4
 100
 AcDbXrecord
 280
@@ -12261,15 +12507,15 @@ FLAGS
   0
 CELLSTYLEMAP
   5
-98
+A2
 102
 {ACAD_REACTORS
 330
-97
+A1
 102
 }
 330
-97
+A1
 100
 AcDbCellStyleMap
  90
