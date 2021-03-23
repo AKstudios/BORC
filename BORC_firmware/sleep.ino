@@ -1,5 +1,5 @@
 // Sleep function for BORC
-// Updated 02/12/2021
+// Updated 03/23/2021
 
 // =================================================================
 // Sleep function
@@ -13,7 +13,7 @@ void sleep(char sleepMode)
   toggleLED(0,0,0);
 
   // disable all devices to save power
-  controlAllDevices(0);  
+  controlDevices(99, LOW);
 
   // put radio and flash to sleep
   radio.sleep();
@@ -67,17 +67,12 @@ void sleep(char sleepMode)
   sleep_disable();  //cancel sleep as a precaution
   flash.wakeup();   // IMPORTANT - wake up flash memory so it doesn't lock out the code
   
-  // only enable essential devices when needed
-  if(knobFlag == true || knobClickFlag == true || actionsIntervalCounter == 3)
-  {
-    pinMode(CURRENT_SENSE_POWER_PIN, OUTPUT);
-    pinMode(TEMP_SENSOR_POWER_PIN, OUTPUT); 
-    pinMode(DRIVER_POWER_PIN, OUTPUT);
-    digitalWrite(CURRENT_SENSE_POWER_PIN, HIGH);
-    digitalWrite(TEMP_SENSOR_POWER_PIN, HIGH);
-    digitalWrite(DRIVER_POWER_PIN, HIGH);
-    delay(1);
-  }
+//  // only enable essential devices when needed
+//  if(knobFlag == true || knobClickFlag == true || actionsIntervalCounter == 3)
+//  {
+//    controlDevices(TEMP_SENSOR_POWER_PIN, HIGH);
+//    delay(1);
+//  }
 }
 
 // =================================================================

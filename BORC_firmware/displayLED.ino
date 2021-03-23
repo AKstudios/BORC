@@ -1,14 +1,16 @@
 // LED matrix functions for BORC
-// Updated 02/14/2021
+// Updated 03/23/2021
 
 // =================================================================
 // Initialize LED matrix
 // =================================================================
 void initializeLEDmatrix()
 {
-  pinMode(LED_SCREEN_POWER_PIN, OUTPUT);
-  digitalWrite(LED_SCREEN_POWER_PIN, HIGH);
-  if(!ledmatrix.begin())
+  // turn on LED matrix
+  controlDevices(LED_SCREEN_POWER_PIN, HIGH);
+
+  // initialize matrix
+  if(!ledmatrix.begin(LED_MATRIX_ADDRESS))
     errorCode |= (1<<LED_DRV_ERR);
   else
     errorCode &= ~(1<<LED_DRV_ERR);

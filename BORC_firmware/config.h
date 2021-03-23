@@ -1,12 +1,12 @@
 // Configuration file for BORC
-// Updated 02/18/2021
+// Updated 03/23/2021
 
 // =================================================================
 // Global variables
 // =================================================================
 char _UID[17], _NODEID[5], _NETWORKID[4], _ENCRYPTKEY[17], _setpoint[3], _interval[6];
 long transmitInterval = 56; // transmit interval for radio messages in seconds
-#define FWVERSION "1001"
+#define FWVERSION "1002"
 #define SERIAL_BAUD 115200
 float batteryVoltage;
 unsigned long last_time, current_time;
@@ -20,12 +20,22 @@ int knobCounter = 0;
 int knobDirection = 0;
 String displayText;
 
+// I2C Addresses ---------------------------------------------------
+#define CURRENT_SENSE_ADDRESS 0x42
+#define SERVO_DRIVER_ADDRESS  0x40
+#define TEMP_SENSE_ADDRESS    0x44
+#define LED_MATRIX_ADDRESS    0x74
+
 // Servo configuration ---------------------------------------------
+#define SERVO_TYPE  1   // 0 = 270 servo, 1 = 360 servo
 #define SERVO_FREQ 60
 int servoPosition = 150;
 int servoMinPosition = 90;
 int servoMaxPosition = 550;
-byte servoIncrements = 10;
+int servoIncrements = 10;
+int servoCWpulse = 150;
+int servoCCWpulse = 500;
+int servoTimeIncrements = 200;  // in ms
 
 // Sensor values ---------------------------------------------------
 float temp, temp_f, rh;

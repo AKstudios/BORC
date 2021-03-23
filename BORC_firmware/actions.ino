@@ -1,43 +1,59 @@
 // Actions functions for BORC (read sensors, debug)
-// Updated 02/18/2021
+// Updated 03/23/2021
 
 // =================================================================
-// Control all devices (turn on/off)
+// Control devices (turn on/off)
 // =================================================================
-void controlAllDevices(byte action)
+void controlDevices(uint8_t pin, byte action)
 {
-  if (action == 1)  // turn on devices
+  if (pin == 99)  // set all devices
   {
-    // set pin modes for devices as OUTPUT
-    pinMode(CURRENT_SENSE_POWER_PIN, OUTPUT);
-    pinMode(SERVO_POWER_PIN, OUTPUT);
-    pinMode(TEMP_SENSOR_POWER_PIN, OUTPUT);
-    pinMode(LED_SCREEN_POWER_PIN, OUTPUT);
-    pinMode(DRIVER_POWER_PIN, OUTPUT);
-  
-    // turn on all devices
-    digitalWrite(CURRENT_SENSE_POWER_PIN, HIGH);
-    digitalWrite(LED_SCREEN_POWER_PIN, HIGH);
-    digitalWrite(SERVO_POWER_PIN, HIGH);
-    digitalWrite(TEMP_SENSOR_POWER_PIN, HIGH);
-    digitalWrite(DRIVER_POWER_PIN, HIGH);
+    if (action == 1)  // turn on devices
+    {
+      // set pin modes for devices as OUTPUT
+      pinMode(CURRENT_SENSE_POWER_PIN, OUTPUT);
+      pinMode(SERVO_POWER_PIN, OUTPUT);
+      pinMode(TEMP_SENSOR_POWER_PIN, OUTPUT);
+      pinMode(LED_SCREEN_POWER_PIN, OUTPUT);
+      pinMode(DRIVER_POWER_PIN, OUTPUT);
+    
+      // turn on all devices
+      digitalWrite(CURRENT_SENSE_POWER_PIN, HIGH);
+      digitalWrite(LED_SCREEN_POWER_PIN, HIGH);
+      digitalWrite(SERVO_POWER_PIN, HIGH);
+      digitalWrite(TEMP_SENSOR_POWER_PIN, HIGH);
+      digitalWrite(DRIVER_POWER_PIN, HIGH);
+    }
+    else if (action == 0) // turn off devices
+    {
+      // turn off all devices
+      digitalWrite(CURRENT_SENSE_POWER_PIN, LOW);
+      digitalWrite(LED_SCREEN_POWER_PIN, LOW);
+      digitalWrite(SERVO_POWER_PIN, LOW);
+      digitalWrite(TEMP_SENSOR_POWER_PIN, LOW);
+      digitalWrite(DRIVER_POWER_PIN, LOW);
+      
+      // set pin modes for devices as INPUT
+      pinMode(DRIVER_POWER_PIN, INPUT);
+      pinMode(LED_SCREEN_POWER_PIN, INPUT);
+      pinMode(CURRENT_SENSE_POWER_PIN, INPUT);
+      pinMode(SERVO_POWER_PIN, INPUT);
+      pinMode(TEMP_SENSOR_POWER_PIN, INPUT);
+    }
   }
 
-  else if (action == 0) // turn off devices
+  else  // set a specific device
   {
-    // turn off all devices
-    digitalWrite(CURRENT_SENSE_POWER_PIN, LOW);
-    digitalWrite(LED_SCREEN_POWER_PIN, LOW);
-    digitalWrite(SERVO_POWER_PIN, LOW);
-    digitalWrite(TEMP_SENSOR_POWER_PIN, LOW);
-    digitalWrite(DRIVER_POWER_PIN, LOW);
-    
-    // set pin modes for devices as INPUT
-    pinMode(DRIVER_POWER_PIN, INPUT);
-    pinMode(LED_SCREEN_POWER_PIN, INPUT);
-    pinMode(CURRENT_SENSE_POWER_PIN, INPUT);
-    pinMode(SERVO_POWER_PIN, INPUT);
-    pinMode(TEMP_SENSOR_POWER_PIN, INPUT);
+    if (action == 1)
+    {
+      pinMode(pin, OUTPUT);
+      digitalWrite(pin, HIGH);
+    }
+    else if (action == 0)
+    {
+      digitalWrite(pin, LOW);
+      pinMode(pin, INPUT);
+    }
   }
 }
 
@@ -46,8 +62,11 @@ void controlAllDevices(byte action)
 // =================================================================
 void readTempRH()
 {
+  // turn on sensor
+  controlDevices(TEMP_SENSOR_POWER_PIN, HIGH);
+  
   // initialize sensor
-  if(!sht31.begin(0x44))
+  if(!sht31.begin(TEMP_SENSE_ADDRESS))
     errorCode |= (1<<TEMP_SENSE_ERR);
   else
     errorCode &= ~(1<<TEMP_SENSE_ERR);
@@ -55,6 +74,9 @@ void readTempRH()
   temp = sht31.readTemperature();    // in °C
   temp_f = (temp * 9.0/5.0) + 32.0;  // convert readings to °F
   rh = sht31.readHumidity();         // in %
+
+  // turn off sensor
+  controlDevices(TEMP_SENSOR_POWER_PIN, LOW);
 }
 
 // =================================================================
@@ -62,8 +84,11 @@ void readTempRH()
 // =================================================================
 void currentSense()
 {
-  // enable current sensor
-  if(!ina219.begin())
+  // turn on sensor
+  controlDevices(CURRENT_SENSE_POWER_PIN, HIGH);
+  
+  // initialize sensor
+  if(!ina219.begin(CURRENT_SENSE_ADDRESS))
     errorCode |= (1<<CURRENT_SENSE_ERR);
   else
     errorCode &= ~(1<<CURRENT_SENSE_ERR);
@@ -79,10 +104,13 @@ void currentSense()
     errorCode &= ~(1<<SERVO_POWER_ERR);
 
   // check if current readings are good
-  if(current >= 2000 || current <= 0)
+  if(current >= 3000 || current <= 0)
     errorCode |= (1<<SERVO_ERR);
   else
     errorCode &= ~(1<<SERVO_ERR);
+
+  // turn off sensor
+  controlDevices(CURRENT_SENSE_POWER_PIN, LOW);
 }
 
 // =================================================================

@@ -1,5 +1,5 @@
 // BORC firmware
-// Updated 02/18/2021
+// Updated 03/23/2021
 
 // Developed by AKstudios
 
@@ -24,7 +24,7 @@
 // =================================================================
 // Library objects
 // =================================================================
-Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x47);
+Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(SERVO_DRIVER_ADDRESS);
 Adafruit_IS31FL3731_Wing ledmatrix = Adafruit_IS31FL3731_Wing();
 Adafruit_SHT31 sht31 = Adafruit_SHT31();
 Adafruit_INA219 ina219;
@@ -143,7 +143,7 @@ void setup()
   Serial.println(UID);
 
   // enable all hardware devices
-  controlAllDevices(1);  
+//  controlDevices(99, HIGH);  
 
   // initialize LED matrix
   initializeLEDmatrix();
