@@ -1,5 +1,5 @@
 // Actions functions for BORC (read sensors, debug)
-// Updated 03/23/2021
+// Updated 04/02/2021
 
 // =================================================================
 // Control devices (turn on/off)
@@ -55,6 +55,7 @@ void controlDevices(uint8_t pin, byte action)
       pinMode(pin, INPUT);
     }
   }
+  delay(1);
 }
 
 // =================================================================
@@ -88,7 +89,7 @@ void currentSense()
   controlDevices(CURRENT_SENSE_POWER_PIN, HIGH);
   
   // initialize sensor
-  if(!ina219.begin(CURRENT_SENSE_ADDRESS))
+  if(!ina219.begin())
     errorCode |= (1<<CURRENT_SENSE_ERR);
   else
     errorCode &= ~(1<<CURRENT_SENSE_ERR);

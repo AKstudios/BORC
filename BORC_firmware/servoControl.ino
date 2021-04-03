@@ -15,6 +15,9 @@ void enableServo()
   // initialize servo driver
   pwm.begin();
   pwm.setPWMFreq(SERVO_FREQ);
+
+  Serial.println("servo driver initialized");
+  delay(1);
 }
 
 // =================================================================
@@ -42,6 +45,7 @@ void runServo()
     Serial.println("manual true");
     if(knobDirection == 1)  // motor left (open valve)
     {
+      toggleLED(1,0,0);  // red color to indicate heat
       if (SERVO_TYPE == 0)
       {
         servoPosition += servoIncrements;
@@ -51,7 +55,7 @@ void runServo()
               
         Serial.print("Servo position: ");
         Serial.println(servoPosition);
-        
+
         pwm.setPWM(0, 0, servoPosition);  // set servo position position
         delay(100); // give servo some time to move
       }
@@ -59,16 +63,18 @@ void runServo()
       {
         pwm.setPWM(0, 0, servoCWpulse);  // move 360 servo clockwise
         delay(1);
-        currentSense();
+//        currentSense();
         delay(servoTimeIncrements);   // give servo some time to move
         pwm.setPWM(0, 0, 0);  // stop 360 servo
         Serial.print("Servo current draw: ");
         Serial.println(current);
       }
+      toggleLED(0,0,0);
     }
 
     else if(knobDirection == 2) // motor right (close valve)
     {
+      toggleLED(0,0,1);  // blue color to indicate cool
       if (SERVO_TYPE == 0)
       {
         servoPosition -= servoIncrements;
@@ -78,7 +84,7 @@ void runServo()
          
         Serial.print("Servo position: ");
         Serial.println(servoPosition);
-        
+
         pwm.setPWM(0, 0, servoPosition);  // set servo position position
         delay(100);   // give servo some time to move
       }
@@ -86,13 +92,14 @@ void runServo()
       {
         pwm.setPWM(0, 0, servoCCWpulse);  // move 360 servo counterclockWise
         delay(1);
-        currentSense();
+//        currentSense();
         delay(servoTimeIncrements);   // give servo some time to move
         pwm.setPWM(0, 0, 0);  // stop 360 servo
         Serial.print("Servo current draw: ");
         Serial.println(current);
       }
     }
+    toggleLED(0,0,0);
   }
 
   // turn motor automatically --------------------------------------

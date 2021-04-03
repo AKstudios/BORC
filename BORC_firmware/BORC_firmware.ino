@@ -1,5 +1,5 @@
 // BORC firmware
-// Updated 03/23/2021
+// Updated 04/02/2021
 
 // Developed by AKstudios
 
@@ -27,7 +27,7 @@
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(SERVO_DRIVER_ADDRESS);
 Adafruit_IS31FL3731_Wing ledmatrix = Adafruit_IS31FL3731_Wing();
 Adafruit_SHT31 sht31 = Adafruit_SHT31();
-Adafruit_INA219 ina219;
+Adafruit_INA219 ina219(CURRENT_SENSE_ADDRESS);
 SPIFlash flash(FLASH_SS, 0xEF30);
 RFM69 radio;
 
@@ -143,20 +143,20 @@ void setup()
   Serial.println(UID);
 
   // enable all hardware devices
-//  controlDevices(99, HIGH);  
+  controlDevices(99, HIGH);
 
   // initialize LED matrix
   initializeLEDmatrix();
 
   // enable current sensor
-  currentSense();
+//  currentSense();
 
   // enable temp/RH sensor
   readTempRH();
   
   // enable servo driver and set servo to min
-  enableServo();
-  pwm.setPWM(0, 0, servoPosition);// start position
+//  enableServo();
+//  pwm.setPWM(0, 0, servoPosition); // start position of 270 servo
 
   // Read the initial state of A
   last_A_state = digitalRead(CHANNEL_A);
@@ -193,9 +193,8 @@ void loop()
         {
           Serial.println("now in demo mode");
           configFlag = true;  // temporarily set configFlag to true. Actual value still in EEPROM, resets on reboot
-          blinkLED(1,1,0,30);
-          blinkLED(1,1,0,30); // blink orange LED twice to indicate temporary demo mode active
-          delay(3000);
+          toggleLED(1,1,1); // toggle white LED to indicate temporary demo mode active
+          delay(100);
           break;
         }
 
