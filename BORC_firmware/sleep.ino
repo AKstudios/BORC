@@ -1,5 +1,5 @@
 // Sleep function for BORC
-// Updated 03/23/2021
+// Updated 04/07/2021
 
 // =================================================================
 // Sleep function
@@ -19,6 +19,9 @@ void sleep(char sleepMode)
   radio.sleep();
   flash.sleep();
   delay(1);
+
+  // enable knob rotation interrupts
+  enableKnobInterrupts();
   
   // enable pin-change interrupt for knob clicks
   cli();  // disable global interrupts
@@ -66,13 +69,29 @@ void sleep(char sleepMode)
   
   sleep_disable();  //cancel sleep as a precaution
   flash.wakeup();   // IMPORTANT - wake up flash memory so it doesn't lock out the code
-  
-//  // only enable essential devices when needed
-//  if(knobFlag == true || knobClickFlag == true || actionsIntervalCounter == 3)
-//  {
-//    controlDevices(TEMP_SENSOR_POWER_PIN, HIGH);
-//    delay(1);
-//  }
+
+  // enable essential devices after waking up
+  if(knobFlag == true || knobClickFlag == true || actionsIntervalCounter == 3)
+  {
+    // enable all hardware devices
+    controlDevices(99, HIGH);
+    delay(1);
+
+    // initialize important devices
+    pwm.begin();
+    pwm.setPWMFreq(SERVO_FREQ);
+  }
+
+  else if(knobFlag == true || knobClickFlag == true || transmitIntervalCounter >= (transmitInterval/8)-1)
+  {
+    // enable all hardware devices
+    controlDevices(99, HIGH);
+    delay(1);
+
+    // initialize important devices
+    enableServo();
+    ledmatrix.clear(); // clear screen so it doesn't flash during transmit
+  }
 }
 
 // =================================================================

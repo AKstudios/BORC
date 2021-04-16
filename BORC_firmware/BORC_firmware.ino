@@ -1,5 +1,5 @@
 // BORC firmware
-// Updated 04/02/2021
+// Updated 04/06/2021
 
 // Developed by AKstudios
 
@@ -39,6 +39,8 @@ ISR (WDT_vect)
   wdt_disable();  // disable watchdog timer
   if(WDTflag == false)
     WDTflag = true;
+  if(servoWDTflag == true)
+    systemReset();
 }
 
 // =================================================================
@@ -105,6 +107,16 @@ ISR(PCINT1_vect)  // ISR for knob click pin
 // =================================================================
 void setup()
 {
+  // disable watchdog timer just in case
+  MCUSR = 0;
+  wdt_disable();  
+
+  // turn LEDs off
+  toggleLED(0,0,0);
+
+  // disable all devices on power up
+  controlDevices(99, LOW);
+  
   Serial.begin(SERIAL_BAUD);
   Serial.println("Power on");
   
@@ -144,31 +156,34 @@ void setup()
 
   // enable all hardware devices
   controlDevices(99, HIGH);
-
+  delay(10);
+  
+  // enable servo driver and set servo to min
+  enableServo();
+  if (SERVO_TYPE == 0)  // 270 servo
+    pwm.setPWM(0, 0, servoMinPosition); // start from min position for 270 servo
+  
   // initialize LED matrix
   initializeLEDmatrix();
 
   // enable current sensor
-//  currentSense();
+  currentSense();
 
   // enable temp/RH sensor
   readTempRH();
-  
-  // enable servo driver and set servo to min
-//  enableServo();
-//  pwm.setPWM(0, 0, servoPosition); // start position of 270 servo
 
   // Read the initial state of A
   last_A_state = digitalRead(CHANNEL_A);
 
   // setup interrupts
-  attachInterrupt(0, encoderISR, CHANGE);
-  attachInterrupt(1, encoderISR, CHANGE);
+  enableKnobInterrupts();
 
   // get initial time
   last_time = millis();
   
   Serial.println("Ready");
+  
+  delay(1000); //wait 1 second till everything settles in
 }
 
 // =================================================================

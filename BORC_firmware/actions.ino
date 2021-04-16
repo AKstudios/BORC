@@ -1,5 +1,13 @@
 // Actions functions for BORC (read sensors, debug)
-// Updated 04/02/2021
+// Updated 04/11/2021
+
+// =================================================================
+// System reset in extreme situations if code gets hanged somewhere
+// =================================================================
+void systemReset()
+{
+  asm volatile ("jmp 0");
+}
 
 // =================================================================
 // Control devices (turn on/off)
@@ -12,7 +20,7 @@ void controlDevices(uint8_t pin, byte action)
     {
       // set pin modes for devices as OUTPUT
       pinMode(CURRENT_SENSE_POWER_PIN, OUTPUT);
-      pinMode(SERVO_POWER_PIN, OUTPUT);
+//      pinMode(SERVO_POWER_PIN, OUTPUT);
       pinMode(TEMP_SENSOR_POWER_PIN, OUTPUT);
       pinMode(LED_SCREEN_POWER_PIN, OUTPUT);
       pinMode(DRIVER_POWER_PIN, OUTPUT);
@@ -20,7 +28,7 @@ void controlDevices(uint8_t pin, byte action)
       // turn on all devices
       digitalWrite(CURRENT_SENSE_POWER_PIN, HIGH);
       digitalWrite(LED_SCREEN_POWER_PIN, HIGH);
-      digitalWrite(SERVO_POWER_PIN, HIGH);
+//      digitalWrite(SERVO_POWER_PIN, HIGH);
       digitalWrite(TEMP_SENSOR_POWER_PIN, HIGH);
       digitalWrite(DRIVER_POWER_PIN, HIGH);
     }
@@ -56,6 +64,24 @@ void controlDevices(uint8_t pin, byte action)
     }
   }
   delay(1);
+}
+
+// =================================================================
+// Enable knob interrupts
+// =================================================================
+void enableKnobInterrupts()
+{
+  attachInterrupt(0, encoderISR, CHANGE);
+  attachInterrupt(1, encoderISR, CHANGE);
+}
+
+// =================================================================
+// Disable knob interrupts
+// =================================================================
+void disableKnobInterrupts()
+{
+  detachInterrupt(0);
+  detachInterrupt(1);
 }
 
 // =================================================================
@@ -112,6 +138,21 @@ void currentSense()
 
   // turn off sensor
   controlDevices(CURRENT_SENSE_POWER_PIN, LOW);
+}
+
+// =================================================================
+// Average current sensor reading
+// =================================================================
+float avgCurrentSense()
+{
+  float current_sum=0.0;
+  float samples = 20.0;
+  for (int i=0; i<samples; i++)
+  {
+    current = ina219.getCurrent_mA();
+    current_sum += current;
+  }
+  return current_sum/samples;
 }
 
 // =================================================================

@@ -1,5 +1,5 @@
 // LED matrix functions for BORC
-// Updated 03/23/2021
+// Updated 04/03/2021
 
 // =================================================================
 // Initialize LED matrix
@@ -14,6 +14,11 @@ void initializeLEDmatrix()
     errorCode |= (1<<LED_DRV_ERR);
   else
     errorCode &= ~(1<<LED_DRV_ERR);
+
+  ledmatrix.setRotation(0); // 0 = upright, 2 = upside down, 1,3 = 90° rotated
+  ledmatrix.setTextColor(255);
+  ledmatrix.clear();
+  ledmatrix.setCursor(2,0);
 }
 
 // =================================================================
@@ -22,14 +27,19 @@ void initializeLEDmatrix()
 void displayLED(char choice)
 {
   // Initialize LED display again only if woken up by knob interrupt first time
-  if(knobCounter <= 10)   // to account for initial bounces in rotary encoder
-  {
-    knobCounter = 11; // set it arbritarily higher so don't have to initialize display again
-    initializeLEDmatrix();
-  }
-  ledmatrix.setTextColor(255);
-  ledmatrix.clear();
-  ledmatrix.setCursor(2,0);
+//  if(knobCounter <= 10)   // to account for initial bounces in rotary encoder
+//  {
+//    knobCounter = 11; // set it arbritarily higher so don't have to initialize display again
+//    initializeLEDmatrix();
+//  }
+
+    ledmatrix.setTextColor(255);
+    ledmatrix.setCursor(2,0);
+    ledmatrix.clear();
+
+  // Turn on LED matrix only if it was previously turned off
+  if(digitalRead(LED_SCREEN_POWER_PIN == LOW))
+    controlDevices(LED_SCREEN_POWER_PIN, HIGH);
 
   // print setpoint on LED display ---------------------------------
   if(choice == 's')
@@ -117,6 +127,7 @@ void displayLED(char choice)
   // fade out display ----------------------------------------------
   else if(choice == 'f')
   {
+    toggleLED(0,0,0); // turn LEDs off
     for(int i=200; i>=0; i=i-10)
     {
       ledmatrix.setTextColor(i);  // adjust brightness

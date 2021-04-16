@@ -1,10 +1,10 @@
 // Configuration file for BORC
-// Updated 04/02/2021
+// Updated 04/13/2021
 
 // =================================================================
 // Global variables
 // =================================================================
-#define FWVERSION "1003"
+#define FWVERSION "1004"
 
 #define SERIAL_BAUD 115200
 char _UID[17], _NODEID[5], _NETWORKID[4], _ENCRYPTKEY[17], _setpoint[3], _interval[6];
@@ -15,7 +15,7 @@ boolean current_A_state, last_A_state;
 byte transmitIntervalCounter = 0;
 byte actionsIntervalCounter = 0;
 byte errorCode = 0;
-int displayTimeout = 5000;
+int displayTimeout = 3000;
 int configurationTimeout = 10000;
 int knobCounter = 0;
 int knobDirection = 0;
@@ -28,22 +28,22 @@ String displayText;
 #define LED_MATRIX_ADDRESS    0x74
 
 // Servo configuration ---------------------------------------------
-#define SERVO_TYPE  1   // 0 = 270 servo, 1 = 360 servo
-#define SERVO_FREQ 60
-int servoPosition = 150;
-int servoMinPosition = 90;
-int servoMaxPosition = 550;
-int servoIncrements = 10;
-int servoCWpulse = 150;
-int servoCCWpulse = 500;
-int servoTimeIncrements = 200;  // in ms
+#define SERVO_TYPE  0           // 0 = 270 servo, 1 = 360 servo
+#define SERVO_FREQ 50           // analog servos are usually 50 Hz
+int servoIncrements = 10;       // for 270 servo
+int servoPosition = 150;        // for 270 servo
+int servoMinPosition = 90;      // for 270 servo
+int servoMaxPosition = 550;     // for 270 servo
+int servoCWpulse = 150;         // for 360 servo
+int servoCCWpulse = 500;        // for 360 servo
+int servoTimeIncrements = 100;  // in ms, for 360 servo
 
 // Sensor values ---------------------------------------------------
 float temp, temp_f, rh;
 float busVoltage, current;
 byte setpointMaxValue = 90;
 byte setpointMinValue = 55;
-int setpoint = 72;
+int setpoint = 72;  
 byte manualOverride = 0;
 
 // Node configuration ----------------------------------------------
@@ -100,6 +100,7 @@ boolean displayMax = false;
 boolean displayMin = false;
 boolean configFlag = false;
 boolean WDTflag = false;
+boolean servoWDTflag = false;
 boolean knobFlag = false;
 boolean knobClickFlag = false;
 boolean advancedOptions = false;

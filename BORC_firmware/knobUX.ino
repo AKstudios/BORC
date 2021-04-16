@@ -6,11 +6,14 @@
 // =================================================================
 void checkKnobStatus()
 {
+  Serial.println("checking knob status");
   // Knob rotated --------------------------------------------------
   if(knobFlag == true && knobClickFlag == false && WDTflag == false && knobDirection != 0)
   {
+    Serial.println("knob rotated");
     if(manualMode == false)
     {
+      Serial.println("setpoint mode true");
       displayLED('s');
       toggleLED(0,0,0); // turn LEDs off
       knobDirection = 0;    // reset knob direction
@@ -18,6 +21,7 @@ void checkKnobStatus()
 
     else if(manualMode == true)
     {
+      Serial.println("manual mode true");
       displayLED('<');
       toggleLED(0,0,0); // turn LEDs off
       runServo();
@@ -29,6 +33,7 @@ void checkKnobStatus()
   // Knob clicked --------------------------------------------------
   else if(knobFlag == true && knobClickFlag == true && WDTflag == false && knobDirection == 0)
   {
+    Serial.println("knob clicked true");
     last_time = millis();
     while(digitalRead(KNOB_CLICK) == 0) // button still pressed
     {
@@ -50,14 +55,15 @@ void checkKnobStatus()
       }
 
       // display current temp when knob held for 1-4 secs
-      if(current_time - last_time >= 1500 && current_time - last_time <= 4500)
+      if(current_time - last_time >= 1500 && current_time - last_time <= 3500)
       {
         toggleLED(1,1,1); // toggle white LED
         displayLED('t');
+//        tempDisplayFlag = true;
       }
 
       // display manual/calibration menu when knob held for 4-7 secs
-      else if(current_time - last_time >= 4500 && current_time - last_time <= 7500)
+      else if(current_time - last_time >= 3500 && current_time - last_time <= 6500)
       {
         toggleLED(0,1,1); // toggle teal LED
         if(advancedOptions == false)
@@ -74,7 +80,7 @@ void checkKnobStatus()
       }
 
       // if button held more than 7 seconds, timeout
-      else if(current_time - last_time > 7500)
+      else if(current_time - last_time > 6500)
       {
         Serial.println("knob pressed too long!");
         break;
@@ -104,10 +110,11 @@ void checkKnobStatus()
   // Knob used, fade out display -----------------------------------
   while (knobDirection == 0 && knobFlag == true && knobClickFlag == false && advancedOptions == false)
   {
-    wdt_reset();
+//    wdt_reset();
     current_time = millis();
     if(current_time - last_time >= displayTimeout)
     {
+      Serial.println("knob used, fading out display ...");
       displayLED('f');
       knobFlag = false;
     }
