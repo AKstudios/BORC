@@ -1,5 +1,5 @@
 // BORC firmware
-// Updated 04/06/2021
+// Updated 04/19/2021
 
 // Developed by AKstudios
 
@@ -50,8 +50,7 @@ void encoderISR()  // Interrupt Service Routine for encoder
 {
   PCICR &= ~(1<<PCIE1); // disable interrupts on PCINT[15:8]
   knobCounter++;
-  detachInterrupt(0);
-  detachInterrupt(1);
+  disableKnobInterrupts();
   if (knobFlag == true)
   {
     current_A_state = digitalRead(CHANNEL_A);
@@ -60,11 +59,13 @@ void encoderISR()  // Interrupt Service Routine for encoder
       if (digitalRead(CHANNEL_B) != current_A_state)
       {
         setpoint--;
+        menuOption--;
         knobDirection = 1;   // knob moves anticlockwise
       }
       else
       {
         setpoint++;
+        menuOption++;
         knobDirection = 2;   // knob moves clockwise
       }
       
@@ -78,6 +79,16 @@ void encoderISR()  // Interrupt Service Routine for encoder
         setpoint = setpointMinValue;
         displayMin = true;
       }
+
+      if (menuOption > menuOptionMaxValue)
+      {
+        menuOption = menuOptionMaxValue;
+      }
+      else if (menuOption < 0)
+      {
+        menuOption = 0;
+      }
+
     }
     manualOverride = 1;
     last_A_state = current_A_state;
@@ -86,8 +97,8 @@ void encoderISR()  // Interrupt Service Routine for encoder
   {
     knobFlag = true;
   }
-  attachInterrupt(0, encoderISR, CHANGE);  // enable hardware interrupt
-  attachInterrupt(1, encoderISR, CHANGE);  // enable hardware interrupt
+  
+  enableKnobInterrupts();
 }
 
 // =================================================================

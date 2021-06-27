@@ -1,10 +1,10 @@
 // Configuration file for BORC
-// Updated 04/13/2021
+// Updated 04/16/2021
 
 // =================================================================
 // Global variables
 // =================================================================
-#define FWVERSION "1004"
+#define FWVERSION "1005"
 
 #define SERIAL_BAUD 115200
 char _UID[17], _NODEID[5], _NETWORKID[4], _ENCRYPTKEY[17], _setpoint[3], _interval[6];
@@ -17,9 +17,12 @@ byte actionsIntervalCounter = 0;
 byte errorCode = 0;
 int displayTimeout = 3000;
 int configurationTimeout = 10000;
+int advancedOptionsTimeout = 5000;
 int knobCounter = 0;
 int knobDirection = 0;
 String displayText;
+int menuOption = 0;
+int menuOptionMaxValue = 5;
 
 // I2C Addresses ---------------------------------------------------
 #define CURRENT_SENSE_ADDRESS 0x41
@@ -105,7 +108,7 @@ boolean knobFlag = false;
 boolean knobClickFlag = false;
 boolean advancedOptions = false;
 boolean manualMode = false;
-boolean calibrationMode = false;
 boolean demoMode = false;
+boolean displayFlag = false;
 
 // =================================================================

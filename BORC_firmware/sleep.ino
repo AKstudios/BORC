@@ -6,8 +6,9 @@
 // =================================================================
 void sleep(char sleepMode)
 { 
-  // reset knob counter
+  // reset counters
   knobCounter = 0;
+  menuOption = 0;  
 
   // turn LEDs off
   toggleLED(0,0,0);
@@ -70,7 +71,7 @@ void sleep(char sleepMode)
   sleep_disable();  //cancel sleep as a precaution
   flash.wakeup();   // IMPORTANT - wake up flash memory so it doesn't lock out the code
 
-  // enable essential devices after waking up
+  // enable essential devices after waking up due to knob or if actions need to be taken
   if(knobFlag == true || knobClickFlag == true || actionsIntervalCounter == 3)
   {
     // enable all hardware devices
@@ -78,11 +79,12 @@ void sleep(char sleepMode)
     delay(1);
 
     // initialize important devices
-    pwm.begin();
-    pwm.setPWMFreq(SERVO_FREQ);
+    enableServo();
+//    initializeLEDmatrix();
   }
 
-  else if(knobFlag == true || knobClickFlag == true || transmitIntervalCounter >= (transmitInterval/8)-1)
+  // time to transmit data
+  else if(knobFlag == false && knobClickFlag == false && transmitIntervalCounter >= (transmitInterval/8)-1)
   {
     // enable all hardware devices
     controlDevices(99, HIGH);
@@ -90,7 +92,6 @@ void sleep(char sleepMode)
 
     // initialize important devices
     enableServo();
-    ledmatrix.clear(); // clear screen so it doesn't flash during transmit
   }
 }
 

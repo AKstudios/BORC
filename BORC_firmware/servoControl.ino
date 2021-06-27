@@ -1,5 +1,5 @@
 // Motor control functions for BORC
-// Updated 04/13/2021
+// Updated 04/19/2021
 
 // =================================================================
 // Turn servo power & servo driver power on
@@ -47,7 +47,7 @@ void runServo()
   Serial.println("turning servo power on");
   // turn on servo power
   controlDevices(SERVO_POWER_PIN, HIGH);
-  delay(1);
+  delay(100);
 
   // turn motor in small increments in manual mode -----------------
   if(manualMode == true)  
@@ -68,8 +68,19 @@ void runServo()
 
         disableKnobInterrupts();
         pwm.setPWM(0, 0, servoPosition);  // set servo position position
-        float avgCurrent = avgCurrentSense();
-        delay(300); // give servo some time to move
+        delay(350);
+        
+//        float avgCurrent = avgCurrentSense();
+//        while (avgCurrent >= 7.0)
+//        {
+//          Serial.print("Current draw: ");
+//          Serial.println(avgCurrent);
+//          delay(1);
+//          avgCurrent = avgCurrentSense();
+//          if (avgCurrent < 7.0)
+//            break;
+//        }
+//        delay(300); // give servo some time to move
         enableKnobInterrupts();
       }
       else if (SERVO_TYPE == 1) // 360 servo
@@ -102,8 +113,19 @@ void runServo()
 
         disableKnobInterrupts();
         pwm.setPWM(0, 0, servoPosition);  // set servo position position
-        float avgCurrent = avgCurrentSense();
-        delay(300);   // give servo some time to move
+        delay(350);
+        
+//        float avgCurrent = avgCurrentSense();
+//        while (avgCurrent >= 7.0)
+//        {
+//          Serial.print("Current draw: ");
+//          Serial.println(avgCurrent);
+//          delay(1);
+//          avgCurrent = avgCurrentSense();
+//          if (avgCurrent < 7.0)
+//            break;
+//        }
+//        delay(300); // give servo some time to move
         enableKnobInterrupts();
       }
       else if (SERVO_TYPE == 1) // 360 servo

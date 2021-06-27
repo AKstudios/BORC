@@ -1,5 +1,0 @@
-{
-    "board": "Moteino:avr:MoteinoMEGA",
-    "port": "COM13",
-    "sketch": "BORC_firmware.ino"
-}

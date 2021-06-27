@@ -6,6 +6,12 @@
 // =================================================================
 void systemReset()
 {
+  // clear configuration settings in EEPROM
+  for (int i = 0 ; i < 500 ; i++) {
+    EEPROM.write(i, 0);
+  }
+
+  // reset system
   asm volatile ("jmp 0");
 }
 

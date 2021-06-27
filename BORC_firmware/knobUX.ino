@@ -1,5 +1,5 @@
 // Knob UX functions for BORC
-// Updated 02/12/2021
+// Updated 04/19/2021
 
 // =================================================================
 // Function to check knob status
@@ -33,7 +33,7 @@ void checkKnobStatus()
   // Knob clicked --------------------------------------------------
   else if(knobFlag == true && knobClickFlag == true && WDTflag == false && knobDirection == 0)
   {
-    Serial.println("knob clicked true");
+    Serial.println("knob clicked");
     last_time = millis();
     while(digitalRead(KNOB_CLICK) == 0) // button still pressed
     {
@@ -54,33 +54,21 @@ void checkKnobStatus()
         }
       }
 
-      // display current temp when knob held for 1-4 secs
+      // display advanced menu when knob held for 1-4 secs
       if(current_time - last_time >= 1500 && current_time - last_time <= 3500)
-      {
-        toggleLED(1,1,1); // toggle white LED
-        displayLED('t');
-//        tempDisplayFlag = true;
-      }
-
-      // display manual/calibration menu when knob held for 4-7 secs
-      else if(current_time - last_time >= 3500 && current_time - last_time <= 6500)
       {
         toggleLED(0,1,1); // toggle teal LED
         if(advancedOptions == false)
         {
           Serial.println("toggle advanced options");
           advancedOptions = true;
-          if(manualMode == false)
-            displayLED('M');
-          else if(manualMode == true)
-            displayLED('S');
           delay(1000);
           break;
         }
       }
 
-      // if button held more than 7 seconds, timeout
-      else if(current_time - last_time > 6500)
+      // if button held more than 4 seconds, timeout
+      else if(current_time - last_time > 3500)
       {
         Serial.println("knob pressed too long!");
         break;
@@ -110,7 +98,7 @@ void checkKnobStatus()
   // Knob used, fade out display -----------------------------------
   while (knobDirection == 0 && knobFlag == true && knobClickFlag == false && advancedOptions == false)
   {
-//    wdt_reset();
+    wdt_reset();
     current_time = millis();
     if(current_time - last_time >= displayTimeout)
     {
@@ -124,85 +112,139 @@ void checkKnobStatus()
   while(advancedOptions == true)
   {
     current_time = millis();
-    
-    // manual mode
-    if (knobDirection == 0 || knobDirection == 1)
+
+    // Option 0 - Show room temp
+    if (menuOption == 0)
+      displayLED('t');
+
+    // Option 1 - Manual mode
+    else if (menuOption == 1)
+      displayLED('M');
+
+    // Option 2 - setpoint mode
+    else if (menuOption == 2)
+      displayLED('S');
+
+    // Option 3 - Calibration mode
+    else if (menuOption == 3)
+      displayLED('C');
+
+    // Option 4 - Rotate display mode
+    else if (menuOption == 4)
+      displayLED('R');
+
+    // Option 5 - System reset mode
+    else if (menuOption == 5)
+      displayLED('X');
+
+
+    // knob was clicked on one of the options ----------------------
+    if(digitalRead(KNOB_CLICK) == 0)
     {
-      if(manualMode == false)
+      Serial.println(menuOption);
+      Serial.println("advanced knob clicked");
+      if (menuOption == 0)  // Option 0 - room temp
       {
-        displayLED('M');
-        if(digitalRead(KNOB_CLICK) == 0)
-        {
-          Serial.println("Manual mode set");
-          advancedOptions = false;
-          manualMode = true;
-          calibrationMode = false;
-          delay(500);
-          displayLED('<');
-          toggleLED(0,0,0);
-          break;
-        }
+        Serial.println("room temp");
+        toggleLED(0,0,0); // toggle LED off
+        
+        advancedOptions = false;
+        manualMode = false;
+        
+        delay(500);
+        displayLED('f');
+        break;
       }
 
-      // setpoint mode
-      else if(manualMode == true)
+      else if (menuOption == 1)  // Option 1 - Manual mode
       {
-        displayLED('S');
-        if(digitalRead(KNOB_CLICK) == 0)
-        {
-          Serial.println("setpoint mode set");
-          advancedOptions = false;
-          manualMode = false;
-          calibrationMode = false;
-          delay(500);
-          setpoint = 72;  // reset setpoint to 72
-          displayLED('s');
-          toggleLED(0,0,0);
-          break;
-        }
+        Serial.println("manual mode set");
+        displayLED('<');
+        toggleLED(0,0,0); // toggle LED off
+        
+        advancedOptions = false;
+        manualMode = true;
+
+        delay(500);
+        displayLED('f');
+        break;
       }
-    }
-    
-    // calibration mode
-    else if (knobDirection == 2)
-    {
-      displayLED('C');
-      if(digitalRead(KNOB_CLICK) == 0)
+  
+      // Option 2 - setpoint mode
+      else if (menuOption == 2)
+      {
+        Serial.println("setpoint mode set");
+        setpoint = 72;  // reset setpoint to 72
+        displayLED('s');
+        toggleLED(0,0,0); // toggle LED off
+        
+        advancedOptions = false;
+        manualMode = false;
+
+        delay(500);
+        displayLED('f');
+        break;
+      }
+  
+      // Option 3 - Calibration mode
+      else if (menuOption == 3)
       {
         Serial.println("calibration mode set");
-        advancedOptions = false;
-        calibrationMode = true;
-        manualMode = false;
+        displayLED('C');
+        toggleLED(0,0,0); // toggle LED off
         delay(500);
-        displayLED('x');
-        toggleLED(0,0,0);
+        calibrateServo();
+              
+        advancedOptions = false;
+        manualMode = false;
+
+        displayLED('f');
+        break;
+      }
+  
+      // Option 4 - Rotate display mode
+      else if (menuOption == 4)
+      {
+        Serial.println("rotate display set");
+        rotateDisplay(true);
+        displayLED('R');
+        toggleLED(0,0,0); // toggle LED off
+        
+        advancedOptions = false;
+        manualMode = false;
+
+        delay(500);
+        displayLED('f');
+        break;
+      }
+  
+      // Option 5 - System reset mode
+      else if (menuOption == 5)
+      {
+        Serial.println("SYSTEM RESET!");
+        displayLED('-');
+        toggleLED(1,1,0);   // toggle orange LED
+
+        advancedOptions = false;
+        manualMode = false;
+
+        delay(1000);
+        knobCounter = 0;
+        systemReset();
         break;
       }
     }
-
+    
     // timeout
-    if(current_time - last_time >= 7000)
+    if(current_time - last_time >= advancedOptionsTimeout)
     {
       Serial.println("advanced options timeout");
-      calibrationMode = false;
-      manualMode = false;
       advancedOptions = false;
-      knobFlag = false;
+      manualMode = false;
+
       displayLED('f');    // fade out display
       break;
     }
-  }
-
-  // Calibration mode ----------------------------------------------
-  while(calibrationMode == true)
-  {
-    displayLED('C');
-    calibrateServo();
-    calibrationMode = false;
-    advancedOptions = false;
-    displayLED('f');
-    toggleLED(0,0,0);
-    break;
   }
 }
 
