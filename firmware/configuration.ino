@@ -14,7 +14,7 @@ void getNodeParams()
 // =================================================================
 // Write new node ID, network ID and encrypt key to EEPROM
 // =================================================================
-void updateNodeParamsInEEPROM()
+void updateEEPROM()
 {
   EEPROM.put(NODEIDADDRESS, NODEID);
   EEPROM.put(NETWORKIDADDRESS, NETWORKID);
@@ -27,58 +27,92 @@ void updateNodeParamsInEEPROM()
 // =================================================================
 void configurationMode()
 {
-  memset(dataReceived, 0, sizeof dataReceived);   // clear array
-  
-//  strcat(dataReceived, "c,d767c451a32b7e28,2,10,Asdfghjkl#qw!erG"); // test
-   
   Serial.println("Configuration mode");
   delay(5);
-  toggleLED(1,1,0); // toggle orange LED to indicate configuration mode
 
-  createDataPacket('c');  // create a configuration packet
+  // toggle orange LED to indicate configuration mode
+  toggleLED(1,1,0);
   
+  // clear received datapacket array
+  memset(dataReceived, 0, sizeof dataReceived);   
+
+  // create configuration mode test packet
+  // strcat(dataReceived, "c,d767c451a32b7e28,2,10,Asdfghjkl#qw!erG");
+
+  // create a configuration mode packet
+  createDataPacket('c');
+
+  // save last time for config loop timeout
   last_time = millis();
+
+  // save last time for config packet trasmission
   unsigned long last_time_2 = millis();
+
+  // config loop
   while (true)
   {
-    current_time = millis();  // keep track of current time
+    // keep track of current time
+    current_time = millis();
 
-    if(current_time - last_time_2 >= 2000) // send data every 2 seconds
+    // send data every 2 seconds
+    if(current_time - last_time_2 >= 2000) 
     {
-      sendData(false);  // false argument does not wait for ACK to come back
+      // false argument does not wait for ACK to come back
+      sendData(false);
+
+      // reset transmission time
       last_time_2 = millis();
     }
 
     // check if gateway sent something back
     if(radio.receiveDone())
     {
+
+      // save incoming data in a data packet
       for (byte i = 0; i < radio.DATALEN; i++)
         dataReceived[i] = (char)radio.DATA[i];
-
       Serial.println(dataReceived);
-      if(sizeof(dataReceived) > 0)  // valid packet, not just an empty ACK
+
+      // check if packet is valid, i.e., has data and isn't just an empty ACK
+      if(sizeof(dataReceived) > 0)
       {
-        Serial.println("data received size ok");          
+        Serial.println("data received size ok");
+
+        // parse data and verify it
         if(parseData() == true) // good data received
         {
           Serial.println("data parsed ok");
-          updateNodeParamsInEEPROM();
+
+          // update node parameters in EEPROM with new data. This will set config flag to true
+          updateEEPROM();
+
+          // set the new node parameters
           setNodeParams();
+
+          // break out of config while loop
           break;
         }
-        else{
+
+        // if parsing data failed, break out of while loop
+        else
+        {
           Serial.println("parse fail");
-          break;}
+          break;
+        }
       }
     }
 
-    // timeout
+    // if configuration timeout reached
     if(current_time - last_time >= configurationTimeout)
     {
       Serial.println("timeout");
+      
+      // set config flag to false
       configFlag == false;
       break;
     }
   }
-  memset(dataReceived, 0, sizeof dataReceived);   // clear array after processing
+
+  // clear array after processing
+  memset(dataReceived, 0, sizeof dataReceived);
 }

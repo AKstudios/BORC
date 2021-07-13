@@ -1,5 +1,5 @@
 // Sleep function for BORC
-// Updated 04/07/2021
+// Updated 0/07/2021
 
 // =================================================================
 // Sleep function
@@ -7,8 +7,7 @@
 void sleep(char sleepMode)
 { 
   // reset counters
-  knobCounter = 0;
-  menuOption = 0;  
+  menuOption = 0;
 
   // turn LEDs off
   toggleLED(0,0,0);
@@ -21,28 +20,32 @@ void sleep(char sleepMode)
   flash.sleep();
   delay(1);
 
-  // enable knob rotation interrupts
+  // enable knob interrupts (rotation & clicks)
   enableKnobInterrupts();
-  
-  // enable pin-change interrupt for knob clicks
-  cli();  // disable global interrupts
-  PORTB |= (1<<PORTB0); //Activate pullup on pin PB0
-  PCIFR |= (1<<PCIF1); // clear outstanding interrupt on PCINT[15:8] 
-  PCICR |= (1<<PCIE1); // enable interrupts on PCINT[15:8]
-  PCMSK1 |= (1<<PCINT8); // pin change mask register for pin D0 (PCINT8)
-  sei();  // enable global interrupts
 
   // disable internal stuff to save power
   ADCSRA = 0;  // disable ADC
   MCUSR = 0;    // clear various "reset" flags
   
-  if(sleepMode == 'w')
+  if(sleepMode == '8')
   {
-    Serial.println("WDT sleep");
+    Serial.println("WDT 8 sleep");
     delay(5);
     // set watchdog sleep
+    WDTCSR = 0;
     WDTCSR = bit (WDCE) | bit (WDE);  // allow changes, disable reset
-    WDTCSR = bit (WDIE) | bit (WDP3) | bit (WDP0); //set interrupt mode and an 8 sec interval
+    WDTCSR = bit (WDIE) | bit (WDP3) | bit (WDP0); // set interrupt mode and an 8 sec interval
+    wdt_reset(); //pat the dog...
+  }
+
+  else if(sleepMode == '2')
+  {
+    Serial.println("WDT 2 sleep");
+    delay(5);
+    // set watchdog sleep
+    WDTCSR = 0;
+    WDTCSR = bit (WDCE) | bit (WDE);  // allow changes, disable reset
+    WDTCSR = bit (WDIE) | bit (WDP2)| bit (WDP1) | bit (WDP0); // set interrupt mode and a 2 sec interval
     wdt_reset(); //pat the dog...
   }
   
@@ -72,7 +75,7 @@ void sleep(char sleepMode)
   flash.wakeup();   // IMPORTANT - wake up flash memory so it doesn't lock out the code
 
   // enable essential devices after waking up due to knob or if actions need to be taken
-  if(knobFlag == true || knobClickFlag == true || actionsIntervalCounter == 3)
+  if(knobRotateFlag == true || knobClickFlag == true || actionsIntervalCounter == 3)
   {
     // enable all hardware devices
     controlDevices(99, HIGH);
@@ -80,11 +83,11 @@ void sleep(char sleepMode)
 
     // initialize important devices
     enableServo();
-//    initializeLEDmatrix();
+    initializeLEDmatrix();
   }
 
   // time to transmit data
-  else if(knobFlag == false && knobClickFlag == false && transmitIntervalCounter >= (transmitInterval/8)-1)
+  else if(knobRotateFlag == false && knobClickFlag == false && transmitIntervalCounter >= (transmitInterval/8)-1)
   {
     // enable all hardware devices
     controlDevices(99, HIGH);

@@ -166,8 +166,13 @@ void runServo()
 // =================================================================
 void calibrateServo()
 {
+  // diable interrupts
+  
+          // toggle Red LED to indicate calibration active
+        toggleLED(1,0,0);
+  
   //  enableServo();
-
+  
   // turn on servo power
   controlDevices(SERVO_POWER_PIN, HIGH);
   
@@ -226,6 +231,11 @@ void calibrateServo()
 
   // once everything is done, turn off servo power
   controlDevices(SERVO_POWER_PIN, LOW);
+
+          // toggle Green LED to indicate calibration complete
+        toggleLED(1,0,0);
+
+        // enable interrupts
 }
 
 // =================================================================

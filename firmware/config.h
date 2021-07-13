@@ -1,28 +1,20 @@
 // Configuration file for BORC
-// Updated 04/16/2021
+// Updated 07/10/2021
 
 // =================================================================
 // Global variables
 // =================================================================
-#define FWVERSION "1005"
 
+// Firmware version number -----------------------------------------
+#define FWVERSION "1006"
+
+// Misc. global variables ------------------------------------------
 #define SERIAL_BAUD 115200
-char _UID[17], _NODEID[5], _NETWORKID[4], _ENCRYPTKEY[17], _setpoint[3], _interval[6];
-long transmitInterval = 56; // transmit interval for radio messages in seconds
 float batteryVoltage;
-unsigned long last_time, current_time;
-boolean current_A_state, last_A_state;
 byte transmitIntervalCounter = 0;
 byte actionsIntervalCounter = 0;
+unsigned long last_time, current_time;
 byte errorCode = 0;
-int displayTimeout = 3000;
-int configurationTimeout = 10000;
-int advancedOptionsTimeout = 5000;
-int knobCounter = 0;
-int knobDirection = 0;
-String displayText;
-int menuOption = 0;
-int menuOptionMaxValue = 5;
 
 // I2C Addresses ---------------------------------------------------
 #define CURRENT_SENSE_ADDRESS 0x41
@@ -41,34 +33,52 @@ int servoCWpulse = 150;         // for 360 servo
 int servoCCWpulse = 500;        // for 360 servo
 int servoTimeIncrements = 100;  // in ms, for 360 servo
 
+// LED matrix configuration ----------------------------------------
+char displayMode, _displayMode;
+int displayTimeout = 4000;
+String displayText;
+int menuOption = 0;
+
+// knob configuration ----------------------------------------------
+boolean current_A_state, last_A_state;
+int knobTimeout = 4000;
+int configurationTimeout = 10000;
+int knobDirection = 0;
+
 // Sensor values ---------------------------------------------------
 float temp, temp_f, rh;
 float busVoltage, current;
 byte setpointMaxValue = 90;
 byte setpointMinValue = 55;
-int setpoint = 72;  
+byte autpoSetpointMaxValue = 90;
+byte autpoSetpointMinValue = 55;
+byte manualSetpointMaxValue = 6;
+byte manualSetpointMinValue = 0;
+int setpoint = 72;
 byte manualOverride = 0;
 
-// Node configuration ----------------------------------------------
+// Node & radio configuration --------------------------------------
+char _UID[17], _NODEID[5], _NETWORKID[4], _ENCRYPTKEY[17], _setpoint[3], _interval[6];
 char UID[17];                     // unique 8-byte (64-bit) ID for node
 String _MACID;
-char dataPacket[100];             // store data packet to send
-char dataReceived[100];           // store received data packets
-uint16_t NODEID = 999;            // 999 = node not configured; 1000 = node currently being configured (limit: 1023)
-uint8_t NETWORKID = 99;           // 99 = configuration network, 10 = sensor network (up to 255)
+char dataPacket[100];                     // store data packet to send
+char dataReceived[100];                   // store received data packets
+uint16_t NODEID = 999;                    // 999 = node not configured; 1000 = node currently being configured (limit: 1023)
+uint8_t NETWORKID = 99;                   // 99 = configuration network, 10 = sensor network (up to 255)
 char ENCRYPTKEY[17] = "sampleEncryptKey"; // 16 bytes + null character at the end
+long transmitInterval = 56;               // transmit interval for radio messages in seconds
 
-#define CONFIGFLAGADDRESS         10    // config flag's address in EEPROM
-#define NODEIDADDRESS             100   // Node ID's address in EEPROM
-#define NETWORKIDADDRESS          200   // Encrypt Key's address in EEPROM
-#define ENCRYPTKEYADDRESS         300   // Encrypt Key's address in EEPROM
-#define NODETYPE                  "ARC" // 3 letter node type identifier
-#define GATEWAYID                 1     // for main gateway
+#define CONFIGFLAGADDRESS         10      // config flag's address in EEPROM
+#define NODEIDADDRESS             100     // Node ID's address in EEPROM
+#define NETWORKIDADDRESS          200     // Encrypt Key's address in EEPROM
+#define ENCRYPTKEYADDRESS         300     // Encrypt Key's address in EEPROM
+#define NODETYPE                  "ARC"   // 3 letter node type identifier
+#define GATEWAYID                 1       // for main gateway
 #define FREQUENCY                 RF69_915MHZ // 915 Mhz for NA region
-#define IS_RFM69HW_HCW            //uncomment only for RFM69HW/HCW! Leave out if you have RFM69W/CW!
 #define ACKTIMEOUT                100
-//#define NODEID                    999 // 999 = node not configured; 1000 = node currently being configured (limit: 1023)
-//#define NETWORKID                 10    // set by gateway (up to 255)
+#define IS_RFM69HW_HCW            //uncomment only for RFM69HW/HCW! Leave out if you have RFM69W/CW!
+//#define NODEID                    999     // 999 = node not configured; 1000 = node currently being configured (limit: 1023)
+//#define NETWORKID                 10      // set by gateway (up to 255)
 //#define ENCRYPTKEY                "sampleEncryptKey" // 16 bytes, set by gateway
 
 // Pin mapping -----------------------------------------------------
@@ -104,11 +114,15 @@ boolean displayMin = false;
 boolean configFlag = false;
 boolean WDTflag = false;
 boolean servoWDTflag = false;
-boolean knobFlag = false;
+boolean knobRotateFlag = false;
 boolean knobClickFlag = false;
 boolean advancedOptions = false;
 boolean manualMode = false;
 boolean demoMode = false;
 boolean displayFlag = false;
+boolean actionsFlag = false;
+boolean transmitFlag = false;
+boolean quickWDT = false;
+boolean debounceFlag = false;
 
 // =================================================================
