@@ -1,5 +1,5 @@
 // BORC firmware
-// Updated 07/11/2021
+// Updated 09/15/2021
 
 // Developed by Akram Ali
 
@@ -53,17 +53,20 @@ void setup()
   // Fade blue LED to indicate a power up
   fadeLED(BLUE);    
 
-  // check device configuration status
-  EEPROM.get(CONFIGFLAGADDRESS, configFlag);
-  if (configFlag == true) // if device not configured, use default values
-  {
-    Serial.println("Device configured, using EEPROM variables to init radio");
-    getNodeParams(); // this will update default variables using data stored in EEPROM
-  }
-  else if (configFlag == false)
-  {
-    Serial.println("Device not configured, using default variables to init radio");
-  }
+  // Set configFlag to true for testing
+  configFlag = true;
+  
+//  // check device configuration status
+//  EEPROM.get(CONFIGFLAGADDRESS, configFlag);
+//  if (configFlag == true) // if device not configured, use default values
+//  {
+//    Serial.println("Device configured, using EEPROM variables to init radio");
+//    getNodeParams(); // this will update default variables using data stored in EEPROM
+//  }
+//  else if (configFlag == false)
+//  {
+//    Serial.println("Device not configured, using default variables to init radio");
+//  }
   
   Serial.println(NODEID);
   Serial.println(NETWORKID);
@@ -104,7 +107,7 @@ void setup()
   readTempRH();
 
   // Read the initial state of A
-  last_A_state = digitalRead(CHANNEL_A);
+//  last_A_state = digitalRead(CHANNEL_A);
 
   // setup interrupts
   enableKnobInterrupts();
@@ -132,7 +135,7 @@ void loop()
     if (configFlag == false)
     {
       // sleep forever
-      sleep('f');
+      nap('f');
     }
 
     // if knob was clicked during configuration mode
@@ -214,26 +217,29 @@ void loop()
       delay(5);
 
       // save debug info
-      debug();
-
-      // check whether regular or quick WDT sleep is needed
-      if(quickWDT == false)
-      {
-        // go to sleep in regular watchdog mode (8 seconds sleep)
-        sleep('8');
-      }
-
-      else if(quickWDT = true)
-      {
-        // go to sleep in quick watchdog mode (2 seconds sleep)
-        sleep('2');
-
-        // reset quick WDT flag to false
-        quickWDT = false;
-      }
+//      debug();
 
       // save previous display mode
       _displayMode = displayMode;
+
+      // go to sleep in regular watchdog mode (8 seconds sleep)
+      nap('8');
+
+//      // check whether regular or quick WDT sleep is needed
+//      if(quickWDT == false)
+//      {
+//        // go to sleep in regular watchdog mode (8 seconds sleep)
+//        nap('8');
+//      }
+//
+//      else if(quickWDT = true)
+//      {
+//        // go to sleep in quick watchdog mode (2 seconds sleep)
+//        nap('2');
+//
+//        // reset quick WDT flag to false
+//        quickWDT = false;
+//      }
     }
   
     // WDT triggered, knob untouched ---------------------------------
@@ -246,12 +252,12 @@ void loop()
       if(actionsFlag == true)
       {
         // read temperature and humidity
-        readTempRH();
+//        readTempRH();
         Serial.print("Temp: ");
         Serial.println(temp);
         Serial.print("RH: ");
         Serial.println(rh);
-               
+        
         // do servo control here
 
 

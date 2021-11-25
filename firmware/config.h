@@ -1,12 +1,12 @@
 // Configuration file for BORC
-// Updated 07/10/2021
+// Updated 09/15/2021
 
 // =================================================================
 // Global variables
 // =================================================================
 
 // Firmware version number -----------------------------------------
-#define FWVERSION "1006"
+#define FWVERSION "1007"
 
 // Misc. global variables ------------------------------------------
 #define SERIAL_BAUD 115200
@@ -40,10 +40,13 @@ String displayText;
 int menuOption = 0;
 
 // knob configuration ----------------------------------------------
-boolean current_A_state, last_A_state;
+//boolean current_A_state, last_A_state;
+boolean aState, bState, aFlag, bFlag;
 int knobTimeout = 4000;
 int configurationTimeout = 10000;
 int knobDirection = 0;
+byte clickDebounceInterval = 400;
+byte rotateDebounceInterval = 50;
 
 // Sensor values ---------------------------------------------------
 float temp, temp_f, rh;
@@ -123,6 +126,5 @@ boolean displayFlag = false;
 boolean actionsFlag = false;
 boolean transmitFlag = false;
 boolean quickWDT = false;
-boolean debounceFlag = false;
 
 // =================================================================

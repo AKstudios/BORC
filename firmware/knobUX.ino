@@ -1,5 +1,5 @@
 // Knob UX functions for BORC
-// Updated 07/11/2021
+// Updated 09/15/2021
 
 // =================================================================
 // Function to check knob status
@@ -7,17 +7,6 @@
 void checkKnobStatus()
 {
   Serial.println("checking knob status");
-
-  // to account for initial bounces in rotary encoder
-  if(debounceFlag == false)
-  {
-    Serial.println("debounce");
-    // wait a bit
-    delay(10);
-
-    // then set debounce flag to true
-    debounceFlag = true;
-  }
 
   // If knob was rotated but not clicked ---------------------------
   if(knobRotateFlag == true && knobClickFlag == false && knobDirection != 0 && advancedOptions == false)

@@ -6,8 +6,11 @@
 // =================================================================
 void readTempRH()
 {
+  Serial.println("reading temp/rh");
+  delay(5);
   // turn on sensor
   controlDevices(TEMP_SENSOR_POWER_PIN, HIGH);
+  delay(10);
   
   // initialize sensor
   if(!sht31.begin(TEMP_SENSE_ADDRESS))

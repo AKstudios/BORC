@@ -1,11 +1,14 @@
 // Actions functions for BORC (system functions, control, debug)
-// Updated 07/10/2021
+// Updated 09/15/2021
 
 // =================================================================
 // System reset in extreme situations if code gets hanged somewhere
 // =================================================================
 void systemReset(bool fullReset)
 {
+
+    Serial.println("resetting");
+  delay(5);
   // if full system reset requested
   if(fullReset == true)
   {
@@ -82,8 +85,11 @@ void controlDevices(uint8_t pin, byte action)
 // =================================================================
 void enableKnobInterrupts()
 {
-  attachInterrupt(0, encoderISR, CHANGE);
-  attachInterrupt(1, encoderISR, CHANGE);
+  pinMode(0, INPUT_PULLUP);
+  pinMode(1, INPUT_PULLUP);
+  
+  attachInterrupt(0, encoderISR_A, RISING);
+  attachInterrupt(1, encoderISR_B, RISING);
 
   // enable pin-change interrupt for knob clicks
   cli();  // disable global interrupts

@@ -13,8 +13,8 @@ void enableServo()
   delay(1);
 
   // initialize servo driver
-  pwm.begin();
-  pwm.setPWMFreq(SERVO_FREQ);
+//  pwm.begin();
+//  pwm.setPWMFreq(SERVO_FREQ);
 
   Serial.println("servo driver initialized");
   delay(1);

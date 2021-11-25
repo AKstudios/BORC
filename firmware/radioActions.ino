@@ -22,6 +22,9 @@ void initializeRadio()
 // =================================================================
 void createDataPacket(char datatype)
 {
+
+  Serial.println("creating datapacket");
+  delay(5);
   // create configuration datapacket
   if(datatype == 'c')
   {
@@ -80,8 +83,13 @@ void createDataPacket(char datatype)
 // =================================================================
 void sendData(boolean checkForACK)
 {
-  radio.sendWithRetry(GATEWAYID, dataPacket, strlen(dataPacket));  // send data
 
+//  radio.sendWithRetry(GATEWAYID, dataPacket, strlen(dataPacket));  // send data
+
+  
+  Serial.println(servoWDTflag);
+  delay(5);
+  
   if(checkForACK == true)
   {
     unsigned long last_time = millis(); // save last millis time
@@ -99,6 +107,10 @@ void sendData(boolean checkForACK)
         break;
     }
   }
+
+  
+  Serial.println("checking for ack done");
+  delay(5);
 }
 
 // =================================================================

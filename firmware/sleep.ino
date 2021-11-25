@@ -1,10 +1,10 @@
 // Sleep function for BORC
-// Updated 0/07/2021
+// Updated 09/15/2021
 
 // =================================================================
 // Sleep function
 // =================================================================
-void sleep(char sleepMode)
+void nap(char sleepMode)
 { 
   // reset counters
   menuOption = 0;
@@ -23,9 +23,7 @@ void sleep(char sleepMode)
   // enable knob interrupts (rotation & clicks)
   enableKnobInterrupts();
 
-  // disable internal stuff to save power
-  ADCSRA = 0;  // disable ADC
-  MCUSR = 0;    // clear various "reset" flags
+  
   
   if(sleepMode == '8')
   {
@@ -55,7 +53,7 @@ void sleep(char sleepMode)
     delay(5);
     wdt_disable();  // disable watchdog timer
   }
-  
+
   // set and enable sleep mode
   set_sleep_mode (SLEEP_MODE_PWR_DOWN);   // set power down mode
   noInterrupts(); // timed sequence follows  
@@ -71,7 +69,6 @@ void sleep(char sleepMode)
 
   // device is sleeping here  --------------------------------------
   
-  sleep_disable();  //cancel sleep as a precaution
   flash.wakeup();   // IMPORTANT - wake up flash memory so it doesn't lock out the code
 
   // enable essential devices after waking up due to knob or if actions need to be taken
@@ -83,7 +80,7 @@ void sleep(char sleepMode)
 
     // initialize important devices
     enableServo();
-    initializeLEDmatrix();
+//    initializeLEDmatrix();
   }
 
   // time to transmit data
