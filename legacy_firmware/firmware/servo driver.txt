@@ -1,0 +1,15 @@
+servo driver
+
+init - turn stuff on and init them
+
+calibrate_bare_servo - find out min and max PWM for servo when not installed
+
+calibrate_installed_servo - find out where the walls are
+
+get_max_position - get the highest value to send to servo class (0 to max)
+
+start_move - takes position as argument
+
+is_moving - return true or false (failsafe - WDT - reboot device when servo stuck)
+
+

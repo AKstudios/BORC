@@ -2,32 +2,72 @@
 #include "display.h"
 #include "common.h"
 
+#include <Adafruit_INA219.h>          //https://github.com/adafruit/Adafruit_INA219
+#include <Adafruit_PWMServoDriver.h>  //https://github.com/adafruit/Adafruit-PWM-Servo-Driver-Library
+
+Adafruit_INA219 ina219(CURRENT_SENSE_ADDRESS);
+Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(SERVO_DRIVER_ADDRESS);
 int value = 10;
+
+//=========================================================================================================
+
+void test()
+{
+  ina219.begin();
+  
+  float busVoltage = ina219.getBusVoltage_V();
+  float current = ina219.getCurrent_mA();
+  Serial.print("initial voltage: ");
+  Serial.println(busVoltage);
+  Serial.print("initial current: ");
+  Serial.println(current);
+
+  pwm.begin();
+  pwm.setPWMFreq(50);
+  pwm.setPWM(0, 0, 150); // start from min position for 270 servo
+  
+  busVoltage = ina219.getBusVoltage_V();
+  current = ina219.getCurrent_mA();
+  Serial.print("90 voltage: ");
+  Serial.println(busVoltage);
+  Serial.print("90 current: ");
+  Serial.println(current);
+
+  delay(2500);
+  
+  pwm.setPWM(0, 0, 500); // start from min position for 270 servo
+  
+  busVoltage = ina219.getBusVoltage_V();
+  current = ina219.getCurrent_mA();
+  Serial.print("550 voltage: ");
+  Serial.println(busVoltage);
+  Serial.print("550 current: ");
+  Serial.println(current);
+
+  delay(2500);
+}
+
+//=========================================================================================================
 
 void setup()
 {    
+  Serial.begin(115200);
+  Serial.println("begin");
+  
   PowerMgr.init();
   PowerMgr.powerOn(CURRENT_SENSE_POWER_PIN);
   PowerMgr.powerOn(LED_SCREEN_POWER_PIN);
   PowerMgr.powerOn(TEMP_SENSOR_POWER_PIN);
   PowerMgr.powerOn(DRIVER_POWER_PIN);
+  PowerMgr.powerOn(SERVO_POWER_PIN);
 
-  Serial.begin(115200);
-  Serial.println("begin");
+  test();
   
   Knob.init();
   Display.init();
-
-  for (int i=0;i<2;i++)
-  {
-  Display.display(11);
-  Display.display(22);
-  Display.display(33);
-  Display.display(44);
-  Display.display(55);
-  }
 }
 
+//=========================================================================================================
 
 void loop()
 {
