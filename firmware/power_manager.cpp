@@ -3,14 +3,35 @@
 //=========================================================================================================
 #include "power_manager.h"
 #include "Arduino.h"
+#include "common.h"
+
+// array of all power pins
+static char pin[] =
+{
+  DRIVER_POWER_PIN,
+  LED_SCREEN_POWER_PIN,
+  TEMP_SENSOR_POWER_PIN,
+  CURRENT_SENSE_POWER_PIN,
+  SERVO_POWER_PIN
+};
+
+//=========================================================================================================
+// init() - set all power pins to outputs once
+//=========================================================================================================
+void CPowerManager::init()
+{
+  for (int i=0; i<sizeof(pin); i++)
+    pinMode(pin[i], OUTPUT);
+}
+
+//=========================================================================================================
 
 //=========================================================================================================
 // powerOn() - turns on a specific device
 //=========================================================================================================
-void CPowerManager::powerOn(int pin)
+void CPowerManager::powerOn(int pin_number)
 {
-    pinMode(pin, OUTPUT);
-    digitalWrite(pin, HIGH);
+  digitalWrite(pin_number, HIGH);
 }
 
 //=========================================================================================================
@@ -18,9 +39,9 @@ void CPowerManager::powerOn(int pin)
 //=========================================================================================================
 // powerOff() - turns off a specific device
 //=========================================================================================================
-void CPowerManager::powerOff(int pin)
+void CPowerManager::powerOff(int pin_number)
 {
-    digitalWrite(pin, LOW);
+  digitalWrite(pin_number, LOW);
 }
 
 //=========================================================================================================

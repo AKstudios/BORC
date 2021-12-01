@@ -3,8 +3,10 @@
 
 #include "rotary_knob.h"
 #include "display.h"
+#include "power_manager.h"
 
 extern CRotaryKnob Knob;
 extern CLedMatrix Display;
+extern CPowerManager PowerMgr;
 
 #endif

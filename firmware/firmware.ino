@@ -5,19 +5,16 @@
 int value = 10;
 
 void setup()
-{
-  pinMode(CURRENT_SENSE_POWER_PIN, OUTPUT);
-  pinMode(TEMP_SENSOR_POWER_PIN, OUTPUT);
-  pinMode(LED_SCREEN_POWER_PIN, OUTPUT);
-  pinMode(DRIVER_POWER_PIN, OUTPUT);
-    
-  digitalWrite(CURRENT_SENSE_POWER_PIN, HIGH);
-  digitalWrite(LED_SCREEN_POWER_PIN, HIGH);
-  digitalWrite(TEMP_SENSOR_POWER_PIN, HIGH);
-  digitalWrite(DRIVER_POWER_PIN, HIGH);
-  
+{    
+  PowerMgr.init();
+  PowerMgr.powerOn(CURRENT_SENSE_POWER_PIN);
+  PowerMgr.powerOn(LED_SCREEN_POWER_PIN);
+  PowerMgr.powerOn(TEMP_SENSOR_POWER_PIN);
+  PowerMgr.powerOn(DRIVER_POWER_PIN);
+
   Serial.begin(115200);
   Serial.println("begin");
+  
   Knob.init();
   Display.init();
 

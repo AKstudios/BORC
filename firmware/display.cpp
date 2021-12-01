@@ -3,13 +3,12 @@
 //=========================================================================================================
 #include "display.h"
 #include "common.h"
-#include "power_manager.h"
+#include "globals.h"
 #include <stdio.h>
 #include <Adafruit_IS31FL3731.h>      //https://github.com/adafruit/Adafruit_IS31FL3731
 
 // initialize all library objects
 static Adafruit_IS31FL3731_Wing ledmatrix;
-CPowerManager leddisplay;
 
 //=========================================================================================================
 // init() - Called once to initialize this object
@@ -17,7 +16,7 @@ CPowerManager leddisplay;
 void CLedMatrix::init()
 {
   // turn display's power on
-  leddisplay.powerOn(LED_SCREEN_POWER_PIN);
+  PowerMgr.powerOn(LED_SCREEN_POWER_PIN);
   
   // initialize LED matrix
   ledmatrix.begin(LED_MATRIX_ADDRESS);
@@ -44,6 +43,9 @@ void CLedMatrix::display(const char* text)
 {
   // clear display
   ledmatrix.clear();
+  
+  // set cursor to position
+  ledmatrix.setCursor(2,0);
 
   // print something on display
   ledmatrix.print(text);
