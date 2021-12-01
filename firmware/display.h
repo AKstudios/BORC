@@ -5,29 +5,21 @@
 #ifndef _DISPLAY_H_
 #define _DISPLAY_H_
 
+//=========================================================================================================
+// CLedMatrix() - A class that manages the LED display that can print text, numbers and float                
+//=========================================================================================================
 class CLedMatrix
 {
 public:
-    
-    void init();
 
+    // Call once to initialize the knob
+    void init();
     
+    // these routines will show any value on the display
     void display(int);
     void display(const char*);
     void display(double);
-
-    
-    void rotate();
-
-protected:
-
-    void clearDisplay();
-
-    
-
 };
 
-
-
-
+//=========================================================================================================
 #endif
