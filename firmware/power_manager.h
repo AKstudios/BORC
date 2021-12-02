@@ -2,7 +2,7 @@
 #define _POWER_MANAGER_H_
 
 //=========================================================================================================
-// power_manager.cpp - turn devices on and off by managing pin states
+// power_manager.h - turn devices on and off by managing pin states
 //=========================================================================================================
 class CPowerManager
 {
@@ -18,4 +18,6 @@ public:
     void powerOff(int pin_number);
     
 };
+//=========================================================================================================
+
 #endif

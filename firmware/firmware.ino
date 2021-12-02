@@ -25,6 +25,7 @@ void test()
   pwm.begin();
   pwm.setPWMFreq(50);
   pwm.setPWM(0, 0, 150); // start from min position for 270 servo
+  delay(500);
   
   busVoltage = ina219.getBusVoltage_V();
   current = ina219.getCurrent_mA();
@@ -36,6 +37,7 @@ void test()
   delay(2500);
   
   pwm.setPWM(0, 0, 500); // start from min position for 270 servo
+  delay(100);
   
   busVoltage = ina219.getBusVoltage_V();
   current = ina219.getCurrent_mA();

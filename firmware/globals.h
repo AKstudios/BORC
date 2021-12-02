@@ -8,5 +8,6 @@
 extern CRotaryKnob Knob;
 extern CLedMatrix Display;
 extern CPowerManager PowerMgr;
+extern CServoDriver Servo;
 
 #endif
