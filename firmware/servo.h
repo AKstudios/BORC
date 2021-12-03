@@ -28,6 +28,9 @@ public:
 
 protected:
     
+    //  soft reboots the system
+    void reboot_system();
+
     // Maximum PWM value the servo can take
     int             m_servo_max_position;
 
