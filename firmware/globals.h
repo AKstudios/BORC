@@ -4,6 +4,7 @@
 #include "rotary_knob.h"
 #include "display.h"
 #include "power_manager.h"
+#include "servo.h"
 
 extern CRotaryKnob Knob;
 extern CLedMatrix Display;

@@ -18,7 +18,7 @@ public:
     void calibrate_installed_servo();
 
     // get the highest value to send to servo class (0 to max)
-    void get_max_position();
+    int get_max_position() {return m_max_limit - m_min_limit;}
 
     // takes position as argument and makes the servo move to that position
     void start_move(int position);
@@ -32,10 +32,10 @@ protected:
     void reboot_system();
 
     // Maximum PWM value the servo can take
-    int             m_servo_max_position;
+
 
     // Minimum PWM value the servo can take
-    int             m_servo_min_position;
+    int m_max_limit, m_min_limit;
 };
 
 //=========================================================================================================

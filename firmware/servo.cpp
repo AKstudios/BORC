@@ -9,11 +9,14 @@
 #include <Adafruit_INA219.h>          //https://github.com/adafruit/Adafruit_INA219
 
 // initialize all library objects
-static Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(SERVO_DRIVER_ADDRESS);
+static Adafruit_PWMServoDriver pwm(SERVO_DRIVER_ADDRESS);
 static Adafruit_INA219 ina219(CURRENT_SENSE_ADDRESS);
 
 // define servo's PWM frequency. Depends on type of servo
 #define SERVO_FREQ  50
+
+// this is the minimum current in mA above which we consider the servo to be moving
+#define MOVING_THRESHOLD  20
 
 //=========================================================================================================
 // init() - initialize the servo driver
@@ -35,10 +38,10 @@ void CServoDriver::init()
     // set servo frequency
     pwm.setPWMFreq(SERVO_FREQ);
 
-    // set servo to a fixed position on start
-    pwm.setPWM(0, 0, 150);
+    // set some reasonable default values for limits
+    m_min_limit = 90;
+    m_max_limit = 550;
 }
-
 //=========================================================================================================
 
 
@@ -49,7 +52,6 @@ void CServoDriver::calibrate_bare_servo()
 {
 
 }
-
 //=========================================================================================================
 
 
@@ -60,29 +62,22 @@ void CServoDriver::calibrate_installed_servo()
 {
     
 }
-
 //=========================================================================================================
 
 
 //=========================================================================================================
-// get_max_position() - get the highest value to send to servo class (0 to max)
-//=========================================================================================================
-void CServoDriver::get_max_position()
-{
-    
-}
-
-//=========================================================================================================
-
-
-//=========================================================================================================
-// start_move(int pwm_value) - takes servo PWM value as an argument
+// start_move(int pwm_value) - takes position as an argument (0-max)
 //=========================================================================================================
 void CServoDriver::start_move(int position)
-{
-    
-}
+{   
+    // check if position is within acceptable range
+    if (position < 0 || position > get_max_position()) return;
 
+    Serial.println(m_min_limit + position);
+
+    // set PWM value for the servo to move
+    pwm.setPWM(0, 0, m_min_limit + position);
+}
 //=========================================================================================================
 
 
@@ -91,19 +86,17 @@ void CServoDriver::start_move(int position)
 //=========================================================================================================
 bool CServoDriver::is_moving()
 {
-    
+    return (ina219.getCurrent_mA() > MOVING_THRESHOLD);
 }
-
 //=========================================================================================================
 
 
 //=========================================================================================================
 // reboot_system() - soft reboots the system
 //=========================================================================================================
-bool CServoDriver::reboot_system()
+void CServoDriver::reboot_system()
 {
     // reboot system
     asm volatile ("jmp 0");
 }
-
 //=========================================================================================================

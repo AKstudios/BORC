@@ -7,7 +7,7 @@
 
 Adafruit_INA219 ina219(CURRENT_SENSE_ADDRESS);
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(SERVO_DRIVER_ADDRESS);
-int value = 10;
+
 
 //=========================================================================================================
 
@@ -63,16 +63,18 @@ void setup()
   PowerMgr.powerOn(DRIVER_POWER_PIN);
   PowerMgr.powerOn(SERVO_POWER_PIN);
 
-  test();
+  // test();
   
   Knob.init();
   Display.init();
+  Servo.init();
 }
 
 //=========================================================================================================
 
 void loop()
 {
+  static int value = 10;
   knob_event_t event;
 
   if (Knob.get_event(&event))
@@ -83,11 +85,13 @@ void loop()
       case KNOB_LEFT:
         Serial.println("knob left\n");
         Display.display(--value);
+        Servo.start_move(value);
         break;
 
       case KNOB_RIGHT:
         Serial.println("knob righttt\n");
         Display.display(++value);
+        Servo.start_move(value);
         break;
 
       case KNOB_CLICK:
