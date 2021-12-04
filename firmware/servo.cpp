@@ -15,9 +15,6 @@ static Adafruit_INA219 ina219(CURRENT_SENSE_ADDRESS);
 // define servo's PWM frequency. Depends on type of servo
 #define SERVO_FREQ  50
 
-// this is the minimum current in mA above which we consider the servo to be moving
-#define MOVING_THRESHOLD  20
-
 //=========================================================================================================
 // init() - initialize the servo driver
 //=========================================================================================================
@@ -41,6 +38,10 @@ void CServoDriver::init()
     // set some reasonable default values for limits
     m_min_limit = 90;
     m_max_limit = 550;
+
+    // set start and stop current thresholds in mA (no load on motor)
+    m_start_moving_threshold = 20;
+    m_stop_moving_threshold = 50;
 }
 //=========================================================================================================
 
@@ -48,7 +49,7 @@ void CServoDriver::init()
 //=========================================================================================================
 // calibrate_bare_servo() - find out min and max PWM for servo when not installed
 //=========================================================================================================
-void CServoDriver::calibrate_bare_servo()
+void CServoDriver::calibrate_bare()
 {
 
 }
@@ -58,7 +59,7 @@ void CServoDriver::calibrate_bare_servo()
 //=========================================================================================================
 // calibrate_installed_servo() - check if the servo hits a wall when control is installed on the valve
 //=========================================================================================================
-void CServoDriver::calibrate_installed_servo()
+void CServoDriver::calibrate_installed()
 {
     
 }
@@ -66,17 +67,75 @@ void CServoDriver::calibrate_installed_servo()
 
 
 //=========================================================================================================
-// start_move(int pwm_value) - takes position as an argument (0-max)
+// move_to_pwm() - move to a PWM value and times out if current never drops
+// returns true if move completes, returns false if it doesn't
 //=========================================================================================================
-void CServoDriver::start_move(int position)
+bool CServoDriver::move_to_pwm(int pwm_value, int timeout_ms)
+{
+    // create a oneshot timer
+    OneShot servo_timer;
+
+    // start moving the servo - converting the PWM value into a position
+    bool is_move_started = start_move(pwm_value - m_min_limit);
+
+    // if servo hasn't started to move, return false
+    if (!is_move_started) return false;
+    
+    // start the oneshot timer again
+    servo_timer.start(timeout_ms);
+    
+    // sit in a loop until the timer expires while servo moves
+    while (!servo_timer.is_expired())
+    {   
+        // if servo is done moving, tell the caller
+        if (!is_moving()) break;
+    }
+
+    // once it's done moving, tell the caller that the servo moved
+    return true;
+}
+//=========================================================================================================
+
+
+//=========================================================================================================
+// start_move() - takes position as an argument (0-max)
+// returns true when servo starts to move, false if it doesn't move at all
+//=========================================================================================================
+bool CServoDriver::start_move(int position, int timeout_ms)
 {   
+    // keep track of valid sequential current readings
+    int current_counter = 0;
+    
+    // create a oneshot timer
+    OneShot servo_timer;
+
     // check if position is within acceptable range
-    if (position < 0 || position > get_max_position()) return;
-
-    Serial.println(m_min_limit + position);
-
+    if (position < 0 || position > get_max_position()) return false;
+  
     // set PWM value for the servo to move
     pwm.setPWM(0, 0, m_min_limit + position);
+
+    // start the oneshot timer
+    servo_timer.start(timeout_ms);
+
+    // sit in a loop waiting for the servo to start moving
+    while (!servo_timer.is_expired())
+    { 
+      // fetch the servo current
+      float current = ina219.getCurrent_mA();
+
+      // here we're checking to see if current is above 50mA three times in a row
+      if (current > m_start_moving_threshold)
+      {
+        if (++current_counter >= 3) return true;
+      }
+      
+      // otherwise, start over
+      else current_counter = 0;
+    }
+
+    // if we get here it never started moving
+    return false;
 }
 //=========================================================================================================
 
@@ -85,8 +144,10 @@ void CServoDriver::start_move(int position)
 // is_moving() - checks whether the servo is moving and returns true or false
 //=========================================================================================================
 bool CServoDriver::is_moving()
-{
-    return (ina219.getCurrent_mA() > MOVING_THRESHOLD);
+{   
+    float current = ina219.getCurrent_mA();
+//    Serial.println(current);
+    return (current > m_stop_moving_threshold);
 }
 //=========================================================================================================
 

@@ -50,6 +50,25 @@ void test()
 }
 
 //=========================================================================================================
+void test_move()
+{
+//Servo.start_move(10);
+delay(3000);
+Serial.println("------------------------");
+
+int pwm_value = 120;
+for(int i=0; i<5; ++i)
+{
+  Serial.print("moving to ");
+  Serial.println(pwm_value);
+//  bool rc = Servo.move_to_pwm(pwm_value, 4000);
+  Serial.print("Result = ");
+//  Serial.println(rc);  
+  pwm_value += 10;
+}
+}
+
+//=========================================================================================================
 
 void setup()
 {    
@@ -68,6 +87,8 @@ void setup()
   Knob.init();
   Display.init();
   Servo.init();
+
+//  test_move();
 }
 
 //=========================================================================================================
@@ -84,13 +105,15 @@ void loop()
     {
       case KNOB_LEFT:
         Serial.println("knob left\n");
-        Display.display(--value);
+        value -= 10;
+        Display.display(value);
         Servo.start_move(value);
         break;
 
       case KNOB_RIGHT:
         Serial.println("knob righttt\n");
-        Display.display(++value);
+        value += 10;
+        Display.display(value);
         Servo.start_move(value);
         break;
 
