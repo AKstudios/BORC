@@ -76,7 +76,7 @@ bool CServoDriver::move_to_pwm(int pwm_value, int timeout_ms)
     OneShot servo_timer;
 
     // start moving the servo - converting the PWM value into a position
-    bool is_move_started = start_move(pwm_value - m_min_limit);
+    bool is_move_started = start_move_to_pwm(pwm_value);
 
     // if servo hasn't started to move, return false
     if (!is_move_started) return false;
@@ -101,7 +101,7 @@ bool CServoDriver::move_to_pwm(int pwm_value, int timeout_ms)
 // start_move() - takes position as an argument (0-max)
 // returns true when servo starts to move, false if it doesn't move at all
 //=========================================================================================================
-bool CServoDriver::start_move(int position, int timeout_ms)
+bool CServoDriver::start_move_to_pwm(int pwm_value, int timeout_ms, bool enforce_limit)
 {   
     // keep track of valid sequential current readings
     int current_counter = 0;
@@ -109,11 +109,15 @@ bool CServoDriver::start_move(int position, int timeout_ms)
     // create a oneshot timer
     OneShot servo_timer;
 
-    // check if position is within acceptable range
-    if (position < 0 || position > get_max_position()) return false;
+    // if you want to enforce the PWM limits...
+    if (enforce_limit)
+    {
+        // ...check if position is within acceptable range
+        if (pwm_value < m_min_limit || pwm_value > m_max_limit) return false;
+    }
   
     // set PWM value for the servo to move
-    pwm.setPWM(0, 0, m_min_limit + position);
+    pwm.setPWM(0, 0, pwm_value);
 
     // start the oneshot timer
     servo_timer.start(timeout_ms);
@@ -139,6 +143,15 @@ bool CServoDriver::start_move(int position, int timeout_ms)
 }
 //=========================================================================================================
 
+//=========================================================================================================
+// start_move_to_position() - takes position as an argument (0-max)
+// returns true when servo starts to move, false if it doesn't move at all
+//=========================================================================================================
+bool CServoDriver::start_move_to_position(int position, int timeout_ms)
+{   
+    return start_move_to_pwm(position + m_min_limit, timeout_ms);
+}
+//=========================================================================================================
 
 //=========================================================================================================
 // is_moving() - checks whether the servo is moving and returns true or false

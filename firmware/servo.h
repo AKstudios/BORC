@@ -21,15 +21,18 @@ public:
     int get_max_position() {return m_max_limit - m_min_limit;}
 
     // takes position as argument and makes the servo move to that position
-    bool start_move(int position, int timeout_ms=1000);
+    bool start_move_to_position(int position, int timeout_ms=1000);
 
     // checks whether the servo is moving and returns true or false
     bool is_moving();
 
 protected:
-//public:
+// public:
     //  soft reboots the system
     void reboot_system();
+
+    // takes pwm value as argument and makes the servo move
+    bool start_move_to_pwm(int pwm_value, int timeout_ms=1000, bool enforce_limit=true);
 
     // move to a PWM value and times out if current never drops
     bool move_to_pwm(int pwm_value, int timeout_ms);

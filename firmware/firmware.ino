@@ -107,14 +107,14 @@ void loop()
         Serial.println("knob left\n");
         value -= 10;
         Display.display(value);
-        Servo.start_move(value);
+        Servo.start_move_to_position(value);
         break;
 
       case KNOB_RIGHT:
         Serial.println("knob righttt\n");
         value += 10;
         Display.display(value);
-        Servo.start_move(value);
+        Servo.start_move_to_position(value);
         break;
 
       case KNOB_CLICK:
