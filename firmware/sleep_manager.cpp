@@ -1,7 +1,7 @@
 #include "globals.h"
 
 #include "LowPower.h"
-
+//#include <avr/interrupts.h>
 
 ////=========================================================================================================
 //// WDT_vect - Interrupt Service Routine for the watchdog timer. This needs to exist for the timer
@@ -64,7 +64,6 @@ void CSleepMgr::execute()
         wakeup_from_timer();
     }
 
-
     wakeup_from_knob();
 
 }
@@ -83,6 +82,8 @@ void CSleepMgr::start_timer(int timeout_ms=5000)
 
 void CSleepMgr::wakeup_from_timer()
 {
+    Serial.println("wake up from timer");
+    delay(10);
     // take temp/rh measurement
 
     // in auto mode - compute new setpoint for PID and drive the motor there
@@ -93,6 +94,16 @@ void CSleepMgr::wakeup_from_timer()
 }
 
 void CSleepMgr::signal_wakeup()
-{
+{ 
+
     m_wakeup_from_knob = true;
+}
+
+
+void CSleepMgr::wakeup_from_knob()
+{
+  PowerMgr.powerI2C();
+  Servo.reinit();
+  
+  ManualModeMgr.start();
 }

@@ -3,8 +3,6 @@
 //                   right, or clicking on it (like a button)
 //=========================================================================================================
 #include "rotary_knob.h"
-#include "common.h"
-#include "Arduino.h"
 #include "globals.h"
 
 // Activity timer expires after this many milliseconds
@@ -62,7 +60,12 @@ void CRotaryKnob::start_debounce_timer(knob_event_t event)
 
   // account for debounce here
   m_debounce_timer.start(30);
-  
+
+  // tell the sleep manager we want to go to sleep 5 seconds from now
+  SleepMgr.start_timer();
+
+  // tell the manager we're awake by knob
+  SleepMgr.signal_wakeup();
 }
 
 //=========================================================================================================

@@ -15,6 +15,9 @@ public:
 
     // initialize the servo driver
     void init();
+
+    // reinitialize the servo stuff
+    void reinit();
     
     // find out min and max PWM for servo when not installed
     void calibrate_bare();

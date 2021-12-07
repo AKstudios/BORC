@@ -16,6 +16,8 @@ public:
 
     // turns off a specific device
     void powerOff(int pin_number);
+
+    void powerI2C();
     
 };
 //=========================================================================================================

@@ -45,3 +45,12 @@ void CPowerManager::powerOff(int pin_number)
 }
 
 //=========================================================================================================
+
+void CPowerManager::powerI2C()
+{
+  digitalWrite(SERVO_POWER_PIN, HIGH);
+  digitalWrite(DRIVER_POWER_PIN, HIGH);
+  digitalWrite(LED_SCREEN_POWER_PIN, HIGH);
+  digitalWrite(TEMP_SENSOR_POWER_PIN, HIGH);
+  digitalWrite(CURRENT_SENSE_POWER_PIN, HIGH);
+}

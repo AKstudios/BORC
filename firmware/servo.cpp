@@ -20,11 +20,11 @@ static Adafruit_INA219 ina219(CURRENT_SENSE_ADDRESS);
 //=========================================================================================================
 void CServoDriver::init()
 {
-    // turn servo's power on
-    PowerMgr.powerOn(DRIVER_POWER_PIN);
-
-    // turn current sensor's power on
-    PowerMgr.powerOn(CURRENT_SENSE_POWER_PIN);
+//    // turn servo's power on
+//    PowerMgr.powerOn(DRIVER_POWER_PIN);
+//
+//    // turn current sensor's power on
+//    PowerMgr.powerOn(CURRENT_SENSE_POWER_PIN);
 
     // initialize servo driver
     pwm.begin();
@@ -51,6 +51,21 @@ void CServoDriver::init()
 }
 //=========================================================================================================
 
+//=========================================================================================================
+// reinit() - reinitialize the servo driver and current chip
+//=========================================================================================================
+void CServoDriver::reinit()
+{
+    
+    // initialize servo driver
+    pwm.begin();
+
+    // set servo frequency
+    pwm.setPWMFreq(SERVO_FREQ);
+
+    // initialize current sensor
+    ina219.begin();
+}
 
 //=========================================================================================================
 // calibrate_bare() - find out min and max PWM for servo when not installed
@@ -253,7 +268,10 @@ bool CServoDriver::move_to_index(int index)
 {   
     int range = m_max_limit - m_min_limit;
 
-    int pwm_value = index * range / get_max_index() + m_min_limit;
+    // invert the index so 0 means close and 6 means open
+    int effective_index = get_max_index() - index;
+    
+    int pwm_value = effective_index * range / get_max_index() + m_min_limit;
 
     return move_to_pwm(pwm_value, 4000, true);
 }

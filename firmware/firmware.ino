@@ -114,6 +114,7 @@ void loop()
   {
     case MANUAL:
       ManualModeMgr.execute();
+      
       break;
   }
 }
