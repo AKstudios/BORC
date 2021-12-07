@@ -87,7 +87,16 @@ void setup()
   Knob.init();
   Display.init();
   Servo.init();
+  Servo.calibrate_bare();
 
+  Servo.move_to_pwm(92, 4000, true);
+  Servo.move_to_pwm(542, 4000, true);
+  Servo.move_to_pwm(92, 4000, true);
+  Servo.move_to_pwm(542, 4000, true);
+  Servo.move_to_pwm(92, 4000, true);
+  Servo.move_to_pwm(542, 4000, true);
+
+  
 //  test_move();
 }
 
