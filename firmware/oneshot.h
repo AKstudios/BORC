@@ -14,9 +14,15 @@ public:
     // Call this to start or restart the timer
     void    start(unsigned int duration_ms);
 
+    // call this to stop the timer
+    void    stop() {m_is_running = false;}
+
     // Call this to find out if the one-shot timer is running and expired.
     // If this returns 'true', it stops the timer
     bool    is_expired();
+
+    // check if the timer is still running
+    bool    is_running() {return m_is_running;}
 
 protected:
 

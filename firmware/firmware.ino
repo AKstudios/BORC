@@ -1,6 +1,7 @@
 #include "globals.h"
 #include "display.h"
 #include "common.h"
+#include <avr/wdt.h>
 
 #include <Adafruit_INA219.h>          //https://github.com/adafruit/Adafruit_INA219
 #include <Adafruit_PWMServoDriver.h>  //https://github.com/adafruit/Adafruit-PWM-Servo-Driver-Library
@@ -89,6 +90,7 @@ void setup()
   Servo.init();
 
   ManualModeMgr.start();
+  SleepMgr.init();
 
   // Servo.calibrate_bare();
 
@@ -106,6 +108,8 @@ void setup()
 
 void loop()
 {
+  wdt_reset(); //pat the dog...
+  SleepMgr.execute();
   switch (System.mode)
   {
     case MANUAL:

@@ -6,3 +6,4 @@ CPowerManager PowerMgr;
 CServoDriver Servo;
 CSystem System;
 CManualModeMgr ManualModeMgr;
+CSleepMgr SleepMgr;
