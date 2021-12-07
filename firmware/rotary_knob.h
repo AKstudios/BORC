@@ -56,6 +56,9 @@ protected:
     // This timer expires when the knob has not been touched for a certain amount of time
     OneShot         m_activity_timer;
 
+    // This timer expires when the knob is being pressed and held for a certain amount of time
+    OneShot         m_long_press_timer;
+
     // How many pending events are there?
     char            m_event_count;
 

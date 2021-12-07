@@ -4,6 +4,7 @@
 #define UNKNOWN_POSITION    -1
 #define DEFAULT_MIN_LIMIT   165
 #define DEFAULT_MAX_LIMIT   500
+#define MAX_INDEX           6
 
 //=========================================================================================================
 // CServoDriver() - A class that manages the servo driver NXP PCA9685               
@@ -24,8 +25,14 @@ public:
     // get the highest value to send to servo class (0 to max)
     int get_max_position() {return m_max_limit - m_min_limit;}
 
+    // manual mode index are 0 to this value
+    int get_max_index() {return MAX_INDEX;}
+
     // takes position as argument and makes the servo move to that position
     bool start_move_to_position(int position);
+
+    // takes a manual index move the servo to it
+    bool move_to_index(int index);
 
     // checks whether the servo is moving and returns true or false
     bool is_moving();

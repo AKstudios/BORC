@@ -50,6 +50,7 @@ void test()
 }
 
 //=========================================================================================================
+
 void test_move()
 {
 //Servo.start_move(10);
@@ -67,7 +68,6 @@ for(int i=0; i<5; ++i)
   pwm_value += 10;
 }
 }
-
 //=========================================================================================================
 
 void setup()
@@ -75,27 +75,29 @@ void setup()
   Serial.begin(115200);
   Serial.println("begin");
   
+  System.init();
+
   PowerMgr.init();
   PowerMgr.powerOn(CURRENT_SENSE_POWER_PIN);
   PowerMgr.powerOn(LED_SCREEN_POWER_PIN);
   PowerMgr.powerOn(TEMP_SENSOR_POWER_PIN);
   PowerMgr.powerOn(DRIVER_POWER_PIN);
   PowerMgr.powerOn(SERVO_POWER_PIN);
-
-  // test();
   
   Knob.init();
   Display.init();
   Servo.init();
-  Servo.calibrate_bare();
 
-  Servo.move_to_pwm(92, 4000, true);
-  Servo.move_to_pwm(542, 4000, true);
-  Servo.move_to_pwm(92, 4000, true);
-  Servo.move_to_pwm(542, 4000, true);
-  Servo.move_to_pwm(92, 4000, true);
-  Servo.move_to_pwm(542, 4000, true);
+  ManualModeMgr.start();
 
+  // Servo.calibrate_bare();
+
+  // Servo.move_to_pwm(92, 4000, true);
+  // Servo.move_to_pwm(542, 4000, true);
+  // Servo.move_to_pwm(92, 4000, true);
+  // Servo.move_to_pwm(542, 4000, true);
+  // Servo.move_to_pwm(92, 4000, true);
+  // Servo.move_to_pwm(542, 4000, true);
   
 //  test_move();
 }
@@ -103,6 +105,18 @@ void setup()
 //=========================================================================================================
 
 void loop()
+{
+  switch (System.mode)
+  {
+    case MANUAL:
+      ManualModeMgr.execute();
+      break;
+  }
+}
+
+//=========================================================================================================
+
+void testknob()
 {
   static int value = 10;
   knob_event_t event;
@@ -134,3 +148,5 @@ void loop()
     }
   }
 }
+
+//=========================================================================================================
