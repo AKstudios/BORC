@@ -5,7 +5,9 @@ void CManualModeMgr::start()
     System.mode = MANUAL;
     Display.display(System.manual_index);
 }
-
+//--------------------------------------------------------------------------------------------------------
+// 
+//--------------------------------------------------------------------------------------------------------
 void CManualModeMgr::execute()
 {
     knob_event_t event;
@@ -20,7 +22,6 @@ void CManualModeMgr::execute()
             {
                 --System.manual_index;
                 Display.display(System.manual_index);
-                Servo.move_to_index(System.manual_index);
             }
             break;
 
@@ -29,7 +30,6 @@ void CManualModeMgr::execute()
             {
                 ++System.manual_index;
                 Display.display(System.manual_index);
-                Servo.move_to_index(System.manual_index);
             }
             break;
         }

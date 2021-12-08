@@ -29,6 +29,13 @@ void CSleepMgr::execute()
     // if it's not time to sleep, don't do anything
     if (!m_sleep_timer.is_expired()) return;
 
+    // if it's time to sleep and we're in manual mode...
+    if (System.mode == MANUAL)
+    {   
+        // ... move the motor
+        Servo.move_to_index(System.manual_index);
+    }
+
     // power down necessary devices here to reduce sleep current draw
     PowerMgr.powerOff(CURRENT_SENSE_POWER_PIN);
     PowerMgr.powerOff(LED_SCREEN_POWER_PIN);
@@ -79,7 +86,9 @@ void CSleepMgr::start_timer(int timeout_ms=5000)
 }
 //=========================================================================================================
 
-
+//--------------------------------------------------------------------------------------------------------
+//
+//--------------------------------------------------------------------------------------------------------
 void CSleepMgr::wakeup_from_timer()
 {
     Serial.println("wake up from timer");
@@ -92,18 +101,26 @@ void CSleepMgr::wakeup_from_timer()
     // send data via radio - t, rh, setpoint, debug
 
 }
+//=========================================================================================================
 
+//--------------------------------------------------------------------------------------------------------
+//
+//--------------------------------------------------------------------------------------------------------
 void CSleepMgr::signal_wakeup()
 { 
 
     m_wakeup_from_knob = true;
 }
+//=========================================================================================================
 
-
+//--------------------------------------------------------------------------------------------------------
+//
+//--------------------------------------------------------------------------------------------------------
 void CSleepMgr::wakeup_from_knob()
 {
-  PowerMgr.powerI2C();
-  Servo.reinit();
-  
-  ManualModeMgr.start();
+    Knob.throw_away_next_event();
+    PowerMgr.powerI2C();
+    Servo.reinit();
+    ManualModeMgr.start();
 }
+//=========================================================================================================

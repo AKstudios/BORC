@@ -1,7 +1,7 @@
 #ifndef _SLEEP_MANAGER_H_
 #define _SLEEP_MANAGER_H_
 
-#include "oneshot.h"
+#include "mstimer.h"
 
 //=========================================================================================================
 // CSleepMgr - class to manage all sleep related activities

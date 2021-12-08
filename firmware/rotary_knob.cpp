@@ -3,15 +3,15 @@
 //                   right, or clicking on it (like a button)
 //=========================================================================================================
 #include "rotary_knob.h"
+#include "common.h"
+#include "Arduino.h"
 #include "globals.h"
 
-// Activity timer expires after this many milliseconds
-#define ACTIVITY_TIMEOUT  4000
 
 //=========================================================================================================
 // ISR for rotary knob rotation - this ISR is called on changing states of channel A pin
 //=========================================================================================================
-static void knob_rotate_isr()
+void knob_rotate_isr()
 {   
     // this maintains the last known state of channel A
     static bool last_A_state = true;
@@ -20,7 +20,7 @@ static void knob_rotate_isr()
     bool current_A_state = digitalRead(CHANNEL_A);
 
     // if this is rising edge of channel A
-    if(current_A_state && !last_A_state)
+    if (current_A_state && !last_A_state)
     {
       // Determine if this is a rotate left or rotate right
       knob_event_t knob_event = digitalRead(CHANNEL_B)? KNOB_LEFT : KNOB_RIGHT;
@@ -37,18 +37,14 @@ static void knob_rotate_isr()
 //=========================================================================================================
 // ISR for rotary knob click - this ISR is called on changing states of click pin on rotary encoder
 //=========================================================================================================
-static void knob_click_isr()
+void knob_click_isr()
 {
-  if (!digitalRead(CLICK_PIN))
     Knob.start_debounce_timer(KNOB_CLICK);
 }
 
-ISR(PCINT1_vect)
-{ 
-  knob_click_isr();
-}
-
+ISR(PCINT1_vect) {knob_click_isr();}
 //=========================================================================================================
+
 
 //=========================================================================================================
 // Debouce a specific event
@@ -58,8 +54,8 @@ void CRotaryKnob::start_debounce_timer(knob_event_t event)
   // save the event being debounced
   m_debounce_event = event;
 
-  // account for debounce here
-  m_debounce_timer.start(30);
+  // When this timer expires, our event has been debounced
+  m_debounce_timer.start(50);
 
   // tell the sleep manager we want to go to sleep 5 seconds from now
   SleepMgr.start_timer();
@@ -67,8 +63,8 @@ void CRotaryKnob::start_debounce_timer(knob_event_t event)
   // tell the manager we're awake by knob
   SleepMgr.signal_wakeup();
 }
-
 //=========================================================================================================
+
 
 //=========================================================================================================
 // init() - Called once to initialize this object
@@ -96,19 +92,17 @@ void CRotaryKnob::init()
     // The index of the next event to be added or retrieved starts at zero
     m_put_index = m_get_index = 0;
 
-    // Start the activity timer for the knob
-    m_activity_timer.start(ACTIVITY_TIMEOUT);
 }
 //=========================================================================================================
 
 
 //=========================================================================================================
-// add_event() - External code (like an ISR) calls this to add a new event to the queue of pending events
+// add_event() - The execute() routine calls this to add a new event to the queue of pending events
 //=========================================================================================================
 void CRotaryKnob::add_event(knob_event_t event)
 {
     // If there is room in the event queue...
-    if (m_event_count < MAX_EVENTS) 
+    if (m_event_count < MAX_EVENTS && !m_throw_away_next_event) 
     {
         // Stuff this event into our circular queue
         m_event[m_put_index++] = event;
@@ -120,10 +114,65 @@ void CRotaryKnob::add_event(knob_event_t event)
         ++m_event_count;
     }
 
-    // Restart the activity timer for the knob
-    m_activity_timer.start(ACTIVITY_TIMEOUT);
+    // This flag is only true for one call to this routine
+    m_throw_away_next_event = false;
+
 }
 //=========================================================================================================
+
+
+//=========================================================================================================
+// execute() - Checks for debounced events and adds them to the event queue.
+//             Also managed the sensing of KNOB_LPRESS events
+//=========================================================================================================
+void CRotaryKnob::execute()
+{
+    static OneShot button_timer;
+
+    // If the knob has just settled into a fully debounced position...
+    if (m_debounce_timer.is_expired())
+    {
+        // If we just debounced a KNOB_LEFT action, add the event
+        if (m_debounce_event == KNOB_LEFT)
+        {
+            add_event(KNOB_LEFT);
+            return;
+        }
+                
+        
+        // If we just debounced a KNOB_RIGHT action, add the event
+        if (m_debounce_event == KNOB_RIGHT)
+        {
+            add_event(KNOB_RIGHT);
+            return;
+        }
+
+        // If we get here, we assume we're handling a KNOB_CLICK action
+        bool button_is_up = digitalRead(CLICK_PIN) != 0;
+
+        // If the button has just settled in the "up" position and the 
+        // timer says the "button down timer" isn't expired, we can
+        // assume this was a short press of the button
+        if (button_is_up)
+        {
+            if (button_timer.is_running() && !button_timer.is_expired())
+            {
+                button_timer.stop();
+                add_event(KNOB_UP);
+            }
+            return;
+        }
+
+        // If we get here, the button has just settled in the down position
+        button_timer.start(2000);
+    }
+
+    // If the button timer has expired then the button has been down for awhile
+    if (button_timer.is_expired()) add_event(KNOB_LPRESS);
+}
+//=========================================================================================================
+
+
 
 
 //=========================================================================================================
@@ -134,12 +183,8 @@ void CRotaryKnob::add_event(knob_event_t event)
 //=========================================================================================================
 bool CRotaryKnob::get_event(knob_event_t *p_event)
 {
-    // If the button debounce timer has expired, then we need to add the "click" event to the queue
-    if (m_debounce_timer.is_expired())
-    {
-      if (m_debounce_event != KNOB_CLICK || !digitalRead(CLICK_PIN))
-        add_event(m_debounce_event);
-    }
+    // Give the debouncer a chance to add events to the queue
+    execute();
 
     // If there are no pending events waiting to be handled, we're done
     if (m_event_count == 0) return false;
