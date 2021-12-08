@@ -25,6 +25,13 @@ bool msTimer::is_expired()
     // Fetch the current timestamp
     unsigned long now = millis();
 
+    // If the timer has been kicked, restart it
+    if (m_is_kicked)
+    {
+        m_is_kicked = false;
+        m_start_time = now;
+    }
+
     // How many milliseconds have elapsed since the timer was started?
     unsigned long elapsed = now - m_start_time;
 
@@ -66,6 +73,13 @@ bool OneShot::is_expired()
 
     // Fetch the current timestamp
     unsigned long now = millis();
+
+    // If the timer has been kicked, restart it
+    if (m_is_kicked)
+    {
+        m_is_kicked = false;
+        m_start_time = now;
+    }
 
     // How many milliseconds have elapsed since the timer was started?
     unsigned long elapsed = now - m_start_time;

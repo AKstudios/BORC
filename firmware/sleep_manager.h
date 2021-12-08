@@ -18,6 +18,9 @@ public:
     // starts sleep timer 
     void start_timer(int timeout_ms=5000);
 
+    // kick the sleep timer
+    void kick_timer();
+
     void signal_wakeup();
 
 protected:

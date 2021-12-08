@@ -88,6 +88,7 @@ void setup()
   Knob.init();
   Display.init();
   Servo.init();
+  Led.init();
 
   ManualModeMgr.start();
   SleepMgr.init();
@@ -108,8 +109,10 @@ void setup()
 
 void loop()
 {
+  
   wdt_reset(); //pat the dog...
   SleepMgr.execute();
+//  Led.execute();
   switch (System.mode)
   {
     case MANUAL:

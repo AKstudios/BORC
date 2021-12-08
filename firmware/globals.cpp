@@ -7,3 +7,4 @@ CServoDriver Servo;
 CSystem System;
 CManualModeMgr ManualModeMgr;
 CSleepMgr SleepMgr;
+CLedMgr Led;

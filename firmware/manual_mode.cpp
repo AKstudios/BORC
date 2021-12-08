@@ -10,6 +10,8 @@ void CManualModeMgr::start()
 //--------------------------------------------------------------------------------------------------------
 void CManualModeMgr::execute()
 {
+    static int color = 0;
+
     knob_event_t event;
 
     while (Knob.get_event(&event))
@@ -31,6 +33,12 @@ void CManualModeMgr::execute()
                 ++System.manual_index;
                 Display.display(System.manual_index);
             }
+            break;
+        
+        case KNOB_UP:
+            ++color;
+//            Led.set(led_color_t(color), 250);
+//            Serial.println(color & 7);
             break;
         }
     }

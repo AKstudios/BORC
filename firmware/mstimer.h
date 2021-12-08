@@ -27,7 +27,13 @@ public:
     // check if the timer is still running
     bool    is_running() {return m_is_running;}
 
+    // Kick the timer to keep it from expiring.  This is safe to call from an ISR
+    void    kick() { m_is_kicked = true; }
+
 protected:
+
+    // Every time this is true, "is_expired()" will restart the timer
+    bool          m_is_kicked;
 
     // The is the timerstamp when the timer was started
     unsigned long m_start_time;

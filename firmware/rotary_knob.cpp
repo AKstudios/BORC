@@ -58,7 +58,7 @@ void CRotaryKnob::start_debounce_timer(knob_event_t event)
   m_debounce_timer.start(50);
 
   // tell the sleep manager we want to go to sleep 5 seconds from now
-  SleepMgr.start_timer();
+  SleepMgr.kick_timer();
 
   // tell the manager we're awake by knob
   SleepMgr.signal_wakeup();
