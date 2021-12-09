@@ -18,6 +18,9 @@ public:
     // starts sleep timer 
     void start_timer(int timeout_ms=5000);
 
+    // kick sleep timer
+    void kick_timer();
+
     // this gets called anytime there is activity on the knob
     void on_knob_activity();
 

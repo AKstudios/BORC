@@ -76,9 +76,11 @@ void CMenuMgr::dispatch()
             break;
 
         case MI_ROTATE_D:
+            Display.rotate();
             break;
 
         case MI_ROOMTEMP:
+            room_temp_handler();
             break;
 
         case MI_REBOOT:
@@ -128,5 +130,38 @@ void CMenuMgr::execute()
             break;
         }
     }
+}
+//=========================================================================================================
+
+
+//=========================================================================================================
+// room_temp_handler() - read current temperature
+//=========================================================================================================
+void CMenuMgr::room_temp_handler()
+{   
+    knob_event_t event;
+
+    OneShot timer;
+
+    // in real life, we will read the sensor
+    int temp = 72;
+
+    // display the current temperature
+    Display.display(temp);
+
+    // start a 5 second timer
+    timer.start(5000);
+
+    // sit in a loop for 5 seconds until someone clicks the knob
+    while (!timer.is_expired())
+    {   
+        // stay awake
+        SleepMgr.kick_timer();
+
+        if (Knob.get_event(&event) && event == KNOB_UP) break;
+    }
+
+    // redisplay our menu item
+    display_item();
 }
 //=========================================================================================================
