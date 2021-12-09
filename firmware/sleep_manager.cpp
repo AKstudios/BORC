@@ -127,7 +127,7 @@ void CSleepMgr::wakeup_from_knob()
     Knob.throw_away_next_event();
     PowerMgr.powerI2C();
     Servo.reinit();
-    ManualModeMgr.start();
+    System.return_to_run_mode();
     start_timer();
 }
 //=========================================================================================================

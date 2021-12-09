@@ -11,6 +11,8 @@ public:
 
     int manual_index;
 
+    int setpoint;
+
     //  soft reboots the system
     void reboot();
 

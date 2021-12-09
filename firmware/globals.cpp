@@ -9,3 +9,4 @@ CManualModeMgr ManualModeMgr;
 CSleepMgr SleepMgr;
 CLedMgr Led;
 CMenuMgr MenuMgr;
+CSetpointModeMgr SetpointModeMgr;

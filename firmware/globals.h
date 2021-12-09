@@ -12,6 +12,7 @@
 #include "sleep_manager.h"
 #include "led_manager.h"
 #include "menu_manager.h"
+#include "setpoint_mode.h"
 
 extern CRotaryKnob Knob;
 extern CLedMatrix Display;
@@ -22,5 +23,6 @@ extern CManualModeMgr ManualModeMgr;
 extern CSleepMgr SleepMgr;
 extern CLedMgr Led;
 extern CMenuMgr MenuMgr;
+extern CSetpointModeMgr SetpointModeMgr;
 
 #endif

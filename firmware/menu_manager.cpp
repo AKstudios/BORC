@@ -67,9 +67,11 @@ void CMenuMgr::dispatch()
     switch (m_menu_item)
     {
         case MI_MANUAL:
+            ManualModeMgr.start();
             break;
 
         case MI_SETPOINT:
+            SetpointModeMgr.start();
             break;
 
         case MI_CALIBRATE:
