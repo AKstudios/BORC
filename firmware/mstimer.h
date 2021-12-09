@@ -27,13 +27,7 @@ public:
     // check if the timer is still running
     bool    is_running() {return m_is_running;}
 
-    // Kick the timer to keep it from expiring.  This is safe to call from an ISR
-    void    kick() { m_is_kicked = true; }
-
 protected:
-
-    // Every time this is true, "is_expired()" will restart the timer
-    bool          m_is_kicked;
 
     // The is the timerstamp when the timer was started
     unsigned long m_start_time;
@@ -53,10 +47,53 @@ class OneShot : public msTimer
 {
 public:
 
+    // Constructor
+    OneShot() { m_is_kicked = false; }
+
     // Call this to find out if the timer is running and expired.
     // If this returns 'true', the timer has been stopped
     bool    is_expired();
+
+    // Restarts the timer in a thread-safe manner
+    void    kick() { m_is_kicked = true; }
+
+protected:
+
+    // When this is true, is_expired() will restart the timer
+    bool    m_is_kicked;
+
 };
+//--------------------------------------------------------------------------------------------------------
+
+
+
+//--------------------------------------------------------------------------------------------------------
+// This is a one-shot timer that includes the ability to start it from an ISR in a thread-safe manner
+//--------------------------------------------------------------------------------------------------------
+class ThreadSafeOneShot : public OneShot
+{
+public:
+
+    // Call this to set the durtation of the timer that will be started via "start_from_isr()"
+    void    set_duration(unsigned int duration_ms) { m_duration_ms = duration_ms; }
+
+    // Starts the timer from an ISR in a thread-safe manner.  Duration must have been previously set
+    void    start_from_isr();
+
+    // Call this to find out if the timer is running and expired.
+    bool    is_expired();
+
+
+protected:
+
+    // This will be true when the timer has been started from an ISR
+    bool          m_is_started_from_isr;
+
+    // This is the timestamp when the ISR called "start_from_isr"
+    unsigned long m_start_time_from_isr;
+
+};
+//--------------------------------------------------------------------------------------------------------
 
 
 #endif

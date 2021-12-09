@@ -85,7 +85,7 @@ void setup()
   PowerMgr.powerOn(DRIVER_POWER_PIN);
   PowerMgr.powerOn(SERVO_POWER_PIN);
   
-  Knob.init();
+  Knob.init(CHANNEL_A, CHANNEL_B, CLICK_PIN);
   Display.init();
   Servo.init();
   Led.init();
@@ -148,9 +148,7 @@ void testknob()
         Servo.start_move_to_position(value);
         break;
 
-      case KNOB_CLICK:
-        Serial.println("knob click\n"); break;
-
+      
       default:
         Serial.println("HOW THE FUCK.. "); break;
     }

@@ -10,11 +10,11 @@ enum knob_event_t : char
 {
   KNOB_LEFT,
   KNOB_RIGHT,
-  KNOB_CLICK,   // Never gets added as an event
   KNOB_UP,
   KNOB_LPRESS
 };
 //=========================================================================================================
+
 
 
 //=========================================================================================================
@@ -26,7 +26,7 @@ class CRotaryKnob
 public:
 
     // Call once to initialize the knob
-    void            init(); 
+    void            init(int A_pin, int B_pin, int click_pin); 
 
     // Call this often to allow debounced event to be added to the queue
     void            execute();
@@ -37,13 +37,15 @@ public:
     // Call this to throw away and ignore the next event that gets debounced
     void            throw_away_next_event() { m_throw_away_next_event = true; }
 
+public:
+
+    // This routine is called by the ISR every time we sense a rotation interrupt
+    void            on_rotate_interrupt();
+
+    // This routine is called by the ISR every time we sense a button-click interrupt
+    void            on_click_interrupt();
+
 protected:
-
-    // The ISR is lonely, it needs access to add event, so make it a friend
-    friend void     knob_rotate_isr();
-
-    // The ISR is lonely, it needs access to add event, so make it a friend
-    friend void     knob_click_isr();
 
     // start deboucing an event
     void            start_debounce_timer(knob_event_t event);
@@ -54,11 +56,17 @@ protected:
     // Our ISR calls this to add an event to the list of pending events
     void            add_event(knob_event_t event);
 
+    // Configure the INT interrupt registers for the rotary A-channel input pin
+    void            configure_INT(int pin, bool enable_pullup);
+
+    // Configure the PCINT interrupt registers for the click-button input put
+    void            configure_PCINT(int pin);
+
     // The button ISR starts this timer every time is senses a button press
-    OneShot         m_debounce_timer;
+    ThreadSafeOneShot m_debounce_timer;
 
     // This timer expires when the knob is being pressed and held for a certain amount of time
-    OneShot         m_long_press_timer;
+    OneShot         m_button_timer;
 
     // How many pending events are there?
     char            m_event_count;
@@ -77,6 +85,9 @@ protected:
 
     // Index where the next event will be fetched from
     int             m_get_index;
+
+    // The pins numbers for rotary input channel A and channel B
+    int             m_A_pin, m_B_pin;
 };
 //=========================================================================================================
 
