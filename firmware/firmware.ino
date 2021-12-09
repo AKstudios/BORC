@@ -106,22 +106,20 @@ void setup()
 }
 
 //=========================================================================================================
-
+// BIG LOOP
+//=========================================================================================================
 void loop()
 {
   
   wdt_reset(); //pat the dog...
   SleepMgr.execute();
 //  Led.execute();
-  switch (System.mode)
+  switch (System.iface_mode)
   {
-    case MANUAL:
-      ManualModeMgr.execute();
-      
-      break;
+    case MANUAL : ManualModeMgr.execute();  break;
+    case MENU   : MenuMgr.execute();        break;
   }
 }
-
 //=========================================================================================================
 
 void testknob()

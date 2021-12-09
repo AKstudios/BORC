@@ -42,8 +42,6 @@ public:
 
 protected:
  public:
-    //  soft reboots the system
-    void reboot_system();
 
     // takes pwm value as argument and makes the servo move
     bool start_move_to_pwm(int pwm_value, bool enforce_limit=true);

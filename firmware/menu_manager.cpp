@@ -1,0 +1,132 @@
+#include "globals.h"
+
+//=========================================================================================================
+// init()
+//=========================================================================================================
+void CMenuMgr::init()
+{
+
+}
+//=========================================================================================================
+
+
+//=========================================================================================================
+// start()
+//=========================================================================================================
+void CMenuMgr::start()
+{   
+    // set the interface mode to menu mode
+    System.iface_mode = MENU;
+
+    // set the menu item to manual
+    m_menu_item = MI_MANUAL;
+
+    // display the menu item (2 characters)
+    display_item();
+}
+//=========================================================================================================
+
+
+//=========================================================================================================
+// display_item()
+//=========================================================================================================
+void CMenuMgr::display_item()
+{
+    switch (m_menu_item)
+    {
+        case MI_MANUAL:
+            Display.display("Ma");
+            break;
+        case MI_SETPOINT:
+            Display.display("Se");
+            break;
+        case MI_CALIBRATE:
+            Display.display("Ca");
+            break;
+        case MI_ROTATE_D:
+            Display.display("Rd");
+            break;
+        case MI_ROOMTEMP:
+            Display.display("Rt");
+            break;
+        case MI_REBOOT:
+            Display.display("Re");
+            break;
+        case MI_CONFIG:
+            Display.display("Co");
+            break;
+    }
+}
+//=========================================================================================================
+
+//=========================================================================================================
+// dispatch()
+//=========================================================================================================
+void CMenuMgr::dispatch()
+{
+    switch (m_menu_item)
+    {
+        case MI_MANUAL:
+            break;
+
+        case MI_SETPOINT:
+            break;
+
+        case MI_CALIBRATE:
+            break;
+
+        case MI_ROTATE_D:
+            break;
+
+        case MI_ROOMTEMP:
+            break;
+
+        case MI_REBOOT:
+            System.reboot();
+            break;
+
+        case MI_CONFIG:
+            break;
+
+    }
+}
+//=========================================================================================================
+
+//=========================================================================================================
+// execute() - manual mode execute
+//=========================================================================================================
+void CMenuMgr::execute()
+{
+    knob_event_t event;
+
+    while (Knob.get_event(&event))
+    {
+        switch (event)
+        {
+        case KNOB_LEFT:
+            if (m_menu_item > 0)
+            {
+                --m_menu_item;
+                display_item();
+            }
+            break;
+
+        case KNOB_RIGHT:
+            if (m_menu_item < MI_COUNT-1)
+            {
+                ++m_menu_item;
+                display_item();
+            }
+            break;
+
+        case KNOB_LPRESS:
+            System.return_to_run_mode();
+            break;
+        
+        case KNOB_UP:
+            dispatch();
+            break;
+        }
+    }
+}
+//=========================================================================================================

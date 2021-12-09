@@ -30,7 +30,7 @@ void CSleepMgr::execute()
     if (!m_sleep_timer.is_expired()) return;
 
     // if it's time to sleep and we're in manual mode...
-    if (System.mode == MANUAL)
+    if (System.run_mode == MANUAL)
     {   
         // ... move the motor
         Servo.move_to_index(System.manual_index);

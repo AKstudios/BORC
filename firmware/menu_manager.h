@@ -1,0 +1,41 @@
+//=========================================================================================================
+// Menu Manager - manages menus
+//=========================================================================================================
+#ifndef _MENU_MANAGER_H_
+#define _MENU_MANAGER_H_
+
+class CMenuMgr
+{
+public:
+
+    enum    menu_item_t
+    {
+        MI_MANUAL   = 0,
+        MI_SETPOINT,
+        MI_CALIBRATE,
+        MI_ROTATE_D,
+        MI_ROOMTEMP,
+        MI_REBOOT,
+        MI_CONFIG,
+        MI_COUNT
+    };
+
+    // Called once at setup
+    void    init();
+
+    void    start();
+
+    // Call this periodicially to allow the state machine to do its thing
+    void    execute();
+
+protected:
+
+    int     m_menu_item;
+
+    void    display_item();
+
+    void    dispatch();
+    
+};
+//=========================================================================================================
+#endif
