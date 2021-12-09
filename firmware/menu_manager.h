@@ -20,9 +20,6 @@ public:
         MI_COUNT
     };
 
-    // Called once at setup
-    void    init();
-
     void    start();
 
     // Call this periodicially to allow the state machine to do its thing
