@@ -23,6 +23,13 @@ public:
 
     // what mode is the interface in - what does playing with the knob do?
     mode_t iface_mode;
+
+    // changes system orientation
+    void rotate();
+
+protected:
+
+    bool m_orientation;
 };
 
 #endif

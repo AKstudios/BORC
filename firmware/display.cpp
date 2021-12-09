@@ -21,9 +21,8 @@ void CLedMatrix::init()
   // initialize LED matrix
   ledmatrix.begin(LED_MATRIX_ADDRESS);
 
-  // set orientation of the display (0 = upright, 2 = upside down, 1,3 = 90° rotated)
-  m_orientation = 2;
-  ledmatrix.setRotation(m_orientation);
+  // set upright system display orientation
+  set_orientation(true);
   
   // set text brightness (text, background) (0 = dark, 255 = full brightness)
   ledmatrix.setTextColor(255, 0);
@@ -41,11 +40,13 @@ void CLedMatrix::init()
 //=========================================================================================================
 // rotate() - rotate the display between upright and upside down
 //=========================================================================================================
-void CLedMatrix::rotate()
+void CLedMatrix::set_orientation(bool flag)
 { 
+  // this sets orientation of the display (0 = upright, 2 = upside down, 1,3 = 90° rotated)
+  int orientation = flag ? 2 : 0;
+  
   // flip the screen orientation..
-  m_orientation = 2 - m_orientation;
-  ledmatrix.setRotation(m_orientation);
+  ledmatrix.setRotation(orientation);
 
   // .. and redisplay the current output
   display(m_current_output);

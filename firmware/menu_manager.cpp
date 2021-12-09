@@ -69,7 +69,7 @@ void CMenuMgr::dispatch()
             break;
 
         case MI_ROTATE_D:
-            Display.rotate();
+            System.rotate();
             break;
 
         case MI_ROOMTEMP:

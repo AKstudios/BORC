@@ -35,11 +35,19 @@ void CRotaryKnob::on_click_interrupt()
 //=========================================================================================================
 void CRotaryKnob::on_rotate_interrupt()
 {
+    knob_event_t event;
+    
+    // Read the rotary encoder B-pin
+    int b_state = digitalRead(m_B_pin);
+
     // Determine if this is a rotate left or rotate right
-    knob_event_t knob_event = digitalRead(m_B_pin) ? KNOB_RIGHT : KNOB_LEFT;
+    if (m_orientation)
+        event = (b_state) ? KNOB_RIGHT : KNOB_LEFT;
+    else
+        event = (b_state) ? KNOB_LEFT :  KNOB_RIGHT;
 
     // account for debounce here
-    Knob.start_debounce_timer(knob_event);
+    Knob.start_debounce_timer(event);
 }
 //=========================================================================================================
 
@@ -199,6 +207,9 @@ void CRotaryKnob::init(int A_pin, int B_pin, int click_pin)
 
     // Tell the debounce timer what its settling time is
     m_debounce_timer.set_duration(50);
+
+    // Set the knob left/right orientation
+    m_orientation = true;
 }
 //=========================================================================================================
 

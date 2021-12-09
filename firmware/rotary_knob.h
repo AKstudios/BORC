@@ -37,6 +37,9 @@ public:
     // Call this to throw away and ignore the next event that gets debounced
     void            throw_away_next_event() { m_throw_away_next_event = true; }
 
+    // Set the left/right orientation.  true = normal, false = upside-down
+    void            set_orientation(bool flag) { m_orientation = flag; }
+
 public:
 
     // This routine is called by the ISR every time we sense a rotation interrupt
@@ -88,6 +91,9 @@ protected:
 
     // The pins numbers for rotary input channel A and channel B
     int             m_A_pin, m_B_pin;
+
+    // Determines which knob direction returns KNOB_LEFT vs. KNOB_RIGHT
+    bool            m_orientation;
 };
 //=========================================================================================================
 

@@ -15,8 +15,8 @@ public:
     // Call once to initialize the knob
     void    init();
 
-    // call this to rotate the display
-    void    rotate();
+    // Set the left/right orientation.  true = normal, false = upside-down
+    void  set_orientation(bool flag);
     
     // these routines will show any value on the display
     void display(int);
@@ -24,9 +24,6 @@ public:
     void display(double);
 
 protected:
-    
-    // this sets orientation of the display (0 = upright, 2 = upside down, 1,3 = 90° rotated)
-    int     m_orientation;
 
     // this keeps track of the current output on the display
     char    m_current_output[3];

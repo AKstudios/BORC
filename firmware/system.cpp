@@ -5,6 +5,9 @@ void CSystem::init()
     manual_index = 0;
     setpoint = DEFAULT_SETPOINT;
 
+    // set the system orientation to "upright"
+    m_orientation = true;
+
     // for now
     run_mode = MANUAL;
 }
@@ -29,5 +32,19 @@ void CSystem::return_to_run_mode()
         ManualModeMgr.start();
     else
         SetpointModeMgr.start();
+}
+//=========================================================================================================
+
+
+//=========================================================================================================
+// rotate()
+//=========================================================================================================
+void CSystem::rotate()
+{
+  m_orientation = !m_orientation;
+
+  Knob.set_orientation(m_orientation);
+
+  Display.set_orientation(m_orientation);
 }
 //=========================================================================================================
