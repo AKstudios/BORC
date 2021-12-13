@@ -10,11 +10,11 @@ void setup()
   Serial.begin(115200);
   Serial.println("begin");
   
-  #if 0
-  EEPROM.destroy();
-  Serial.println("destroyed!");
-  while(true);
-  #endif
+  // #if 0
+  // EEPROM.destroy();
+  // Serial.println("destroyed!");
+  // while(true);
+  // #endif
 
   // get the stored values from EEPROM
   // !!! THIS HAS TO BE THE FIRST THING WE DO !!!

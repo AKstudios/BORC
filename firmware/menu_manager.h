@@ -17,6 +17,7 @@ public:
         MI_ROOMTEMP,
         MI_REBOOT,
         MI_CONFIG,
+        MI_DESTROY,
         MI_COUNT
     };
 
