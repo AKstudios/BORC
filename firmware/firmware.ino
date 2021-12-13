@@ -10,18 +10,15 @@ void setup()
   Serial.begin(115200);
   Serial.println("begin");
   
-  #if 1
+  #if 0
   EEPROM.destroy();
   Serial.println("destroyed!");
   // while(true);
   #endif
 
-  Serial.print("reading..");
-  Serial.println(EEPROM.read());
-
-  Serial.println(ee.run_mode);
-  Serial.println(ee.manual_index);
-  Serial.println(ee.setpoint);
+  // get the stored values from EEPROM
+  // !!! THIS HAS TO BE THE FIRST THING WE DO !!!
+  EEPROM.read();
 
   System.init();
 
@@ -38,8 +35,9 @@ void setup()
   Led.init();
 
   ManualModeMgr.start();
+
   SleepMgr.init();
-  
+
   // Servo.calibrate_bare();
 
   // Servo.move_to_pwm(92, 4000, true);

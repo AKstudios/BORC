@@ -49,8 +49,9 @@ void CSleepMgr::execute()
 
     // turn RGB LED off
     Led.set(OFF);
-    
-    EEPROM.write();    
+
+    // write data to EEPROM
+    EEPROM.write();
 
     m_wakeup_from_knob = false;
 

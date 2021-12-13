@@ -5,7 +5,7 @@
 //=========================================================================================================
 void CManualModeMgr::start()
 {
-    ee.run_mode = System.iface_mode = MANUAL;
+    System.iface_mode = ee.run_mode;
 
     // display the current manual mode index
     Display.display(ee.manual_index);

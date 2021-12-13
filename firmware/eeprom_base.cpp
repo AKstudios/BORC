@@ -1,6 +1,8 @@
 #include <string.h>
 #include "eeprom_base.h"
 #include "crc32.h"
+#include <stdio.h>
+#include <Arduino.h>
 
 // Our magic-number that indicates our structure exists.  In ASCII "AADW" ;-)
 #define MAGIC_NUMBER (uint32_t)0x41414457
@@ -13,7 +15,6 @@
 
 // This is how we denote an empty slot in the cache
 #define EMPTY_SLOT 0xFFFFFFFF
-
 
 //=========================================================================================================
 // Constructor() - Saves wear-leveling setup information and initializes our internal data-descriptor
@@ -94,7 +95,7 @@ bool CEEPROM_Base::read()
             m_error = error_t::CRC;
         }
     }
-   
+
     // And we need to initialize any new fields that may be present in the data structure
     initialize_new_fields();
 
