@@ -183,8 +183,10 @@ void CServoDriver::calibrate_installed()
 //=========================================================================================================
 bool CServoDriver::move_to_pwm(int pwm_value, int timeout_ms, bool enforce_limit)
 {   
+    bool status = true;
+
     // turn on servo's power if needed
-    if (m_is_auto_power_control)    PowerMgr.powerOn(SERVO_POWER_PIN);
+    if (m_is_auto_power_control) PowerMgr.powerOn(SERVO_POWER_PIN);
 
     // create a oneshot timer
     OneShot servo_timer;
@@ -193,8 +195,11 @@ bool CServoDriver::move_to_pwm(int pwm_value, int timeout_ms, bool enforce_limit
     bool is_move_started = start_move_to_pwm(pwm_value, enforce_limit);
 
     // if servo hasn't started to move, return false
-    if (!is_move_started) return false;
-    
+    if (!is_move_started)
+    {
+        status = false;
+        goto cleanup;
+    }
     // start the oneshot timer again
     servo_timer.start(timeout_ms);
     
@@ -207,16 +212,19 @@ bool CServoDriver::move_to_pwm(int pwm_value, int timeout_ms, bool enforce_limit
             // if it is expired, we don't know where the servo is
             m_current_pwm = UNKNOWN_POSITION;
 
-            // tell the caller
-            return false;
+            // cleanup and tell the caller
+            status = false;
+            goto cleanup;
         }
     }
 
+    cleanup:
+
     // turn off servo's power if needed
-    if (m_is_auto_power_control)    PowerMgr.powerOff(SERVO_POWER_PIN);
+    if (m_is_auto_power_control) PowerMgr.powerOff(SERVO_POWER_PIN);
 
     // once it's done moving, tell the caller that the servo moved
-    return true;
+    return status;
 }
 //=========================================================================================================
 
