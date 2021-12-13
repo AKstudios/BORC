@@ -37,11 +37,7 @@ void CSystem::return_to_run_mode()
 //=========================================================================================================
 void CSystem::rotate()
 {
-  m_orientation = !m_orientation;
-
-  Knob.set_orientation(m_orientation);
-
-  Display.set_orientation(m_orientation);
+  set_orientation(!m_orientation);
 }
 //=========================================================================================================
 
