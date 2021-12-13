@@ -36,12 +36,8 @@ void CSleepMgr::execute()
         Servo.move_to_index(ee.manual_index);
     }
 
-    // power down necessary devices here to reduce sleep current draw
-    PowerMgr.powerOff(CURRENT_SENSE_POWER_PIN);
-    PowerMgr.powerOff(LED_SCREEN_POWER_PIN);
-    PowerMgr.powerOff(TEMP_SENSOR_POWER_PIN);
-    PowerMgr.powerOff(DRIVER_POWER_PIN);
-    PowerMgr.powerOff(SERVO_POWER_PIN);
+    // power down all devices here to reduce sleep current draw
+    PowerMgr.powerOffAll();
 
     // put the radio and SPI flash to sleep
     // radio.sleep();

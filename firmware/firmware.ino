@@ -14,19 +14,28 @@ void setup()
   // !!! THIS HAS TO BE THE FIRST THING WE DO !!!
   EEPROM.read();
 
+  // !!! THIS HAS TO BE THE SECOND THING WE DO !!!
   System.init();
 
+  // initialize the power manager
   PowerMgr.init();
+
+  // turn power all for all devices
   PowerMgr.powerOnAll(); 
 
+  // initialize all devices
   Knob.init(CHANNEL_A, CHANNEL_B, CLICK_PIN);
   Display.init();
   Servo.init();
   Led.init();
+
+  // initialize system nanager
   SleepMgr.init();
 
+  // restore the system orientation
   System.set_orientation(ee.orientation);
 
+  // set system mode to the actual run mode
   System.return_to_run_mode();
 
   // Servo.calibrate_bare();

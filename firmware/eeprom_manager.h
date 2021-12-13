@@ -65,9 +65,11 @@ public:
         uint8_t         manual_index;
         uint8_t         setpoint;
         bool            orientation;
-
-    } data, clean;
+        float           kp;
+        float           ki;
+        float           kd;
         
+    } data, clean;
 
 protected:
     

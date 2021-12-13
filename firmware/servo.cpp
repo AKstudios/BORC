@@ -48,6 +48,8 @@ void CServoDriver::init()
 
     // set stop current counter to a default known value
     m_stop_current_counter = 0;
+
+    m_is_auto_power_control = true;
 }
 //=========================================================================================================
 
@@ -71,7 +73,14 @@ void CServoDriver::reinit()
 // calibrate_bare() - find out min and max PWM for servo when not installed
 //=========================================================================================================
 void CServoDriver::calibrate_bare()
-{
+{   
+    // save servo power flag and turn it off here
+    bool _m_is_auto_power_control = m_is_auto_power_control;
+    m_is_auto_power_control = false;
+    
+    // manually turn on servo's power
+    PowerMgr.powerOn(SERVO_POWER_PIN);
+
     // set known values to all limits
     const int safe_lo_pwm = (DEFAULT_MIN_LIMIT + DEFAULT_MAX_LIMIT)/2;
     const int safe_hi_pwm = (DEFAULT_MIN_LIMIT + DEFAULT_MAX_LIMIT)/2;
@@ -148,6 +157,12 @@ void CServoDriver::calibrate_bare()
             break;
         }
     }
+
+    // manually turn off servo's power
+    PowerMgr.powerOff(SERVO_POWER_PIN);
+
+    // restore servo power flag
+    m_is_auto_power_control = _m_is_auto_power_control;
 }
 //=========================================================================================================
 
@@ -167,7 +182,10 @@ void CServoDriver::calibrate_installed()
 // returns true if move completes, returns false if it doesn't
 //=========================================================================================================
 bool CServoDriver::move_to_pwm(int pwm_value, int timeout_ms, bool enforce_limit)
-{
+{   
+    // turn on servo's power if needed
+    if (m_is_auto_power_control)    PowerMgr.powerOn(SERVO_POWER_PIN);
+
     // create a oneshot timer
     OneShot servo_timer;
 
@@ -193,6 +211,9 @@ bool CServoDriver::move_to_pwm(int pwm_value, int timeout_ms, bool enforce_limit
             return false;
         }
     }
+
+    // turn off servo's power if needed
+    if (m_is_auto_power_control)    PowerMgr.powerOff(SERVO_POWER_PIN);
 
     // once it's done moving, tell the caller that the servo moved
     return true;

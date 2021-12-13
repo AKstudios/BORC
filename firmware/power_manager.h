@@ -20,7 +20,8 @@ public:
     // turn power on for all devices
     void powerOnAll(); 
 
-    void powerOnI2C();
+    // turn power off for all devices
+    void powerOffAll();
 };
 //=========================================================================================================
 

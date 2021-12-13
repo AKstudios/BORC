@@ -41,8 +41,10 @@ public:
     bool is_moving();
 
 protected:
- public:
+//  public:
 
+    bool m_is_auto_power_control;
+    
     // takes pwm value as argument and makes the servo move
     bool start_move_to_pwm(int pwm_value, bool enforce_limit=true);
 

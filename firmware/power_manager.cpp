@@ -62,3 +62,17 @@ void CPowerManager::powerOnAll()
 //=========================================================================================================
 
 
+//=========================================================================================================
+// powerOffAll() - // turn power off for all devices
+//=========================================================================================================
+void CPowerManager::powerOffAll()
+{
+  digitalWrite(SERVO_POWER_PIN, LOW);
+  digitalWrite(DRIVER_POWER_PIN, LOW);
+  digitalWrite(LED_SCREEN_POWER_PIN, LOW);
+  digitalWrite(TEMP_SENSOR_POWER_PIN, LOW);
+  digitalWrite(CURRENT_SENSE_POWER_PIN, LOW);
+}
+//=========================================================================================================
+
+
