@@ -5,10 +5,10 @@
 //=========================================================================================================
 void CManualModeMgr::start()
 {
-    System.run_mode = System.iface_mode = MANUAL;
+    ee.run_mode = System.iface_mode = MANUAL;
 
     // display the current manual mode index
-    Display.display(System.manual_index);
+    Display.display(ee.manual_index);
 }
 //=========================================================================================================
 
@@ -26,18 +26,18 @@ void CManualModeMgr::execute()
         switch (event)
         {
         case KNOB_LEFT:
-            if (System.manual_index > 0)
+            if (ee.manual_index > 0)
             {
-                --System.manual_index;
-                Display.display(System.manual_index);
+                --ee.manual_index;
+                Display.display(ee.manual_index);
             }
             break;
 
         case KNOB_RIGHT:
-            if (System.manual_index < Servo.get_max_index())
+            if (ee.manual_index < Servo.get_max_index())
             {
-                ++System.manual_index;
-                Display.display(System.manual_index);
+                ++ee.manual_index;
+                Display.display(ee.manual_index);
             }
             break;
         

@@ -10,6 +10,19 @@ void setup()
   Serial.begin(115200);
   Serial.println("begin");
   
+  #if 1
+  EEPROM.destroy();
+  Serial.println("destroyed!");
+  // while(true);
+  #endif
+
+  Serial.print("reading..");
+  Serial.println(EEPROM.read());
+
+  Serial.println(ee.run_mode);
+  Serial.println(ee.manual_index);
+  Serial.println(ee.setpoint);
+
   System.init();
 
   PowerMgr.init();

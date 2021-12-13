@@ -2,14 +2,10 @@
 
 void CSystem::init()
 {
-    manual_index = 0;
-    setpoint = DEFAULT_SETPOINT;
+    if (ee.setpoint == 0)   ee.setpoint = DEFAULT_SETPOINT;
 
     // set the system orientation to "upright"
     m_orientation = true;
-
-    // for now
-    run_mode = MANUAL;
 }
 
 //=========================================================================================================
@@ -28,7 +24,7 @@ void CSystem::reboot()
 //=========================================================================================================
 void CSystem::return_to_run_mode()
 {
-    if (run_mode == MANUAL)
+    if (ee.run_mode == MANUAL)
         ManualModeMgr.start();
     else
         SetpointModeMgr.start();

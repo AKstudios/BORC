@@ -1,3 +1,15 @@
+#ifndef _COMMON_H_
+#define _COMMON_H_
+#include <stdint.h>
+
+// system mode
+enum mode_t : uint8_t
+{
+    MANUAL=0,
+    MENU=1,
+    SETPOINT=2
+};
+
 // Misc. global variables ------------------------------------------
 #define SERIAL_BAUD               115200
 #define FWVERSION                 "1007"
@@ -34,3 +46,5 @@
 #define FLASH_ERR                 5   // SPI flash error
 #define RADIO_ERR                 6   // Radio error
 #define SERVO_ERR                 7   // servo error (0 current or very high current)
+
+#endif

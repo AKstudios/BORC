@@ -10,3 +10,6 @@ CSleepMgr SleepMgr;
 CLedMgr Led;
 CMenuMgr MenuMgr;
 CSetpointModeMgr SetpointModeMgr;
+CEEPROM EEPROM;
+
+CEEPROM::data_t& ee;

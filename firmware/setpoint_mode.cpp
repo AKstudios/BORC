@@ -4,11 +4,11 @@
 // start() - start setpoint mode
 //=========================================================================================================
 void CSetpointModeMgr::start()
-{
-    System.run_mode = System.iface_mode = SETPOINT;
+{   
+    ee.run_mode = System.iface_mode = SETPOINT;
 
     // display the current setpoint
-    Display.display(System.setpoint);
+    Display.display(ee.setpoint);
 }
 //=========================================================================================================
 
@@ -26,18 +26,18 @@ void CSetpointModeMgr::execute()
         switch (event)
         {
         case KNOB_LEFT:
-            if (System.setpoint > MIN_SETPOINT)
+            if (ee.setpoint > MIN_SETPOINT)
             {
-                --System.setpoint;
-                Display.display(System.setpoint);
+                --ee.setpoint;
+                Display.display(ee.setpoint);
             }
             break;
 
         case KNOB_RIGHT:
-            if (System.setpoint < MAX_SETPOINT)
+            if (ee.setpoint < MAX_SETPOINT)
             {
-                ++System.setpoint;
-                Display.display(System.setpoint);
+                ++ee.setpoint;
+                Display.display(ee.setpoint);
             }
             break;
         

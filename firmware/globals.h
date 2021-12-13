@@ -13,6 +13,7 @@
 #include "led_manager.h"
 #include "menu_manager.h"
 #include "setpoint_mode.h"
+#include "eeprom_manager.h"
 
 extern CRotaryKnob Knob;
 extern CLedMatrix Display;
@@ -24,5 +25,7 @@ extern CSleepMgr SleepMgr;
 extern CLedMgr Led;
 extern CMenuMgr MenuMgr;
 extern CSetpointModeMgr SetpointModeMgr;
+extern CEEPROM EEPROM;
+extern CEEPROM::data_t& ee;
 
 #endif

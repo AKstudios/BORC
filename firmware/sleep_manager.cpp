@@ -30,10 +30,10 @@ void CSleepMgr::execute()
     if (!m_sleep_timer.is_expired()) return;
 
     // if it's time to sleep and we're in manual mode...
-    if (System.run_mode == MANUAL)
+    if (ee.run_mode == MANUAL)
     {   
         // ... move the motor
-        Servo.move_to_index(System.manual_index);
+        Servo.move_to_index(ee.manual_index);
     }
 
     // power down necessary devices here to reduce sleep current draw
@@ -50,7 +50,8 @@ void CSleepMgr::execute()
     // turn RGB LED off
     Led.set(OFF);
     
-    
+    EEPROM.write();    
+
     m_wakeup_from_knob = false;
 
     Serial.println("sleep");
