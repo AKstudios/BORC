@@ -20,6 +20,9 @@ public:
     // changes system orientation
     void rotate();
 
+    // set system-wide orientation
+    void set_orientation();
+
 protected:
 
     bool m_orientation;

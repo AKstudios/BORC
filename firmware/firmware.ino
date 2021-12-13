@@ -13,7 +13,7 @@ void setup()
   #if 0
   EEPROM.destroy();
   Serial.println("destroyed!");
-  // while(true);
+  while(true);
   #endif
 
   // get the stored values from EEPROM
