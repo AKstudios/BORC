@@ -64,20 +64,19 @@ void CSleepMgr::execute()
         {
             LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF);
             
-            if (m_wakeup_from_knob) break;
+            if (m_wakeup_from_knob)
+            {
+                wakeup_from_knob();
+                return;
+            }
 
             // do temp/rh
             // PID stuff
         }
 
-        if (m_wakeup_from_knob) break;
-
         // radio, servo, blah
         wakeup_from_timer();
     }
-
-    wakeup_from_knob();
-
 }
 //=========================================================================================================
 
@@ -127,7 +126,7 @@ void CSleepMgr::on_knob_activity()
 void CSleepMgr::wakeup_from_knob()
 {
     Knob.throw_away_next_event();
-    PowerMgr.powerI2C();
+    PowerMgr.powerOnAll();
     Servo.reinit();
     System.return_to_run_mode();
     start_timer();

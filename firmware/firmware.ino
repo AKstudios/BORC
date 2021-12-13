@@ -9,12 +9,6 @@ void setup()
 {    
   Serial.begin(115200);
   Serial.println("begin");
-  
-  // #if 0
-  // EEPROM.destroy();
-  // Serial.println("destroyed!");
-  // while(true);
-  // #endif
 
   // get the stored values from EEPROM
   // !!! THIS HAS TO BE THE FIRST THING WE DO !!!
@@ -23,19 +17,13 @@ void setup()
   System.init();
 
   PowerMgr.init();
-  PowerMgr.powerOn(CURRENT_SENSE_POWER_PIN);
-  PowerMgr.powerOn(LED_SCREEN_POWER_PIN);
-  PowerMgr.powerOn(TEMP_SENSOR_POWER_PIN);
-  PowerMgr.powerOn(DRIVER_POWER_PIN);
-  PowerMgr.powerOn(SERVO_POWER_PIN);
-  
+  PowerMgr.powerOnAll(); 
+
   Knob.init(CHANNEL_A, CHANNEL_B, CLICK_PIN);
   Display.init();
   Servo.init();
   Led.init();
-
   ManualModeMgr.start();
-
   SleepMgr.init();
 
   System.set_orientation(ee.orientation);

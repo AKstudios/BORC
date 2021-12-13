@@ -16,12 +16,12 @@ public:
     void    init();
 
     // Set the left/right orientation.  true = normal, false = upside-down
-    void  set_orientation(bool flag);
+    void    set_orientation(bool flag);
     
     // these routines will show any value on the display
-    void display(int);
-    void display(const char*);
-    void display(double);
+    void    display(int);
+    void    display(const char*);
+    void    display(double);
 
 protected:
 
