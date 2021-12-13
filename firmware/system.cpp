@@ -3,9 +3,6 @@
 void CSystem::init()
 {
     if (ee.setpoint == 0)   ee.setpoint = DEFAULT_SETPOINT;
-
-    // set the system orientation to "upright"
-    m_orientation = true;
 }
 
 //=========================================================================================================
@@ -37,7 +34,7 @@ void CSystem::return_to_run_mode()
 //=========================================================================================================
 void CSystem::rotate()
 {
-  set_orientation(!m_orientation);
+  set_orientation(!ee.orientation);
 }
 //=========================================================================================================
 
@@ -47,10 +44,10 @@ void CSystem::rotate()
 //=========================================================================================================
 void CSystem::set_orientation(bool orientation)
 {
-  m_orientation = orientation;
+  ee.orientation = orientation;
 
-  Knob.set_orientation(m_orientation);
+  Knob.set_orientation(ee.orientation);
 
-  Display.set_orientation(m_orientation);
+  Display.set_orientation(ee.orientation);
 }
 //=========================================================================================================

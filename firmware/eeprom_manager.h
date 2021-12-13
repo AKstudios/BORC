@@ -64,6 +64,7 @@ public:
         mode_t          run_mode;
         uint8_t         manual_index;
         uint8_t         setpoint;
+        bool            orientation;
 
     } data, clean;
         

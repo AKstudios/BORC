@@ -21,11 +21,10 @@ public:
     void rotate();
 
     // set system-wide orientation
-    void set_orientation();
+    void set_orientation(bool orientation);
 
 protected:
 
-    bool m_orientation;
 };
 
 #endif
