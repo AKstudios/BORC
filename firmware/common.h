@@ -12,7 +12,6 @@ enum mode_t : uint8_t
 
 // Misc. global variables ------------------------------------------
 #define SERIAL_BAUD               115200
-#define FWVERSION                 "1007"
 
 // I2C Addresses ---------------------------------------------------
 #define CURRENT_SENSE_ADDRESS     0x41
