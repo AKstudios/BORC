@@ -38,6 +38,8 @@ void setup()
 
   SleepMgr.init();
 
+  System.set_orientation(ee.orientation);
+
   // Servo.calibrate_bare();
 
   // Servo.move_to_pwm(92, 4000, true);
