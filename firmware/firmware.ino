@@ -23,10 +23,11 @@ void setup()
   Display.init();
   Servo.init();
   Led.init();
-  ManualModeMgr.start();
   SleepMgr.init();
 
   System.set_orientation(ee.orientation);
+
+  System.return_to_run_mode();
 
   // Servo.calibrate_bare();
 

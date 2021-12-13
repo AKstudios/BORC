@@ -18,7 +18,9 @@ public:
     void powerOff(int pin_number);
 
     // turn power on for all devices
-    void powerOnAll();    
+    void powerOnAll(); 
+
+    void powerOnI2C();
 };
 //=========================================================================================================
 
