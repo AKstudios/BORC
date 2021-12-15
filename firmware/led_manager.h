@@ -30,7 +30,8 @@ public:
     // If period_ms = 0, LED is solid
     // If period_ms = 1, LED does a single 10ms flash
     // If period_ms is anything else, it's the blink period.
-    void    set(led_color_t color, unsigned int period_ms = 0);
+    // single_flash
+    void    set(led_color_t color, unsigned int period_ms = 0, bool single_flash = false);
 
     // Call this periodicially to allow the state machine to do its thing
     void    execute();

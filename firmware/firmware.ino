@@ -10,6 +10,9 @@ void setup()
   Serial.begin(115200);
   Serial.println("begin");
 
+  // blink aqua for 1 second to show device booted
+  Led.set(AQUA, 1000, true);
+
   // get the stored values from EEPROM
   // !!! THIS HAS TO BE THE FIRST THING WE DO !!!
   EEPROM.read();
@@ -29,16 +32,17 @@ void setup()
   Servo.init();
   Led.init();
 
-  // initialize system nanager
+  // initialize sleep nanager
   SleepMgr.init();
 
-  // restore the system orientation
+  // restore the system orientation from EEPROM
   System.set_orientation(ee.orientation);
 
   // set system mode to the actual run mode
   System.return_to_run_mode();
 
-  // Servo.calibrate_bare();
+  // if the servo hasn't been successfully calibrated, do so
+  // if (!ee.is_servo_calibrated)  Servo.calibrate_bare();
 
   // Servo.move_to_pwm(92, 4000, true);
   // Servo.move_to_pwm(542, 4000, true);  

@@ -18,6 +18,7 @@ void CEEPROM::initialize_new_fields()
         data.orientation = true;
     }
 
+
     // And we also initialize "another_new_field" that was added to our data structure 
     // in DATA_FORMAT #3
 

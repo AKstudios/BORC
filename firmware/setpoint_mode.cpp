@@ -30,6 +30,7 @@ void CSetpointModeMgr::execute()
             {
                 --ee.setpoint;
                 Display.display(ee.setpoint);
+                Led.set(BLUE, 1000, true);
             }
             break;
 
@@ -38,6 +39,7 @@ void CSetpointModeMgr::execute()
             {
                 ++ee.setpoint;
                 Display.display(ee.setpoint);
+                Led.set(RED, 1000, true);
             }
             break;
         

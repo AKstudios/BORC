@@ -1,7 +1,5 @@
 #include "globals.h"
-
 #include "LowPower.h"
-//#include <avr/interrupts.h>
 
 ////=========================================================================================================
 //// WDT_vect - Interrupt Service Routine for the watchdog timer. This needs to exist for the timer
@@ -36,6 +34,12 @@ void CSleepMgr::execute()
         Servo.move_to_index(ee.manual_index);
     }
 
+    // clear display
+    Display.clear();
+
+    // turn RGB LED off
+    Led.set(OFF);
+
     // power down all devices here to reduce sleep current draw
     PowerMgr.powerOffAll();
 
@@ -43,17 +47,16 @@ void CSleepMgr::execute()
     // radio.sleep();
     // flash.sleep();
 
-    // turn RGB LED off
-    Led.set(OFF);
-
     // write data to EEPROM
     EEPROM.write();
 
+    // set knob wakeup flag to false before going to sleep
     m_wakeup_from_knob = false;
 
     Serial.println("sleep");
     delay(10);
     
+    // stay in a sleep loop unless someone interacts with the knob
     while (true)
     {
         for (int i=0; i<4; i++)

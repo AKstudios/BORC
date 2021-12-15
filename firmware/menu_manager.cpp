@@ -69,6 +69,7 @@ void CMenuMgr::dispatch()
             break;
 
         case MI_CALIBRATE:
+            Servo.calibrate_bare();
             break;
 
         case MI_ROTATE_D:
@@ -84,6 +85,9 @@ void CMenuMgr::dispatch()
             break;
         
         case MI_DESTROY:
+            Display.fill();
+            Led.set(WHITE);
+            delay(1000);
             EEPROM.destroy();
             System.reboot();
             break;

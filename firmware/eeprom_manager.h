@@ -65,6 +65,7 @@ public:
         uint8_t         manual_index;
         uint8_t         setpoint;
         bool            orientation;
+        bool            is_servo_calibrated;
         float           kp;
         float           ki;
         float           kd;

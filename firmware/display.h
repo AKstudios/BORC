@@ -23,6 +23,12 @@ public:
     void    display(const char*);
     void    display(double);
 
+    // this will clear the display
+    void    clear();
+
+    // tihs will fill up the display
+    void    fill();
+
 protected:
 
     // this keeps track of the current output on the display

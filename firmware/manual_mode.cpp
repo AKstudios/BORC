@@ -5,7 +5,7 @@
 //=========================================================================================================
 void CManualModeMgr::start()
 {
-    System.iface_mode = ee.run_mode;
+    ee.run_mode = System.iface_mode = MANUAL;
 
     // display the current manual mode index
     Display.display(ee.manual_index);
@@ -30,6 +30,7 @@ void CManualModeMgr::execute()
             {
                 --ee.manual_index;
                 Display.display(ee.manual_index);
+                Led.set(BLUE, 1000, true);
             }
             break;
 
@@ -38,6 +39,7 @@ void CManualModeMgr::execute()
             {
                 ++ee.manual_index;
                 Display.display(ee.manual_index);
+                Led.set(RED, 1000, true);
             }
             break;
         

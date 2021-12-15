@@ -1,9 +1,6 @@
 //=========================================================================================================
 // CServoDriver() - A class that manages the servo driver NXP PCA9685               
 //=========================================================================================================
-#include "servo.h"
-#include "common.h"
-#include "Arduino.h"
 #include "globals.h"
 #include <Adafruit_PWMServoDriver.h>  //https://github.com/adafruit/Adafruit-PWM-Servo-Driver-Library
 #include <Adafruit_INA219.h>          //https://github.com/adafruit/Adafruit_INA219
@@ -74,6 +71,13 @@ void CServoDriver::reinit()
 //=========================================================================================================
 void CServoDriver::calibrate_bare()
 {   
+    // show that we're calibrating the servo on the display and LED
+    Display.display("Ca");
+    Led.set(PURPLE);
+
+    // assume this is going to work
+    bool success = true;
+
     // save servo power flag and turn it off here
     bool _m_is_auto_power_control = m_is_auto_power_control;
     m_is_auto_power_control = false;
@@ -105,9 +109,10 @@ void CServoDriver::calibrate_bare()
 
         // have we failed to find the lower limit?
         if (current_target <= dangerous_lo_pwm) 
-        {   
+        {  
             // then set it to default
             m_min_limit = DEFAULT_MIN_LIMIT;
+            success = false;
             break;
         }
 
@@ -143,6 +148,7 @@ void CServoDriver::calibrate_bare()
         {   
             // then set it to default
             m_max_limit = DEFAULT_MAX_LIMIT;
+            success = false;
             break;
         }
 
@@ -163,6 +169,12 @@ void CServoDriver::calibrate_bare()
 
     // restore servo power flag
     m_is_auto_power_control = _m_is_auto_power_control;
+
+    // store servo calibration status in EEPROM
+    if (success) ee.is_servo_calibrated = true;
+
+    // turn LED off after calibration
+    Led.set(OFF);
 }
 //=========================================================================================================
 

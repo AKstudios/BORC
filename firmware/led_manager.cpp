@@ -1,5 +1,4 @@
 #include "globals.h"
-#include "common.h"
 
 //=========================================================================================================
 // init() - set LED pins as outputs
@@ -47,10 +46,13 @@ void CLedMgr::on(led_color_t pattern)
 // If period_ms = 1, LED does a single 10ms flash
 // If period_ms is anything else, it's the blink period.    
 //=========================================================================================================
-void CLedMgr::set(led_color_t color, unsigned int period_ms)
+void CLedMgr::set(led_color_t color, unsigned int period_ms, bool single_flash)
 {
     // save this for posterity
     m_color = color & 7;
+
+    // save this for posterity
+    m_is_single_flash = single_flash;
 
     // kill the timer to change to a new pattern
     m_timer.stop();
@@ -60,12 +62,6 @@ void CLedMgr::set(led_color_t color, unsigned int period_ms)
 
     // turn on the pins the user asked for
     on(color);
-
-    // does the caller want to do one single flash?
-    m_is_single_flash = (period_ms == 1);
-
-    // does the user want to do one single quick flash?
-    if (m_is_single_flash)  period_ms = 10;
 
     // if we're blinking, start the timer
     if (period_ms)  m_timer.start(period_ms);

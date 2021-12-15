@@ -21,10 +21,10 @@ enum mode_t : uint8_t
 
 // Pin mapping -----------------------------------------------------
 #define CLICK_PIN                 0
-#define GREEN_PIN                 14
+#define GREEN_PIN                 3
 #define CHANNEL_B                 10
 #define CHANNEL_A                 11
-#define RED_PIN                   3
+#define RED_PIN                   14
 #define BLUE_PIN                  15
 #define DRIVER_POWER_PIN          18
 #define LED_SCREEN_POWER_PIN      19
