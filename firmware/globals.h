@@ -14,6 +14,7 @@
 #include "menu_manager.h"
 #include "setpoint_mode.h"
 #include "eeprom_manager.h"
+#include "temphum.h"
 
 extern CRotaryKnob Knob;
 extern CLedMatrix Display;
@@ -27,5 +28,6 @@ extern CMenuMgr MenuMgr;
 extern CSetpointModeMgr SetpointModeMgr;
 extern CEEPROM EEPROM;
 extern CEEPROM::data_t& ee;
+extern CTempHum TempHum;
 
 #endif

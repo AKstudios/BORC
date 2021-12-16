@@ -2,6 +2,7 @@
 #include "common.h"
 #include <avr/wdt.h>
 
+
 //=========================================================================================================
 // Setup
 //=========================================================================================================
@@ -43,6 +44,11 @@ void setup()
 
   // if the servo hasn't been successfully calibrated, do so
   // if (!ee.is_servo_calibrated)  Servo.calibrate_bare();
+
+  // read temp and hum from sensor
+  TempHum.read(true);
+  Serial.println(TempHum.temp);
+  Serial.println(TempHum.rh);
 
   // Servo.move_to_pwm(92, 4000, true);
   // Servo.move_to_pwm(542, 4000, true);  

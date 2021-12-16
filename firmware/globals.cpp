@@ -11,5 +11,5 @@ CLedMgr Led;
 CMenuMgr MenuMgr;
 CSetpointModeMgr SetpointModeMgr;
 CEEPROM EEPROM;
-
 CEEPROM::data_t& ee = EEPROM.data;
+CTempHum TempHum;
