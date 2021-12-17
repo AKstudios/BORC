@@ -63,9 +63,11 @@ public:
         const header_t  header = { 0 };
         mode_t          run_mode;
         uint8_t         manual_index;
-        uint8_t         setpoint;
+        float           setpoint;
         bool            orientation;
-        bool            is_servo_calibrated;
+        servocal_t      is_servo_calibrated;
+        uint16_t        servo_min;
+        uint16_t        servo_max;
         float           kp;
         float           ki;
         float           kd;

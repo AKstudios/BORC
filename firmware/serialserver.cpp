@@ -97,12 +97,14 @@ void CSerialServer::show_nv(void* vp)
     const char run_mode_s[]   PROGMEM = "run_mode           : 2 - SETPOINT";
     const char run_mode[]     PROGMEM = "run_mode           : %i";
     const char manual_index[] PROGMEM = "manual_index       : %i";
-    const char setpoint[]     PROGMEM = "setpoint           : %i";
+    const char setpoint[]     PROGMEM = "setpoint           : %s";
     const char orientation[]  PROGMEM = "orientation        : %i";
     const char is_servocal[]  PROGMEM = "is_servo_cal       : %i";
     const char kp[]           PROGMEM = "kp                 : %s";
     const char ki[]           PROGMEM = "ki                 : %s";
     const char kd[]           PROGMEM = "kd                 : %s";
+    const char servo_min[]    PROGMEM = "servo_min          : %i";
+    const char servo_max[]    PROGMEM = "servo_max          : %i";
 
 
     // Get a handy reference to the EEPROM structure the caller wants to dump
@@ -123,9 +125,11 @@ void CSerialServer::show_nv(void* vp)
 
     // Now display all of the other EEPROM settings
     replyf(manual_index,    ee.manual_index);
-    replyf(setpoint,        ee.setpoint);
+    replyf(setpoint,        strfloat(ee.setpoint, 0, 3));
     replyf(orientation,     ee.orientation);
     replyf(is_servocal,     ee.is_servo_calibrated);
+    replyf(servo_min,       ee.servo_min);
+    replyf(servo_max,       ee.servo_max);
     replyf(kp,              strfloat(ee.kp, 0, 3));
     replyf(ki,              strfloat(ee.ki, 0, 3));
     replyf(kd,              strfloat(ee.kd, 0, 3));
@@ -161,15 +165,15 @@ bool CSerialServer::handle_reboot()
 bool CSerialServer::handle_help()
 {
     
-    const char line_01  [] PROGMEM = "ee                - Displays EEPROM contents";
-    const char line_02  [] PROGMEM = "ee dirty          - Displays EEPROM shadow RAM";
-    const char line_03  [] PROGMEM = "ee destroy        - Erases EEPROM";
-    const char line_04  [] PROGMEM = "fwrev             - Displays firmware revision";
-    const char line_05  [] PROGMEM = "reboot            - Soft reboots device";
-    const char line_06  [] PROGMEM = "eeset kp <value>  - Saves PID P constant to EEPROM";
-    const char line_07  [] PROGMEM = "eeset ki <value>  - Saves PID I constant to EEPROM";
-    const char line_08  [] PROGMEM = "eeset kd <value>  - Saves PID D constant to EEPROM";
-
+    const char line_01  [] PROGMEM = "ee                          - Displays EEPROM contents";
+    const char line_02  [] PROGMEM = "ee dirty                    - Displays EEPROM shadow RAM";
+    const char line_03  [] PROGMEM = "ee destroy                  - Erases EEPROM";
+    const char line_04  [] PROGMEM = "fwrev                       - Displays firmware revision";
+    const char line_05  [] PROGMEM = "reboot                      - Soft reboots device";
+    const char line_06  [] PROGMEM = "eeset kp <value>            - Saves PID P constant to EEPROM";
+    const char line_07  [] PROGMEM = "eeset ki <value>            - Saves PID I constant to EEPROM";
+    const char line_08  [] PROGMEM = "eeset kd <value>            - Saves PID D constant to EEPROM";
+    const char line_09  [] PROGMEM = "eeset is_servocal <value>   - Saves servo calibration flag";
 
     replyf(line_01);
     replyf(line_02);
@@ -179,6 +183,7 @@ bool CSerialServer::handle_help()
     replyf(line_06);
     replyf(line_07);
     replyf(line_08);
+    replyf(line_09);
 
     return pass();
 }
@@ -212,6 +217,7 @@ bool CSerialServer::handle_nvset()
     {
         ee.kp = fvalue;
         EEPROM.write();
+        PID.set_constants(ee.kp, ee.ki, ee.kd);
         return pass();
     }
 
@@ -220,6 +226,7 @@ bool CSerialServer::handle_nvset()
     {
         ee.ki = fvalue;
         EEPROM.write();
+        PID.set_constants(ee.kp, ee.ki, ee.kd);
         return pass();
     }
 
@@ -227,6 +234,14 @@ bool CSerialServer::handle_nvset()
     if token_is("kd")
     {
         ee.kd = fvalue;
+        EEPROM.write();
+        PID.set_constants(ee.kp, ee.ki, ee.kd);
+        return pass();
+    }
+
+    if token_is("is_servocal")
+    {
+        ee.is_servo_calibrated = int(fvalue);
         EEPROM.write();
         return pass();
     }

@@ -2,7 +2,7 @@
 
 void CSystem::init()
 {
-    if (ee.setpoint == 0)   ee.setpoint = DEFAULT_SETPOINT;
+    if (ee.setpoint == 0)   ee.setpoint = f_to_c(DEFAULT_SETPOINT);
 }
 
 //=========================================================================================================

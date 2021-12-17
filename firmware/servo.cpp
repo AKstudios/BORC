@@ -32,10 +32,6 @@ void CServoDriver::init()
     // set servo frequency
     pwm.setPWMFreq(SERVO_FREQ);
 
-    // set some reasonable default values for limits
-    m_min_limit = DEFAULT_MIN_LIMIT;
-    m_max_limit = DEFAULT_MAX_LIMIT;
-
     // set start and stop current thresholds in mA (no load on motor)
     m_start_moving_threshold = 300;
     m_stop_moving_threshold = 200;
@@ -46,7 +42,15 @@ void CServoDriver::init()
     // set stop current counter to a default known value
     m_stop_current_counter = 0;
 
+    // give the system power control of the servo
     m_is_auto_power_control = true;
+
+    // if servo isn't calibrated, use defaults
+    if (ee.is_servo_calibrated != CAL)
+    {
+        ee.servo_max = DEFAULT_MAX_LIMIT;
+        ee.servo_min = DEFAULT_MIN_LIMIT;
+    }
 }
 //=========================================================================================================
 
@@ -79,7 +83,7 @@ void CServoDriver::calibrate_bare()
     bool success = true;
 
     // save servo power flag and turn it off here
-    bool _m_is_auto_power_control = m_is_auto_power_control;
+    bool old_auto_power_control = m_is_auto_power_control;
     m_is_auto_power_control = false;
     
     // manually turn on servo's power
@@ -111,7 +115,7 @@ void CServoDriver::calibrate_bare()
         if (current_target <= dangerous_lo_pwm) 
         {  
             // then set it to default
-            m_min_limit = DEFAULT_MIN_LIMIT;
+            ee.servo_min = DEFAULT_MIN_LIMIT;
             success = false;
             break;
         }
@@ -123,7 +127,7 @@ void CServoDriver::calibrate_bare()
         if (!move_to_pwm(current_target, 4000, false))
         {   
             // we found our lower limit
-            m_min_limit = current_target + step_size;
+            ee.servo_min = current_target + step_size;
             break;
         }
     }
@@ -147,7 +151,7 @@ void CServoDriver::calibrate_bare()
         if (current_target >= dangerous_hi_pwm) 
         {   
             // then set it to default
-            m_max_limit = DEFAULT_MAX_LIMIT;
+            ee.servo_max = DEFAULT_MAX_LIMIT;
             success = false;
             break;
         }
@@ -159,7 +163,7 @@ void CServoDriver::calibrate_bare()
         if (!move_to_pwm(current_target, 4000, false))
         {
             // we found our upper limit
-            m_max_limit = current_target - step_size;
+            ee.servo_max = current_target - step_size;
             break;
         }
     }
@@ -168,10 +172,17 @@ void CServoDriver::calibrate_bare()
     PowerMgr.powerOff(SERVO_POWER_PIN);
 
     // restore servo power flag
-    m_is_auto_power_control = _m_is_auto_power_control;
+    m_is_auto_power_control = old_auto_power_control;
 
-    // store servo calibration status in EEPROM
-    if (success) ee.is_servo_calibrated = true;
+    // if calibration is successful..
+    if (success)
+    {   
+        // store servo calibration status in EEPROM
+        ee.is_servo_calibrated = CAL;
+        
+        // and set PID limits
+        PID.set_output_limits(0, ee.servo_max-ee.servo_min);
+    }
 
     // turn LED off after calibration
     Led.set(OFF);
@@ -186,6 +197,12 @@ void CServoDriver::calibrate_installed()
 {
     
 }
+//=========================================================================================================
+
+//=========================================================================================================
+// get_max_position() - // get the highest value to send to servo class (0 to max)
+//=========================================================================================================
+int CServoDriver::get_max_position()  {return ee.servo_max - ee.servo_min;}
 //=========================================================================================================
 
 
@@ -261,7 +278,7 @@ bool CServoDriver::start_move_to_pwm(int pwm_value, bool enforce_limit)
     if (enforce_limit)
     {
         // ...check if position is within acceptable range
-        if (pwm_value < m_min_limit || pwm_value > m_max_limit) return false;
+        if (pwm_value < ee.servo_min || pwm_value > ee.servo_max) return false;
     }
   
     // set PWM value for the servo to move
@@ -297,7 +314,7 @@ bool CServoDriver::start_move_to_pwm(int pwm_value, bool enforce_limit)
 //=========================================================================================================
 bool CServoDriver::start_move_to_position(int position)
 {   
-    return start_move_to_pwm(position + m_min_limit);
+    return start_move_to_pwm(position + ee.servo_min);
 }
 //=========================================================================================================
 
@@ -307,12 +324,12 @@ bool CServoDriver::start_move_to_position(int position)
 //=========================================================================================================
 bool CServoDriver::move_to_index(int index)
 {   
-    int range = m_max_limit - m_min_limit;
+    int range = ee.servo_max - ee.servo_min;
 
     // invert the index so 0 means close and 6 means open
     int effective_index = get_max_index() - index;
     
-    int pwm_value = effective_index * range / get_max_index() + m_min_limit;
+    int pwm_value = effective_index * range / get_max_index() + ee.servo_min;
 
     return move_to_pwm(pwm_value, 4000, true);
 }

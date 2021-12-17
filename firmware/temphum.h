@@ -5,8 +5,8 @@ class CTempHum
 {
 public:
     // read the temperature and humidity
-    // setting is_celcius to true returns temp in celsius, setting ot false returns temp in farenheit
-    void read(bool is_celsius);
+    // returns temperature in celsius
+    float read();
 
     // save temperature and humidity in these variables
     float temp, rh;

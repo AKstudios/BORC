@@ -33,20 +33,23 @@ void setup()
   Servo.init();
   Led.init();
 
-  // initialize sleep nanager
+  // initialize sleep manager
   SleepMgr.init();
 
   // restore the system orientation from EEPROM
   System.set_orientation(ee.orientation);
 
+  // Initialize setpoint mode manager
+  SetpointModeMgr.init();
+
   // set system mode to the actual run mode
   System.return_to_run_mode();
 
   // if the servo hasn't been successfully calibrated, do so
-  // if (!ee.is_servo_calibrated)  Servo.calibrate_bare();
+  // if (ee.is_servo_calibrated == NOTCAL)  Servo.calibrate_bare();
 
   // read temp and hum from sensor
-  TempHum.read(true);
+  TempHum.read();
   Serial.println(TempHum.temp);
   Serial.println(TempHum.rh);
 

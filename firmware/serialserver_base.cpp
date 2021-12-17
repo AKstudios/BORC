@@ -273,6 +273,7 @@ bool CSerialServerBase::pass(const char* fmt, ...)
     va_list args;
     if (fmt) va_start(args, fmt);
     reply("OK", fmt, args);
+    writeln("");
     return true;
 }
 //=========================================================================================================
@@ -287,6 +288,7 @@ bool CSerialServerBase::fail(const char* fmt, ...)
     va_list args;
     if (fmt) va_start(args, fmt);
     reply("FAIL", fmt, args);
+    writeln("");
     return false;
 }
 //=========================================================================================================
@@ -299,6 +301,7 @@ bool CSerialServerBase::fail_syntax()
 {
     va_list args;
     reply("FAIL SYNTAX", nullptr, args);
+    writeln("");
     return false;
 }
 //=========================================================================================================

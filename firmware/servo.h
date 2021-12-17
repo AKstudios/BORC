@@ -26,7 +26,7 @@ public:
     void calibrate_installed();
 
     // get the highest value to send to servo class (0 to max)
-    int get_max_position() {return m_max_limit - m_min_limit;}
+    int get_max_position();
 
     // manual mode index are 0 to this value
     int get_max_index() {return MAX_INDEX;}
@@ -53,9 +53,6 @@ protected:
 
     // servo may jitter after moving to a position, this code waits for it to stop
     bool wait_for_servo_to_settle();
-
-    // Minimum and maximum PWM value the servo can take
-    int m_max_limit, m_min_limit;
 
     // current thresholds for sensing servo start and stop
     int m_start_moving_threshold, m_stop_moving_threshold;

@@ -1,14 +1,26 @@
 #include "globals.h"
 
+
+//=========================================================================================================
+// int() - initialize at boot
+//=========================================================================================================
+void CSetpointModeMgr::init()
+{   
+    m_setpoint_f = c_to_f(ee.setpoint);
+}
+//=========================================================================================================
+
+
 //=========================================================================================================
 // start() - start setpoint mode
 //=========================================================================================================
 void CSetpointModeMgr::start()
 {   
+    
     ee.run_mode = System.iface_mode = SETPOINT;
 
     // display the current setpoint
-    Display.display(ee.setpoint);
+    Display.display(m_setpoint_f);
 }
 //=========================================================================================================
 
@@ -26,20 +38,24 @@ void CSetpointModeMgr::execute()
         switch (event)
         {
         case KNOB_LEFT:
-            if (ee.setpoint > MIN_SETPOINT)
+            if (m_setpoint_f > MIN_SETPOINT)
             {
-                --ee.setpoint;
-                Display.display(ee.setpoint);
+                --m_setpoint_f;
+                Display.display(m_setpoint_f);
                 Led.set(BLUE, 1000, true);
+                ee.setpoint = f_to_c(m_setpoint_f);
+                PID.new_setpoint(ee.setpoint);
             }
             break;
 
         case KNOB_RIGHT:
-            if (ee.setpoint < MAX_SETPOINT)
+            if (m_setpoint_f < MAX_SETPOINT)
             {
-                ++ee.setpoint;
-                Display.display(ee.setpoint);
+                ++m_setpoint_f;
+                Display.display(m_setpoint_f);
                 Led.set(RED, 1000, true);
+                ee.setpoint = f_to_c(m_setpoint_f);
+                PID.new_setpoint(ee.setpoint);
             }
             break;
         

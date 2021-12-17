@@ -148,8 +148,8 @@ void CMenuMgr::room_temp_handler()
 
     OneShot timer;
 
-    // in real life, we will read the sensor
-    int temp = 72;
+    // get temp from sensor and convert to farenheit
+    int temp = c_to_f(TempHum.read());
 
     // display the current temperature
     Display.display(temp);
@@ -163,6 +163,7 @@ void CMenuMgr::room_temp_handler()
         // stay awake
         SleepMgr.kick_timer();
 
+        // if someone clicks the knob, break out
         if (Knob.get_event(&event) && event == KNOB_UP) break;
     }
 

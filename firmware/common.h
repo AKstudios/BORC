@@ -5,9 +5,17 @@
 // system mode
 enum mode_t : uint8_t
 {
-    MANUAL=0,
-    MENU=1,
-    SETPOINT=2
+    MANUAL = 0,
+    MENU = 1,
+    SETPOINT = 2
+};
+
+// servo calibration mode
+enum servocal_t : uint8_t
+{
+    NOTCAL = 0,
+    CAL = 1,
+    DONTCAL = 2
 };
 
 // Misc. global variables ------------------------------------------

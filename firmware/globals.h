@@ -17,20 +17,25 @@
 #include "eeprom_manager.h"
 #include "temphum.h"
 #include "serialserver.h"
+#include "pid_ctrl.h"
 
-extern CRotaryKnob Knob;
-extern CLedMatrix Display;
-extern CPowerManager PowerMgr;
-extern CServoDriver Servo;
-extern CSystem System;
-extern CManualModeMgr ManualModeMgr;
-extern CSleepMgr SleepMgr;
-extern CLedMgr Led;
-extern CMenuMgr MenuMgr;
+extern CRotaryKnob      Knob;
+extern CLedMatrix       Display;
+extern CPowerManager    PowerMgr;
+extern CServoDriver     Servo;
+extern CSystem          System;
+extern CManualModeMgr   ManualModeMgr;
+extern CSleepMgr        SleepMgr;
+extern CLedMgr          Led;
+extern CMenuMgr         MenuMgr;
 extern CSetpointModeMgr SetpointModeMgr;
-extern CEEPROM EEPROM;
+extern CTempHum         TempHum;
+extern CSerialServer    SerialServer;
+extern CPIDController   PID;
+extern CEEPROM          EEPROM;
 extern CEEPROM::data_t& ee;
-extern CTempHum TempHum;
-extern CSerialServer SerialServer;
+int c_to_f(float c);
+float f_to_c(int f);
+
 
 #endif
