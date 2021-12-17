@@ -62,6 +62,8 @@ void loop()
 {
   wdt_reset(); //pat the dog...
 
+  SerialServer.execute();
+
   SleepMgr.execute();
 
   Led.execute();

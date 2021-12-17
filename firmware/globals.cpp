@@ -13,3 +13,4 @@ CSetpointModeMgr SetpointModeMgr;
 CEEPROM EEPROM;
 CEEPROM::data_t& ee = EEPROM.data;
 CTempHum TempHum;
+CSerialServer SerialServer;

@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include "common.h"
+#include "changelog.h"
 #include "rotary_knob.h"
 #include "display.h"
 #include "power_manager.h"
@@ -15,6 +16,7 @@
 #include "setpoint_mode.h"
 #include "eeprom_manager.h"
 #include "temphum.h"
+#include "serialserver.h"
 
 extern CRotaryKnob Knob;
 extern CLedMatrix Display;
@@ -29,5 +31,6 @@ extern CSetpointModeMgr SetpointModeMgr;
 extern CEEPROM EEPROM;
 extern CEEPROM::data_t& ee;
 extern CTempHum TempHum;
+extern CSerialServer SerialServer;
 
 #endif
