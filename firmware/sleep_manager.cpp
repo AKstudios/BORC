@@ -95,29 +95,35 @@ void CSleepMgr::wakeup_from_timer()
     // turn power on to all devices
     PowerMgr.powerOnAll();
 
-    // reinitialize the servo driver
-    Servo.reinit();
-
     // read current temperature
     TempHum.read_temp();
 
-    // compute new position for servo
-    int new_position = int(PID.compute(TempHum.temp, 32));
-    
-    Serial.print("Temp: ");
-    Serial.println(c_to_f(TempHum.temp));
-    Serial.print("Setpoint: ");
-    Serial.println(ee.setpoint_f);
-    Serial.print("New servo position: ");
-    Serial.println(new_position);
-    Serial.println();
+    // if we're in setpoint mode..
+    if (ee.run_mode == SETPOINT_MODE)
+    {   
+        // reinitialize the servo driver
+        Servo.reinit();
 
-    // move the servo to new position
-    Servo.move_to_position(new_position);
+        // compute new position for servo
+        int new_position = int(PID.compute(TempHum.temp, 32));
+        
+        Serial.print("Temp: ");
+        Serial.println(c_to_f(TempHum.temp));
+        Serial.print("Setpoint: ");
+        Serial.println(ee.setpoint_f);
+        Serial.print("New servo position: ");
+        Serial.println(new_position);
+        Serial.println();
 
-    // to-do:
-    // if servo already at position, don't move
-    // fix integral windup
+        // move the servo to new position
+        Servo.move_to_position(new_position);
+
+        // to-do:
+        // if servo already at position, don't move
+        // flip servo position to proper open/close
+        // fix integral windup
+    }
+
 
     // send data via radio - t, rh, setpoint, debug
 
