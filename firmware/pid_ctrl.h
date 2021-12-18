@@ -31,8 +31,8 @@ public:
     // Call this to set the output limits to a physically possible range
     void    set_output_limits(pid_t lower_limit, pid_t upper_limit);
 
-    // Call this to start a new setpoint.  
-    void    new_setpoint(pid_t setpoint);
+    // Call this to start a new setpoint.  setpoint is in degrees F
+    void    new_setpoint_f(int setpoint_f);
 
     // Stores new PID constants.  This resets the integral
     void    set_constants(pid_t kp, pid_t ki, pid_t kd);
@@ -43,7 +43,7 @@ public:
 protected:
 
     // This is the measured value we are trying to maintain control of
-    pid_t   m_setpoint;
+    pid_t   m_setpoint_c;
 
     // This is the accumulated sum of errors
     pid_t   m_integral;

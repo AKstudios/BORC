@@ -7,7 +7,7 @@
 void CMenuMgr::start()
 {   
     // set the interface mode to menu mode
-    System.iface_mode = MENU;
+    System.iface_mode = MENU_MODE;
 
     // set the menu item to manual
     m_menu_item = MI_MANUAL;

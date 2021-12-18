@@ -5,9 +5,9 @@
 // system mode
 enum mode_t : uint8_t
 {
-    MANUAL = 0,
-    MENU = 1,
-    SETPOINT = 2
+    MANUAL_MODE   = 0,
+    MENU_MODE     = 1,
+    SETPOINT_MODE = 2
 };
 
 // servo calibration mode

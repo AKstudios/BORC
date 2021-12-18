@@ -97,7 +97,7 @@ void CSerialServer::show_nv(void* vp)
     const char run_mode_s[]   PROGMEM = "run_mode           : 2 - SETPOINT";
     const char run_mode[]     PROGMEM = "run_mode           : %i";
     const char manual_index[] PROGMEM = "manual_index       : %i";
-    const char setpoint[]     PROGMEM = "setpoint           : %s";
+    const char setpoint[]     PROGMEM = "setpoint           : %i";
     const char orientation[]  PROGMEM = "orientation        : %i";
     const char is_servocal[]  PROGMEM = "is_servo_cal       : %i";
     const char kp[]           PROGMEM = "kp                 : %s";
@@ -113,10 +113,10 @@ void CSerialServer::show_nv(void* vp)
     // Display the run mode, decoded into plain English
     switch (ee.run_mode)
     {
-        case MANUAL:
+        case MANUAL_MODE:
             replyf(run_mode_m);
             break;
-        case SETPOINT:
+        case SETPOINT_MODE:
             replyf(run_mode_s);
             break;
         default:
@@ -125,7 +125,7 @@ void CSerialServer::show_nv(void* vp)
 
     // Now display all of the other EEPROM settings
     replyf(manual_index,    ee.manual_index);
-    replyf(setpoint,        strfloat(ee.setpoint, 0, 3));
+    replyf(setpoint,        ee.setpoint_f);
     replyf(orientation,     ee.orientation);
     replyf(is_servocal,     ee.is_servo_calibrated);
     replyf(servo_min,       ee.servo_min);

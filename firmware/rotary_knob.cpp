@@ -111,11 +111,13 @@ void CRotaryKnob::configure_PCINT(int pin)
         PCMSK2 |= mask;   // A change on this pin causes an interrupt
         break;
 
+    #if 0   /* ---- This is commentd out so it will compile on an Atmega 2560 ---- */
     case 3:
         DDRD &= ~(mask);  // Make it an input
         PORTD  |= mask;   // Enable the pullup
         PCMSK3 |= mask;   // A change on this pin causes an interrupt
         break;
+    #endif
     }
 
     // Clear any pending interrupt for this bank of pins

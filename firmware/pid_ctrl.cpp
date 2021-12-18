@@ -9,7 +9,7 @@
 void CPIDController::init()
 {   
     // fetch the setpoint from EEPROM
-    m_setpoint = ee.setpoint;
+    m_setpoint_c = f_to_c(ee.setpoint_f);
     
     // fetch the PID constants from EEPROM
     m_kp = ee.kp;
@@ -38,11 +38,11 @@ void CPIDController::set_output_limits(pid_t lower_limit, pid_t upper_limit)
 
 
 //=========================================================================================================
-// new_setpoint() - Starts a new setpoint.
+// new_setpoint_f() - Starts a new setpoint.  Setpoint is in degrees F
 //=========================================================================================================
-void CPIDController::new_setpoint(pid_t setpoint)
+void CPIDController::new_setpoint_f(int setpoint_f)
 {
-    m_setpoint = setpoint;
+   m_setpoint_c = f_to_c(setpoint_f);
 }
 //=========================================================================================================
 
@@ -84,7 +84,7 @@ pid_t CPIDController::compute(pid_t pv, pid_t dt)
     pid_t P, I, D = 0;
 
     // How far away is the present value from the desired setpoint?
-    pid_t error = m_setpoint - pv;
+    pid_t error = m_setpoint_c - pv;
 
     // Compute the proportional term
     P = m_kp * error;

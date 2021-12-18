@@ -9,13 +9,9 @@ class CSetpointModeMgr
 {
 public:
 
-    void init();
-
     void start();
     
     void execute();
-
-    int m_setpoint_f;
 };
 
 #endif

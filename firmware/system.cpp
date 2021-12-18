@@ -1,9 +1,16 @@
 #include "globals.h"
 
+
+//=========================================================================================================
+// init() - Called once at boot, immediately after the EEPROM has been read
+//=========================================================================================================
 void CSystem::init()
 {
-    if (ee.setpoint == 0)   ee.setpoint = f_to_c(DEFAULT_SETPOINT);
+    // If the EEPROM is blank, use a default setpoint
+    if (ee.setpoint_f == 0) ee.setpoint_f = DEFAULT_SETPOINT;
 }
+//=========================================================================================================
+
 
 //=========================================================================================================
 // reboot() - soft reboots the system
@@ -21,7 +28,7 @@ void CSystem::reboot()
 //=========================================================================================================
 void CSystem::return_to_run_mode()
 {
-    if (ee.run_mode == MANUAL)
+    if (ee.run_mode == MANUAL_MODE)
         ManualModeMgr.start();
     else
         SetpointModeMgr.start();

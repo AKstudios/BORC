@@ -1,14 +1,6 @@
 #include "globals.h"
 
 
-//=========================================================================================================
-// int() - initialize at boot
-//=========================================================================================================
-void CSetpointModeMgr::init()
-{   
-    m_setpoint_f = c_to_f(ee.setpoint);
-}
-//=========================================================================================================
 
 
 //=========================================================================================================
@@ -16,11 +8,10 @@ void CSetpointModeMgr::init()
 //=========================================================================================================
 void CSetpointModeMgr::start()
 {   
-    
-    ee.run_mode = System.iface_mode = SETPOINT;
+    ee.run_mode = System.iface_mode = SETPOINT_MODE;
 
     // display the current setpoint
-    Display.display(m_setpoint_f);
+    Display.display(ee.setpoint_f);
 }
 //=========================================================================================================
 
@@ -38,24 +29,22 @@ void CSetpointModeMgr::execute()
         switch (event)
         {
         case KNOB_LEFT:
-            if (m_setpoint_f > MIN_SETPOINT)
+            if (ee.setpoint_f > MIN_SETPOINT)
             {
-                --m_setpoint_f;
-                Display.display(m_setpoint_f);
+                --ee.setpoint_f;
+                Display.display(ee.setpoint_f);
                 Led.set(BLUE, 1000, true);
-                ee.setpoint = f_to_c(m_setpoint_f);
-                PID.new_setpoint(ee.setpoint);
+                PID.new_setpoint_f(ee.setpoint_f);
             }
             break;
 
         case KNOB_RIGHT:
-            if (m_setpoint_f < MAX_SETPOINT)
+            if (ee.setpoint_f < MAX_SETPOINT)
             {
-                ++m_setpoint_f;
-                Display.display(m_setpoint_f);
+                ++ee.setpoint_f;
+                Display.display(ee.setpoint_f);
                 Led.set(RED, 1000, true);
-                ee.setpoint = f_to_c(m_setpoint_f);
-                PID.new_setpoint(ee.setpoint);
+                PID.new_setpoint_f(ee.setpoint_f);
             }
             break;
         
