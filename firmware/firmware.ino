@@ -39,9 +39,6 @@ void setup()
   // restore the system orientation from EEPROM
   System.set_orientation(ee.orientation);
 
-  // Initialize setpoint mode manager
-  SetpointModeMgr.init();
-
   // set system mode to the actual run mode
   System.return_to_run_mode();
 
@@ -73,9 +70,9 @@ void loop()
 
   switch (System.iface_mode)
   {
-    case MANUAL   : ManualModeMgr.execute();    break;
-    case MENU     : MenuMgr.execute();          break;
-    case SETPOINT : SetpointModeMgr.execute();  break;
+    case MANUAL_MODE   : ManualModeMgr.execute();    break;
+    case MENU_MODE     : MenuMgr.execute();          break;
+    case SETPOINT_MODE : SetpointModeMgr.execute();  break;
   }
 }
 //=========================================================================================================
