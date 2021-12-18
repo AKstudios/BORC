@@ -1,6 +1,8 @@
 #ifndef _SYSTEM_H_
 #define _SYSTEM_H_
 
+// This is a comment by doug
+
 #include "common.h"
 
 class CSystem
