@@ -16,8 +16,10 @@ void CPIDController::init()
     m_ki = ee.ki;
     m_kd = ee.kd;
 
-    // if we don't have constants in EEPROM, assume it's a P-controller
-    if (m_kp == 0)  m_kp = 10;
+    // if we don't have constants in EEPROM, set a default value
+    if (m_kp == 0)  m_kp = 20;
+    if (m_ki == 0)  m_ki = 0.1;
+    if (m_kd == 0)  m_kd = 0.01;
 
     // These are the limits on the output
     m_lower_limit = 0;
@@ -80,7 +82,7 @@ void CPIDController::set_constants(pid_t kp, pid_t ki, pid_t kd)
 // Do NOT pass 0 (or even very small numbers) for dt!!
 //=========================================================================================================
 pid_t CPIDController::compute(pid_t pv, pid_t dt)
-{
+{   
     pid_t P, I, D = 0;
 
     // How far away is the present value from the desired setpoint?

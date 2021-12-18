@@ -8,23 +8,37 @@
 static Adafruit_SHT31 sht31;
 
 //=========================================================================================================
-// read() - // initialize the sensor and read temperature and humidity 
+// read_temp() - // initialize the sensor and read temperature
 //=========================================================================================================
-float CTempHum::read()
+float CTempHum::read_temp()
 {   
-    // turn sensor's power on
-    PowerMgr.powerOn(TEMP_SENSOR_POWER_PIN);
-
     // intialize sensor
     sht31.begin(TEMP_SENSE_ADDRESS);
 
     // get temperature readings in °C
     temp = sht31.readTemperature();    
 
-    // get humidity readings in %
-    rh = sht31.readHumidity();
+    // if reading is NaN, try reading temp again
+    if (isnan(temp))    temp = sht31.readTemperature();
 
     // send the temperature back to caller
     return temp;
+}
+//=========================================================================================================
+
+
+//=========================================================================================================
+// read_hum() - // initialize the sensor and read temperature and humidity 
+//=========================================================================================================
+float CTempHum::read_hum()
+{  
+    // intialize sensor
+    sht31.begin(TEMP_SENSE_ADDRESS);
+
+    // get humidity readings in %
+    rh = sht31.readHumidity();
+
+    // send the rh % back to caller
+    return rh;
 }
 //=========================================================================================================

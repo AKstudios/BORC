@@ -231,7 +231,7 @@ bool CServoDriver::move_to_pwm(int pwm_value, int timeout_ms, bool enforce_limit
     }
     // start the oneshot timer again
     servo_timer.start(timeout_ms);
-    
+
     // sit in a loop until the timer expires while servo moves
     while (is_moving())
     {   
@@ -309,12 +309,12 @@ bool CServoDriver::start_move_to_pwm(int pwm_value, bool enforce_limit)
 //=========================================================================================================
 
 //=========================================================================================================
-// start_move_to_position() - takes position as an argument (0-max)
+// move_to_position() - takes position as an argument (0-max)
 // returns true when servo starts to move, false if it doesn't move at all
 //=========================================================================================================
-bool CServoDriver::start_move_to_position(int position)
+bool CServoDriver::move_to_position(int position)
 {   
-    return start_move_to_pwm(position + ee.servo_min);
+    return move_to_pwm((position + ee.servo_min), 4000, true);
 }
 //=========================================================================================================
 

@@ -46,7 +46,8 @@ void setup()
   // if (ee.is_servo_calibrated == NOTCAL)  Servo.calibrate_bare();
 
   // read temp and hum from sensor
-  TempHum.read();
+  TempHum.read_temp();
+  TempHum.read_hum();
   Serial.println(TempHum.temp);
   Serial.println(TempHum.rh);
 

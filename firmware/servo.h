@@ -32,7 +32,7 @@ public:
     int get_max_index() {return MAX_INDEX;}
 
     // takes position as argument and makes the servo move to that position
-    bool start_move_to_position(int position);
+    bool move_to_position(int position);
 
     // takes a manual index move the servo to it
     bool move_to_index(int index);
@@ -49,7 +49,7 @@ protected:
     bool start_move_to_pwm(int pwm_value, bool enforce_limit=true);
 
     // move to a PWM value and times out if current never drops
-    bool move_to_pwm(int pwm_value, int timeout_ms, bool enforce_limit);
+    bool move_to_pwm(int pwm_value, int timeout_ms, bool enforce_limit=true);
 
     // servo may jitter after moving to a position, this code waits for it to stop
     bool wait_for_servo_to_settle();

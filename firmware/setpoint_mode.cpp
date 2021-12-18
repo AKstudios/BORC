@@ -8,7 +8,11 @@
 //=========================================================================================================
 void CSetpointModeMgr::start()
 {   
+    // set the system mode and interface mode to setpoint mode
     ee.run_mode = System.iface_mode = SETPOINT_MODE;
+
+    // initialize the PID controller
+    PID.init();
 
     // display the current setpoint
     Display.display(ee.setpoint_f);

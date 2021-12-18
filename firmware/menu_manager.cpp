@@ -149,7 +149,7 @@ void CMenuMgr::room_temp_handler()
     OneShot timer;
 
     // get temp from sensor and convert to farenheit
-    int temp = c_to_f(TempHum.read());
+    int temp = c_to_f(TempHum.read_temp());
 
     // display the current temperature
     Display.display(temp);

@@ -4,9 +4,11 @@
 class CTempHum
 {
 public:
-    // read the temperature and humidity
-    // returns temperature in celsius
-    float read();
+    // read the temperature and return in celsius
+    float read_temp();
+
+    // read humidity and return in %
+    float read_hum();
 
     // save temperature and humidity in these variables
     float temp, rh;
