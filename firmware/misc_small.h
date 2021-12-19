@@ -25,7 +25,7 @@ public:
     void    execute();
 
     // Call this to find out if the USB is currently conected
-    bool    current_state();
+    bool    current_state() {return m_state == 1;}
 
 protected:
 

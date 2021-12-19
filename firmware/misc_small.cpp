@@ -10,15 +10,6 @@
 //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
 
 
-//=========================================================================================================
-// current_state() - Returns true if the USB is connected, otherwise returns false
-//=========================================================================================================
-bool CUSBSensor::current_state()
-{
-    return analogRead(A0) > 400;    
-}
-//=========================================================================================================
-
 
 //=========================================================================================================
 // execute() - State machine used to sense and report changes of state in the USB connection
@@ -26,7 +17,7 @@ bool CUSBSensor::current_state()
 void CUSBSensor::execute()
 {
     // Find out of the USB is currently plugged in
-    unsigned char is_connected = current_state() ? 1 : 0;
+    unsigned char is_connected = (analogRead(A0) > 400) ? 1:0;    
 
     // If this state is different than the last sensed state...
     if (is_connected != m_state)
