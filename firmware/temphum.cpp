@@ -8,21 +8,21 @@
 static Adafruit_SHT31 sht31;
 
 //=========================================================================================================
-// read_temp() - // initialize the sensor and read temperature
+// read_temp_c() - initialize the sensor and read temperature
 //=========================================================================================================
-float CTempHum::read_temp()
+float CTempHum::read_temp_c()
 {   
     // intialize sensor
     sht31.begin(TEMP_SENSE_ADDRESS);
 
     // get temperature readings in °C
-    temp = sht31.readTemperature();    
+    float temp_c = sht31.readTemperature();    
 
     // if reading is NaN, try reading temp again
-    if (isnan(temp))    temp = sht31.readTemperature();
+    if (isnan(temp_c)) temp_c = sht31.readTemperature();
 
     // send the temperature back to caller
-    return temp;
+    return temp_c;
 }
 //=========================================================================================================
 
@@ -36,9 +36,24 @@ float CTempHum::read_hum()
     sht31.begin(TEMP_SENSE_ADDRESS);
 
     // get humidity readings in %
-    rh = sht31.readHumidity();
+    float rh = sht31.readHumidity();
 
     // send the rh % back to caller
     return rh;
+}
+//=========================================================================================================
+
+
+//=========================================================================================================
+// simulate_temp_c() - Tell the object to always report this simulated temperature
+//=========================================================================================================
+void CTempHum::simulate_temp_c(float temperature_c)
+{
+    // Store the simualate temperature for future use
+    m_simulated_temp_c = temperature_c;
+
+    // Any impossible temperature means "we're simulating temperatures"
+    m_is_simulated = (temperature_c <= -99 || temperature_c >= 99);
+
 }
 //=========================================================================================================

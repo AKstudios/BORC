@@ -29,6 +29,8 @@ void CSerialServer::on_command(const char* token)
     else if token_is("help")    handle_help();
     else if token_is("nvset")   handle_nvset();
     else if token_is("eeset")   handle_nvset();
+    else if token_is("sim")     handle_sim();
+    else if token_is("temp")    handle_temp();
 
     else fail_syntax();
 }
@@ -43,6 +45,59 @@ bool CSerialServer::handle_fwrev()
     return pass(FW_VERSION);
 }
 //=========================================================================================================
+
+
+//=========================================================================================================
+// handle_temp() - Report the temperature in both C and F
+//=========================================================================================================
+bool CSerialServer::handle_temp()
+{
+    // Fetch the current temperature in C
+    float temp_c = TempHum.read_temp_c();
+
+    // Fetch the Farenheit version of the temperature
+    int temp_f = c_to_f(temp_c);
+
+    // Report them both to the user
+    return pass("%s %i", strfloat(temp_c, 0, 2), temp_f);
+}
+//=========================================================================================================
+
+
+
+
+//=========================================================================================================
+// handle_sim() - Handles the following commands:
+//                   sim temp <value>
+//=========================================================================================================
+bool CSerialServer::handle_sim()
+{
+    const char* token;
+
+    // Find out what the user wants to simulate
+    if (!get_next_token(&token)) return fail_syntax();
+
+    // If the user wants to simulate a room temperature
+    if token_is("temp")
+    {
+        // Fetch the temperature they want to use
+        if (!get_next_token(&token)) return fail_syntax();
+
+        // Convert the token to float, in degrees C
+        float temp_c = atof(token);
+
+        // Tell TempHum to simulate this room temp.  99 degrees = "stop simulating"
+        TempHum.simulate_temp_c(temp_c);
+
+        // Tell the user that all is well.
+        return pass();
+    }
+
+    // If we get here, we have no idea what the user is talking about
+    return fail_syntax();
+}
+//=========================================================================================================
+
 
 
 //=========================================================================================================
@@ -174,6 +229,9 @@ bool CSerialServer::handle_help()
     const char line_07  [] PROGMEM = "eeset ki <value>            - Saves PID I constant to EEPROM";
     const char line_08  [] PROGMEM = "eeset kd <value>            - Saves PID D constant to EEPROM";
     const char line_09  [] PROGMEM = "eeset is_servocal <value>   - Saves servo calibration flag";
+    const char line_10  [] PROGMEM = "sim temp <deg_C>            - Simulates the room temperature";
+    const char line_11  [] PROGMEM = "temp                        - Reports the room temperature";
+    
 
     replyf(line_01);
     replyf(line_02);
@@ -184,6 +242,8 @@ bool CSerialServer::handle_help()
     replyf(line_07);
     replyf(line_08);
     replyf(line_09);
+    replyf(line_10);
+    replyf(line_11);
 
     return pass();
 }

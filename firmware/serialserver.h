@@ -22,6 +22,8 @@ protected:
     bool    handle_nvset();
     bool    handle_reboot();
     bool    handle_help();
+    bool    handle_sim();
+    bool    handle_temp();
     // ------------------------------------------------------------------
 
     void    show_nv(void*);
