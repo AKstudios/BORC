@@ -22,15 +22,16 @@
 void CSerialServer::on_command(const char* token)
 {
 
-    if      token_is("fwrev")   handle_fwrev();
-    else if token_is("nv")      handle_nv();
-    else if token_is("ee")      handle_nv();
-    else if token_is("reboot")  handle_reboot();
-    else if token_is("help")    handle_help();
-    else if token_is("nvset")   handle_nvset();
-    else if token_is("eeset")   handle_nvset();
-    else if token_is("sim")     handle_sim();
-    else if token_is("temp")    handle_temp();
+    if      token_is("fwrev")    handle_fwrev();
+    else if token_is("nv")       handle_nv();
+    else if token_is("ee")       handle_nv();
+    else if token_is("reboot")   handle_reboot();
+    else if token_is("help")     handle_help();
+    else if token_is("nvset")    handle_nvset();
+    else if token_is("eeset")    handle_nvset();
+    else if token_is("sim")      handle_sim();
+    else if token_is("temp")     handle_temp();
+    else if token_is("setpoint") handle_setpoint();
 
     else fail_syntax();
 }
@@ -65,6 +66,33 @@ bool CSerialServer::handle_temp()
 
 
 
+//=========================================================================================================
+// handle_setpoint() - Sets the temp controller setpoint
+//=========================================================================================================
+bool CSerialServer::handle_setpoint()
+{
+    const char* token;
+
+    // Fetch the temperature we want to use as a setpoint
+    if (!get_next_token(&token)) return fail_syntax();
+
+    // Fetch the current temperature in C
+    float temp_c = atof(token);
+    
+    // Fetch the Farenheit version of the temperature
+    int temp_f = c_to_f(temp_c);
+
+    // Tell the temperature controller what to use for a setpoint
+    TempCtrl.new_setpoint_f(temp_f);
+
+    // Report them both to the user
+    return pass("%s %i", strfloat(temp_c, 0, 2), temp_f);
+}
+//=========================================================================================================
+
+
+
+
 
 //=========================================================================================================
 // handle_sim() - Handles the following commands:
@@ -90,7 +118,7 @@ bool CSerialServer::handle_sim()
         TempHum.simulate_temp_c(temp_c);
 
         // Tell the user that all is well.
-        return pass();
+        return pass("%s  %i", strfloat(temp_c, 0, 2), c_to_f(temp_c));
     }
 
     // If we get here, we have no idea what the user is talking about
@@ -231,6 +259,7 @@ bool CSerialServer::handle_help()
     const char line_09  [] PROGMEM = "eeset is_servocal <value>   - Saves servo calibration flag";
     const char line_10  [] PROGMEM = "sim temp <deg_C>            - Simulates the room temperature";
     const char line_11  [] PROGMEM = "temp                        - Reports the room temperature";
+    const char line_12  [] PROGMEM = "setpoint <deg_c>            - Sets new temp control setpoint";
     
 
     replyf(line_01);
@@ -244,6 +273,7 @@ bool CSerialServer::handle_help()
     replyf(line_09);
     replyf(line_10);
     replyf(line_11);
+    replyf(line_12);
 
     return pass();
 }

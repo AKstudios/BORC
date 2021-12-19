@@ -155,7 +155,7 @@ void CSleepMgr::execute_sleep_mode()
 // start_sleep_timer() - starts sleep timer
 //=========================================================================================================
 void CSleepMgr::start_sleep_timer(int timeout_ms)
-{   Serial.println("start sleep timer");
+{
     m_sleep_timer.start(timeout_ms);
 }
 //=========================================================================================================
@@ -187,10 +187,10 @@ void CSleepMgr::on_wakeup_from_timer()
             // move the servo to new position
             Servo.move_to_pwm(new_position, 4000, true);
 
-            Serial.print("Temp: ");
-            Serial.println(c_to_f(temp_c));
-            Serial.print("Setpoint: ");
-            Serial.println(ee.setpoint_f);
+            Serial.print("Temp C: ");
+            Serial.println(strfloat(temp_c, 0, 2));
+            Serial.print("Setpoint C: ");
+            Serial.println(strfloat(ee.setpoint_f, 0, 2));
             Serial.print("New servo position: ");
             Serial.println(new_position);
             Serial.println();
