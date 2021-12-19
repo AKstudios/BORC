@@ -48,6 +48,12 @@ void CNotchController::set_output_limits(nc_out_t lower_limit, nc_out_t upper_li
     m_lower_limit = lower_limit;
     m_upper_limit = upper_limit;
 
+    Serial.print("Limits ");
+    Serial.print(lower_limit);
+    Serial.print("  ");
+    Serial.print(upper_limit);
+    Serial.println();
+
     // Determine the size of the increment between notches
     float increment = (upper_limit - lower_limit) / float(NOTCH_COUNT - 1);
     
