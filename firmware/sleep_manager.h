@@ -25,6 +25,9 @@ public:
     // Call this to simulate sleep mode, but the system never actually goes to sleep
     void    start_awake_mode();
 
+    // if anything besides manual mode moves the motor, they have to call this routine
+    void    marked_motor_as_moved() {m_last_driven_index = 0xFF;}
+
 protected:
 
     enum {SLEEP_MODE, AWAKE_MODE} m_mode;

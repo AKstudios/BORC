@@ -33,11 +33,16 @@ void setup()
   Servo.init();
   Led.init();
 
+  // Initilize the Temperature controller
+  TempCtrl.init();
+
   // restore the system orientation from EEPROM
   System.set_orientation(ee.orientation);
 
   // set system mode to the actual run mode
   System.return_to_run_mode();
+
+  
 
   // if the servo hasn't been successfully calibrated, do so
   // if (ee.is_servo_calibrated == NOTCAL)  Servo.calibrate_bare();

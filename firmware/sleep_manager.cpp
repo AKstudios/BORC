@@ -116,6 +116,8 @@ void CSleepMgr::execute_sleep_mode()
     // set knob wakeup flag to false before going to sleep
     m_wakeup_from_knob = false;
 
+    TempCtrl.new_setpoint_f(ee.setpoint_f);
+
     Serial.println("sleep");
     delay(10);
     
@@ -157,6 +159,8 @@ void CSleepMgr::start_sleep_timer(int timeout_ms)
 //=========================================================================================================
 void CSleepMgr::on_wakeup_from_timer()
 {
+    nc_out_t new_position;
+
     // turn power on to all devices
     PowerMgr.powerOnAll();
 
@@ -170,23 +174,24 @@ void CSleepMgr::on_wakeup_from_timer()
         TempHum.read_temp();
 
         // compute new position for servo
-        int new_position = int(PID.compute(TempHum.temp, 32));
-        
-        Serial.print("Temp: ");
-        Serial.println(c_to_f(TempHum.temp));
-        Serial.print("Setpoint: ");
-        Serial.println(ee.setpoint_f);
-        Serial.print("New servo position: ");
-        Serial.println(new_position);
-        Serial.println();
+        if (TempCtrl.compute(TempHum.temp, 32, &new_position))
+        {
+            // move the servo to new position
+            Servo.move_to_pwm(new_position, 4000, true);
 
-        // move the servo to new position
-        Servo.move_to_position(new_position);
-    
-        // Tell awake_mode_execute() that it has no idea where the servo is now
-        m_last_driven_index = 0xFF;
+            Serial.print("Temp: ");
+            Serial.println(c_to_f(TempHum.temp));
+            Serial.print("Setpoint: ");
+            Serial.println(ee.setpoint_f);
+            Serial.print("New servo position: ");
+            Serial.println(new_position);
+            Serial.println();
+
+            // Tell awake_mode_execute() that it has no idea where the servo is now
+            m_last_driven_index = 0xFF;
+        }
+
     }
-
 
     // send data via radio - t, rh, setpoint, debug
 

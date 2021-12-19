@@ -25,14 +25,8 @@ public:
     // find out min and max PWM for servo when installed
     void calibrate_installed();
 
-    // get the highest value to send to servo class (0 to max)
-    int get_max_position();
-
     // manual mode index are 0 to this value
     int get_max_index() {return MAX_INDEX;}
-
-    // takes position as argument and makes the servo move to that position
-    bool move_to_position(int position);
 
     // takes a manual index move the servo to it
     bool move_to_index(int index);

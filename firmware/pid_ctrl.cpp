@@ -23,7 +23,7 @@ void CPIDController::init()
 
     // These are the limits on the output
     m_lower_limit = 0;
-    m_upper_limit = Servo.get_max_position();
+    m_upper_limit = ee.servo_max;
 }
 //=========================================================================================================
 

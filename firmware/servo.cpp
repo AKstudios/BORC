@@ -180,12 +180,16 @@ void CServoDriver::calibrate_bare()
         // store servo calibration status in EEPROM
         ee.is_servo_calibrated = CAL;
         
-        // and set PID limits
-        PID.set_output_limits(0, ee.servo_max-ee.servo_min);
+        // and set output limits
+        TempCtrl.set_output_limits(0, ee.servo_max-ee.servo_min);
+        // PID.set_output_limits(0, ee.servo_max-ee.servo_min);
     }
 
     // turn LED off after calibration
     Led.set(OFF);
+
+    // tell sleep manager that we moved the motor without his permission.. sorry!
+    SleepMgr.marked_motor_as_moved();
 }
 //=========================================================================================================
 
@@ -197,12 +201,6 @@ void CServoDriver::calibrate_installed()
 {
     
 }
-//=========================================================================================================
-
-//=========================================================================================================
-// get_max_position() - // get the highest value to send to servo class (0 to max)
-//=========================================================================================================
-int CServoDriver::get_max_position()  {return ee.servo_max - ee.servo_min;}
 //=========================================================================================================
 
 
@@ -305,16 +303,6 @@ bool CServoDriver::start_move_to_pwm(int pwm_value, bool enforce_limit)
 
     // if we get here it never started moving
     return false;
-}
-//=========================================================================================================
-
-//=========================================================================================================
-// move_to_position() - takes position as an argument (0-max)
-// returns true when servo starts to move, false if it doesn't move at all
-//=========================================================================================================
-bool CServoDriver::move_to_position(int position)
-{   
-    return move_to_pwm((position + ee.servo_min), 4000, true);
 }
 //=========================================================================================================
 

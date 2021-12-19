@@ -15,8 +15,10 @@ CSerialServer       SerialServer;
 CPIDController      PID;
 CUSBSensor          USB;
 CEEPROM             EEPROM;
-CEEPROM::data_t& ee = EEPROM.data;
+CNotchController    TempCtrl;
 
+// pointer to EEPROM dirty data buffer
+CEEPROM::data_t& ee = EEPROM.data;
 
 int c_to_f(float c) {return (c * 1.8) + 32;}
 
