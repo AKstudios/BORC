@@ -8,13 +8,79 @@
 ////=========================================================================================================
 
 
+
 //=========================================================================================================
-// init() - setup sleep stuff
+// start_sleep_mode() - Sets us up to automatically to go sleep a few seconds from now
 //=========================================================================================================
-void CSleepMgr::init()
-{   
-    // start sleep timer
-    start_timer();
+void CSleepMgr::start_sleep_mode()
+{
+    m_mode = SLEEP_MODE;
+    start_sleep_timer();
+}
+//=========================================================================================================
+
+//=========================================================================================================
+// start_awake_mode() - Sets us up to simulate the behavior of sleep mode without ever actually sleeping
+//=========================================================================================================
+void CSleepMgr::start_awake_mode()
+{
+    // We're staying awake until further notice
+    m_mode = AWAKE_MODE;
+
+    // We don't know where we last parked the servo
+    m_last_driven_index = 0xFF;
+
+    // We're going to simulate going to sleep a few seconds from now
+    start_sleep_timer();
+
+    // And start a timer that expires every 32 seconds to we can drive the servo 
+    m_pid_timer.start(32000);
+}
+//=========================================================================================================
+
+
+
+//=========================================================================================================
+// execute_awake_mode() - Manages timer related events when we're in AWAKE_MODE
+//=========================================================================================================
+void CSleepMgr::execute_awake_mode()
+{
+    // If it's time to simulate going to sleep...
+    if (m_sleep_timer.is_expired())
+    {
+        // Save the dirty EEPROM structure to physical EEPROM
+        EEPROM.write();
+
+        // If we're in manual mode, move the servo to the correct position
+        if (ee.run_mode == MANUAL_MODE && ee.manual_index != m_last_driven_index) 
+        {
+            Servo.move_to_index(ee.manual_index);
+            m_last_driven_index = ee.manual_index;
+        }
+
+        // And restart the sleep timer
+        start_sleep_timer();
+    }
+
+    // If it's time to drive the servo to the setpoint position, make it so
+    if (m_pid_timer.is_expired())
+    {
+        if (ee.run_mode == SETPOINT_MODE) drive_servo_to_setpoint();
+    }
+}
+//=========================================================================================================
+
+
+
+//=========================================================================================================
+// execute() - checks timer and goes to sleep
+//=========================================================================================================
+void CSleepMgr::execute()
+{
+    if (m_mode == AWAKE_MODE)
+        execute_awake_mode();
+    else
+        execute_sleep_mode();
 }
 //=========================================================================================================
 
@@ -22,16 +88,16 @@ void CSleepMgr::init()
 //=========================================================================================================
 // execute() - checks timer and goes to sleep
 //=========================================================================================================
-void CSleepMgr::execute()
-{   
+void CSleepMgr::execute_sleep_mode()
+{
     // if it's not time to sleep, don't do anything
     if (!m_sleep_timer.is_expired()) return;
 
     // if it's time to sleep and we're in manual mode...
     if (ee.run_mode == MANUAL_MODE)
     {   
-        // ... move the motor
         Servo.move_to_index(ee.manual_index);
+        m_last_driven_index = ee.manual_index;
     }
 
     // clear display
@@ -77,53 +143,63 @@ void CSleepMgr::execute()
 //=========================================================================================================
 
 
+
+
 //=========================================================================================================
-// start_timer() - starts sleep timer
+// start_sleep_timer() - starts sleep timer
 //=========================================================================================================
-void CSleepMgr::start_timer(int timeout_ms)
+void CSleepMgr::start_sleep_timer(int timeout_ms)
 {   Serial.println("start sleep timer");
     m_sleep_timer.start(timeout_ms);
 }
 //=========================================================================================================
 
 
-//--------------------------------------------------------------------------------------------------------
-//
-//--------------------------------------------------------------------------------------------------------
+
+//=========================================================================================================
+// drive_servo_to_setpoint() - Drives the servo motor to the approprate position to try to maintain
+//                             the current setpoint
+//=========================================================================================================
+void CSleepMgr::drive_servo_to_setpoint()
+{
+    // reinitialize the servo driver
+    Servo.reinit();
+
+    // Read the current temperature
+    TempHum.read_temp();
+
+    // compute new position for servo
+    int new_position = int(PID.compute(TempHum.temp, 32));
+        
+    Serial.print("Temp: ");
+    Serial.println(c_to_f(TempHum.temp));
+    Serial.print("Setpoint: ");
+    Serial.println(ee.setpoint_f);
+    Serial.print("New servo position: ");
+    Serial.println(new_position);
+    Serial.println();
+
+    // move the servo to new position
+    Servo.move_to_position(new_position);
+    
+    // Tell awake_mode_execute() that it has no idea where the servo is now
+    m_last_driven_index = 0xFF;
+}
+//=========================================================================================================
+
+
+
+
+//=========================================================================================================
+// wakeup_from_timer() - Called when the system wakes from sleep due to the timer
+//=========================================================================================================
 void CSleepMgr::wakeup_from_timer()
 {
     // turn power on to all devices
     PowerMgr.powerOnAll();
 
-    // read current temperature
-    TempHum.read_temp();
-
-    // if we're in setpoint mode..
-    if (ee.run_mode == SETPOINT_MODE)
-    {   
-        // reinitialize the servo driver
-        Servo.reinit();
-
-        // compute new position for servo
-        int new_position = int(PID.compute(TempHum.temp, 32));
-        
-        Serial.print("Temp: ");
-        Serial.println(c_to_f(TempHum.temp));
-        Serial.print("Setpoint: ");
-        Serial.println(ee.setpoint_f);
-        Serial.print("New servo position: ");
-        Serial.println(new_position);
-        Serial.println();
-
-        // move the servo to new position
-        Servo.move_to_position(new_position);
-
-        // to-do:
-        // if servo already at position, don't move
-        // flip servo position to proper open/close
-        // fix integral windup
-    }
-
+    // if we're in setpoint mode, run the PID controller and the servo
+    if (ee.run_mode == SETPOINT_MODE) drive_servo_to_setpoint();
 
     // send data via radio - t, rh, setpoint, debug
 
@@ -131,33 +207,34 @@ void CSleepMgr::wakeup_from_timer()
 //=========================================================================================================
 
 
-//--------------------------------------------------------------------------------------------------------
+
+//=========================================================================================================
 // on_knob_activity() - this gets called anytime there is activity on the knob
-//--------------------------------------------------------------------------------------------------------
+//=========================================================================================================
 void CSleepMgr::on_knob_activity()
 { 
     m_sleep_timer.kick();
-
     m_wakeup_from_knob = true;
 }
 //=========================================================================================================
 
-//--------------------------------------------------------------------------------------------------------
-//
-//--------------------------------------------------------------------------------------------------------
+
+//=========================================================================================================
+// wakeup_from_knob() - Called when the system is awoken from sleep by activity on the rotary kob
+//=========================================================================================================
 void CSleepMgr::wakeup_from_knob()
 {
     Knob.throw_away_next_event();
     PowerMgr.powerOnAll();
     Servo.reinit();
     System.return_to_run_mode();
-    start_timer();
+    start_sleep_timer();
 }
 //=========================================================================================================
 
 
 //=========================================================================================================
-// kick_timer() - football
+// kick_sleep_timer() - football
 //=========================================================================================================
-void CSleepMgr::kick_timer() {m_sleep_timer.kick();}
+void CSleepMgr::kick_sleep_timer() {m_sleep_timer.kick();}
 //=========================================================================================================

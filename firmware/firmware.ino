@@ -33,9 +33,6 @@ void setup()
   Servo.init();
   Led.init();
 
-  // initialize sleep manager
-  SleepMgr.init();
-
   // restore the system orientation from EEPROM
   System.set_orientation(ee.orientation);
 

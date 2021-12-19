@@ -35,9 +35,9 @@ void CUSBSensor::execute()
 void CUSBSensor::on_change_of_state()
 {
     if (m_state)
-        Led.set(GREEN);
+        SleepMgr.start_awake_mode();
     else
-        Led.set(RED);
+        SleepMgr.start_sleep_mode();
 }
 //=========================================================================================================
 

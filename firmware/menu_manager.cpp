@@ -161,7 +161,7 @@ void CMenuMgr::room_temp_handler()
     while (!timer.is_expired())
     {   
         // stay awake
-        SleepMgr.kick_timer();
+        SleepMgr.kick_sleep_timer();
 
         // if someone clicks the knob, break out
         if (Knob.get_event(&event) && event == KNOB_UP) break;

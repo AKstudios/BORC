@@ -10,29 +10,51 @@ class CSleepMgr
 {
 public:
     // setup sleep mode
-    void init();
+    void    init();
 
     // checks timer and goes to sleep
-    void execute();
-
-    // starts sleep timer 
-    void start_timer(int timeout_ms=5000);
+    void    execute();
 
     // kick sleep timer
-    void kick_timer();
+    void    kick_sleep_timer();
 
     // this gets called anytime there is activity on the knob
-    void on_knob_activity();
+    void    on_knob_activity();
+
+    // Call this to set up the system to automatically go to sleep a few seconds from now
+    void    start_sleep_mode();
+
+    // Call this to simulate sleep mode, but the system never actually goes to sleep
+    void    start_awake_mode();
 
 protected:
-    
-    void wakeup_from_knob();
 
-    void wakeup_from_timer();
+    enum {SLEEP_MODE, AWAKE_MODE} m_mode;
 
+    // Called when the system wakes up due to knob activity
+    void    wakeup_from_knob();
+
+    // Called when the system wakes up from sleep due to the timer
+    void    wakeup_from_timer();
+
+    // starts sleep timer 
+    void    start_sleep_timer(int timeout_ms=5000);
+
+    // execute() calls one of these
+    void    execute_awake_mode();
+    void    execute_sleep_mode();
+
+    // Reads the temperature, runs the PID controller, and moves the servo to the right place
+    void    drive_servo_to_setpoint();
 
     // This timer expires when it's time to sleep
     OneShot         m_sleep_timer;
+
+    // This timer is used to move the servo every 32 seconds when we're in AWAKE_MODE
+    msTimer         m_pid_timer;
+
+    // This is the last manual_index we know we drove the motor to
+    uint8_t         m_last_driven_index;
 
     // flag that lets us know if we woke up from knob
     volatile bool m_wakeup_from_knob;

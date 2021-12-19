@@ -286,7 +286,7 @@ void CRotaryKnob::execute()
     }
 
     // Ensure that the sleep manager doesn't go to sleep while we're holding the button down
-    if (m_button_timer.is_running()) SleepMgr.kick_timer();
+    if (m_button_timer.is_running()) SleepMgr.kick_sleep_timer();
 
     // If the button timer has expired then the button has been down for awhile
     if (m_button_timer.is_expired()) add_event(KNOB_LPRESS);
