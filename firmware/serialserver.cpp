@@ -4,7 +4,7 @@
 #include "serialserver.h"
 #include <string.h>
 #include "globals.h"
-#include "strfloat.h"
+
 
 // Compares a token to a string constant.  The string constant can be in RAM or Flash
 #define token_is(strcon) ((compare_token(token,strcon)))
@@ -32,10 +32,53 @@ void CSerialServer::on_command(const char* token)
     else if token_is("sim")      handle_sim();
     else if token_is("temp")     handle_temp();
     else if token_is("setpoint") handle_setpoint();
+    else if token_is("ui")       handle_ui();
 
     else fail_syntax();
 }
 //=========================================================================================================
+
+
+//=========================================================================================================
+// handle_ui() - Simulates user interactions
+//=========================================================================================================
+bool CSerialServer::handle_ui()
+{
+    const char* token;
+
+    // Fetch the next token, it will tell us what user interaction to simulate
+    if (!get_next_token(&token)) return fail_syntax();
+
+    if (compare_token(token, "l") || compare_token(token, "left"))
+    {
+        Knob.add_event(KNOB_LEFT);
+        return pass();
+    }
+
+    if (compare_token(token, "r") || compare_token(token, "right"))
+    {
+        Knob.add_event(KNOB_RIGHT);
+        return pass();
+    }
+
+    if (compare_token(token, "c") || compare_token(token, "click"))
+    {
+        Knob.add_event(KNOB_UP);
+        return pass();
+    }
+
+    if (compare_token(token, "lp") || compare_token(token, "lpress"))
+    {
+        Knob.add_event(KNOB_LPRESS);
+        return pass();
+    }
+
+    // If we get here, we don't recognize what the user wants us to do
+    return fail_syntax();
+}
+//=========================================================================================================
+
+
 
 
 //=========================================================================================================
@@ -60,7 +103,7 @@ bool CSerialServer::handle_temp()
     int temp_f = c_to_f(temp_c);
 
     // Report them both to the user
-    return pass("%s %i", strfloat(temp_c, 0, 2), temp_f);
+    return pass("%s %i (temp)", strfloat(temp_c, 0, 2), temp_f);
 }
 //=========================================================================================================
 
@@ -88,8 +131,11 @@ bool CSerialServer::handle_setpoint()
     // Tell the temperature controller what to use for a setpoint
     TempCtrl.new_setpoint_f(temp_f);
 
+    // Put the system in setpoint mode
+    SetpointModeMgr.start();
+
     // Report them both to the user
-    return pass("%s %i", strfloat(temp_c, 0, 2), temp_f);
+    return pass("%s %i (setpoint)", strfloat(temp_c, 0, 2), temp_f);
 }
 //=========================================================================================================
 
@@ -121,7 +167,7 @@ bool CSerialServer::handle_sim()
         TempHum.simulate_temp_c(temp_c);
 
         // Tell the user that all is well.
-        return pass("%s  %i", strfloat(temp_c, 0, 2), c_to_f(temp_c));
+        return pass("%s %i (sim_temp)", strfloat(temp_c, 0, 2), c_to_f(temp_c));
     }
 
     // If we get here, we have no idea what the user is talking about
@@ -263,7 +309,11 @@ bool CSerialServer::handle_help()
     const char line_10  [] PROGMEM = "sim temp <deg_C>            - Simulates the room temperature";
     const char line_11  [] PROGMEM = "temp                        - Reports the room temperature";
     const char line_12  [] PROGMEM = "setpoint <deg_c>            - Sets new temp control setpoint";
-    
+    const char line_13  [] PROGMEM = "ui <l | left>               - Simulate knob rotate left";
+    const char line_14  [] PROGMEM = "ui <r | right>              - Simulate knob rotate right";
+    const char line_15  [] PROGMEM = "ui <c | click>              - Simulate knob click";
+    const char line_16  [] PROGMEM = "ui <lp | lpress>            - Simulate knob long press";
+        
 
     replyf(line_01);
     replyf(line_02);
@@ -277,6 +327,10 @@ bool CSerialServer::handle_help()
     replyf(line_10);
     replyf(line_11);
     replyf(line_12);
+    replyf(line_13);
+    replyf(line_14);
+    replyf(line_15);
+    replyf(line_16);
 
     return pass();
 }

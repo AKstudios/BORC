@@ -49,6 +49,7 @@ public:
     void            on_click_interrupt();
 
 protected:
+    friend class CSerialServer;
 
     // start deboucing an event
     void            start_debounce_timer(knob_event_t event);

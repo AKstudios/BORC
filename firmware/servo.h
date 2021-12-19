@@ -2,8 +2,8 @@
 #define _SERVO_H_
 
 #define UNKNOWN_POSITION    -1
-#define DEFAULT_MIN_LIMIT   165
-#define DEFAULT_MAX_LIMIT   500
+#define DEFAULT_MIN_LIMIT   523
+#define DEFAULT_MAX_LIMIT   858
 #define MAX_INDEX           6
 
 //=========================================================================================================

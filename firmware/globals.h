@@ -20,7 +20,7 @@
 #include "pid_ctrl.h"
 #include "misc_small.h"
 #include "temp_ctrl.h"
-#include "strfloat.h"
+
 
 extern CRotaryKnob      Knob;
 extern CLedMatrix       Display;
@@ -38,6 +38,7 @@ extern CPIDController   PID;
 extern CUSBSensor       USB;
 extern CEEPROM          EEPROM;
 extern CNotchController TempCtrl;
+
 extern CEEPROM::data_t& ee;
 
 int c_to_f(float c);

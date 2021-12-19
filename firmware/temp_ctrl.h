@@ -3,11 +3,12 @@
 //=========================================================================================================
 #ifndef _TEMP_CTRL_H_
 #define _TEMP_CTRL_H_
-#include <stdint.h>
+#include "common.h"
+
 
 typedef float    nc_pv_t;
 typedef uint16_t nc_out_t;
-typedef uint16_t nc_time_t;
+typedef uint32_t nc_time_t;
 
 //=========================================================================================================
 // At system startup, the following sequence of events must happen:
@@ -46,7 +47,7 @@ protected:
     enum        { MAX_NOTCH = NOTCH_COUNT - 1 };
 
     // How often "compute" emits a new output setting
-    enum        { TIMER_SECONDS = 64 };
+    enum        { TIMER_SECONDS = WAKEUP_TIME_SECS * 2};
 
     // This is the size of the dead-band above and below the setpoint
     const nc_pv_t DEADBAND_SIZE = 1;

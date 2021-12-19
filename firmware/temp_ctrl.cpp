@@ -79,10 +79,22 @@ void CNotchController::set_output_limits(nc_out_t lower_limit, nc_out_t upper_li
 //=========================================================================================================
 void CNotchController::new_setpoint_f(nc_pv_t setpoint_f)
 {
-    m_setpoint_c = f_to_c(setpoint_f);
-    m_lower_boundary = m_setpoint_c - DEADBAND_SIZE;
-    m_upper_boundary = m_setpoint_c + DEADBAND_SIZE;
-    m_current_notch = RAMPING;
+    // What setpoint are we being asked to set?
+    float setpoint_c = f_to_c(setpoint_f);
+
+    // If that's different than our current setpoint, spring into action
+    if (setpoint_c != m_setpoint_c)
+    {
+        // Save the setpoint for posterity
+        m_setpoint_c = setpoint_c;
+        
+        // Compute the in-band boundaries
+        m_lower_boundary = setpoint_c - DEADBAND_SIZE;
+        m_upper_boundary = setpoint_c + DEADBAND_SIZE;
+        
+        // Switch to ramping mode
+        m_current_notch  = RAMPING;
+    }
 }
 //=========================================================================================================
 
@@ -109,6 +121,9 @@ bool CNotchController::compute(nc_pv_t pv_c, nc_time_t dt, nc_out_t* p_output)
     // Restart the timer
     m_started_at += m_duration;
 
+    // Save the original notch value when we enter this routine
+    int8_t original_notch = m_current_notch;    
+
     // If we're in ramping mode...
     if (m_current_notch == RAMPING)
     {
@@ -117,19 +132,17 @@ bool CNotchController::compute(nc_pv_t pv_c, nc_time_t dt, nc_out_t* p_output)
         {
             m_current_notch = MAX_NOTCH;
             *p_output = m_notch_value[m_current_notch];
-            return true;
         }
 
         // If the temperatue is too high, turn the output all the way off
-        if (pv_c < m_lower_boundary)
+        else if (pv_c > m_upper_boundary)
         {
             m_current_notch = 0;
             *p_output = m_notch_value[m_current_notch];
-            return true;
         }
 
-        // If get get here, the temperature is in-band, so don't bother to change anything
-        return false;
+        // We're done managing ramping
+        goto cleanup;
     }
 
 
@@ -137,17 +150,41 @@ bool CNotchController::compute(nc_pv_t pv_c, nc_time_t dt, nc_out_t* p_output)
     if (pv_c < m_lower_boundary && m_current_notch < MAX_NOTCH)
     {
         *p_output = m_notch_value[++m_current_notch];
-        return true;
     }
 
     // If the pv is too high and we have room to bump the output down a notch, do so
-    if (pv_c > m_upper_boundary && m_current_notch > 0)
+    else if (pv_c > m_upper_boundary && m_current_notch > 0)
     {
         *p_output = m_notch_value[--m_current_notch];
-        return true;
     }
 
-    // If we get here, no change to the output value is required
-    return false;
+cleanup:
+
+    // Had the current notch changed?
+    bool change_occured = (m_current_notch != original_notch);
+
+    // Change this "#if 0" to a "#if 1" to see debugging data as the notch changes
+    #if 0   
+    if (change_occured)
+    {
+        if (original_notch == RAMPING)
+        {
+            Serial.println(m_current_notch == 0 ? "Servo railed LOW" : "Servo railed HIGH");
+        }
+        else
+        {
+            Serial.print("Servo bumped from notch ");
+            Serial.print(original_notch);
+            Serial.print(" to ");
+            Serial.print(m_current_notch);
+            Serial.println();
+        }
+
+    }
+    #endif
+
+
+    // Tell the caller whether or not he should perform a motor movement
+    return change_occured;
 }
 //=========================================================================================================

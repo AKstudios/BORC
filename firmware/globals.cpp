@@ -20,6 +20,6 @@ CNotchController    TempCtrl;
 // pointer to EEPROM dirty data buffer
 CEEPROM::data_t& ee = EEPROM.data;
 
-int c_to_f(float c) {return (c * 1.8) + 32;}
 
+int c_to_f(float c) {return (c * 1.8) + 32;}
 float f_to_c(int f) {return ((f - 32) * 0.55556);}

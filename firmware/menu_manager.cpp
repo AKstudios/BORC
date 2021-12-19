@@ -87,8 +87,8 @@ void CMenuMgr::dispatch()
         case MI_DESTROY:
             Display.fill();
             Led.set(WHITE);
-            delay(1000);
             EEPROM.destroy();
+            delay(1000);
             System.reboot();
             break;
 

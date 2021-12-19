@@ -32,9 +32,6 @@ void CSleepMgr::start_awake_mode()
 
     // We're going to simulate going to sleep a few seconds from now
     start_sleep_timer();
-
-    // And start a timer that expires every 32 seconds to we can drive the servo 
-    m_pid_timer.start(32000);
 }
 //=========================================================================================================
 
@@ -62,7 +59,7 @@ void CSleepMgr::execute_awake_mode()
         TempCtrl.new_setpoint_f(ee.setpoint_f);
 
         // If it's time simulate the system waking up from the timer, do so
-        if (!m_pid_timer.is_running()) m_pid_timer.start(32000);
+        if (!m_pid_timer.is_running()) m_pid_timer.start(WAKEUP_TIME_SECS * 1000); 
 
         // And restart the sleep timer
         start_sleep_timer();
@@ -182,11 +179,8 @@ void CSleepMgr::on_wakeup_from_timer()
         float temp_c = TempHum.read_temp_c();
 
         // compute new position for servo
-        if (TempCtrl.compute(temp_c, 32, &new_position))
+        if (TempCtrl.compute(temp_c, WAKEUP_TIME_SECS, &new_position))
         {
-            // move the servo to new position
-            Servo.move_to_pwm(new_position, 4000, true);
-
             Serial.print("Temp C: ");
             Serial.println(strfloat(temp_c, 0, 2));
             Serial.print("Setpoint: ");
@@ -196,6 +190,9 @@ void CSleepMgr::on_wakeup_from_timer()
             Serial.print("New servo position: ");
             Serial.println(new_position);
             Serial.println();
+
+            // Now move the servo to new position
+            Servo.move_to_pwm(new_position, 4000, true);
 
             // Tell awake_mode_execute() that it has no idea where the servo is now
             m_last_driven_index = 0xFF;

@@ -2,6 +2,14 @@
 #define _COMMON_H_
 #include <stdint.h>
 
+// If we're compiling on an Atmega-2560, assume we don't have real hardware attached
+#if defined(__AVR_ATmega2560__)
+    #define NO_HW 1
+#else
+    #define NO_HW 0
+#endif
+
+
 // system mode
 enum mode_t : uint8_t
 {
@@ -17,6 +25,9 @@ enum servocal_t : uint8_t
     CAL = 1,
     DONTCAL = 2
 };
+
+// Number of seconds that define a hardware-sleep period
+#define WAKEUP_TIME_SECS 32
 
 // Misc. global variables ------------------------------------------
 #define SERIAL_BAUD               115200

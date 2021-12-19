@@ -25,6 +25,7 @@ protected:
     bool    handle_sim();
     bool    handle_temp();
     bool    handle_setpoint();
+    bool    handle_ui();
     // ------------------------------------------------------------------
 
     void    show_nv(void*);

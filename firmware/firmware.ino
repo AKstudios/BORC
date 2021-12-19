@@ -33,6 +33,9 @@ void setup()
   Servo.init();
   Led.init();
 
+  // If we don't have any hardware, simulate normal room temperature
+  if (NO_HW) TempHum.simulate_temp_c(25.00);
+
   // Initilize the Temperature controller
   TempCtrl.init();
 
@@ -43,7 +46,6 @@ void setup()
   System.return_to_run_mode();
 
   
-
   // if the servo hasn't been successfully calibrated, do so
   // if (ee.is_servo_calibrated == NOTCAL)  Servo.calibrate_bare();
 

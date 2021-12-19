@@ -12,6 +12,9 @@ static Adafruit_INA219 ina219(CURRENT_SENSE_ADDRESS);
 // define servo's PWM frequency. Depends on type of servo
 #define SERVO_FREQ  50
 
+// This is the maximum valid PWM value
+#define MAX_VALID_PWM 1023
+
 //=========================================================================================================
 // init() - initialize the servo driver
 //=========================================================================================================
@@ -86,14 +89,22 @@ void CServoDriver::calibrate_bare()
     bool old_auto_power_control = m_is_auto_power_control;
     m_is_auto_power_control = false;
     
+    // If there's no hardware attached, just use default calibration values
+    if (NO_HW) 
+    {
+        ee.servo_min = DEFAULT_MIN_LIMIT;
+        ee.servo_max = DEFAULT_MAX_LIMIT;
+        goto cleanup;        
+    }
+
     // manually turn on servo's power
     PowerMgr.powerOn(SERVO_POWER_PIN);
 
     // set known values to all limits
     const int safe_lo_pwm = (DEFAULT_MIN_LIMIT + DEFAULT_MAX_LIMIT)/2;
     const int safe_hi_pwm = (DEFAULT_MIN_LIMIT + DEFAULT_MAX_LIMIT)/2;
-    const int dangerous_lo_pwm = 0;
-    const int dangerous_hi_pwm = 750;
+    const int dangerous_lo_pwm = 273;
+    const int dangerous_hi_pwm = 1023;
     const int step_size = 10;
 
     // wait for the servo to stop moving
@@ -168,6 +179,8 @@ void CServoDriver::calibrate_bare()
         }
     }
 
+cleanup:
+
     // manually turn off servo's power
     PowerMgr.powerOff(SERVO_POWER_PIN);
 
@@ -181,8 +194,7 @@ void CServoDriver::calibrate_bare()
         ee.is_servo_calibrated = CAL;
         
         // and set output limits
-        TempCtrl.set_output_limits(0, ee.servo_max-ee.servo_min);
-        // PID.set_output_limits(0, ee.servo_max-ee.servo_min);
+        TempCtrl.set_output_limits(ee.servo_min, ee.servo_max);
     }
 
     // turn LED off after calibration
@@ -211,6 +223,9 @@ void CServoDriver::calibrate_installed()
 bool CServoDriver::move_to_pwm(int pwm_value, int timeout_ms, bool enforce_limit)
 {   
     bool status = true;
+
+    // If we don't have any hardware attached, we're done
+    if (NO_HW) return true;
 
     // turn on servo's power if needed
     if (m_is_auto_power_control) PowerMgr.powerOn(SERVO_POWER_PIN);
@@ -280,7 +295,7 @@ bool CServoDriver::start_move_to_pwm(int pwm_value, bool enforce_limit)
     }
   
     // set PWM value for the servo to move
-    pwm.setPWM(0, 0, pwm_value);
+    pwm.setPWM(0, 0, MAX_VALID_PWM - pwm_value);
 
     // start the oneshot timer, it shouldn't take more than 1 second to start a move
     servo_timer.start(1000);

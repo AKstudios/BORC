@@ -9,9 +9,6 @@ void CSetpointModeMgr::start()
     // set the system mode and interface mode to setpoint mode
     ee.run_mode = System.iface_mode = SETPOINT_MODE;
 
-    // Tell the temperature controller that the motor may have moved without its permission
-    TempCtrl.reset();
-
     // display the current setpoint
     Display.display(ee.setpoint_f);
 }

@@ -195,11 +195,15 @@ void CRotaryKnob::init(int A_pin, int B_pin, int click_pin)
     // Need to make the rotary B-channel an input
     pinMode(m_B_pin, INPUT);
 
-    // Configure the INT interrupt for the A-channel pin
-    configure_INT(A_pin, false);
+    // If we have physical hardware attached...
+    if (!NO_HW)
+    {
+        // Configure the INT interrupt for the A-channel pin
+        configure_INT(A_pin, false);
 
-    // Configure the PCINT interrupt for the click-pin
-    configure_PCINT(click_pin);
+        // Configure the PCINT interrupt for the click-pin
+        configure_PCINT(click_pin);
+    }
 
     // We haven't sensed any events yet
     m_event_count = 0;
