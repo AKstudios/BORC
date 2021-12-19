@@ -1,9 +1,10 @@
 //=========================================================================================================
 // temp_ctrl.cpp - Implements a notch controller for controlling temperature
 //=========================================================================================================
-#include "temp_ctrl.h"
+#include "globals.h"
 
 
+const int RAMPING = -1;
 
 //=========================================================================================================
 // init() - Called once at startup
@@ -23,10 +24,10 @@ void CNotchController::init()
     m_duration = TIMER_SECONDS;
 
     // Assume for the moment that we don't know where our output is
-    m_current_notch = -1;
+    m_current_notch = RAMPING;
 
     // And we don't have a setpoint yet
-    m_setpoint = 0;
+    m_setpoint_c = 0;
 }
 //=========================================================================================================
 
@@ -35,7 +36,7 @@ void CNotchController::init()
 //=========================================================================================================
 // reset() - Tells the controller that the output control has been changed outside of our control
 //=========================================================================================================
-void CNotchController::reset() { m_current_notch = -1; }
+void CNotchController::reset() { m_current_notch = RAMPING; }
 //=========================================================================================================
 
 
@@ -68,10 +69,10 @@ void CNotchController::set_output_limits(nc_out_t lower_limit, nc_out_t upper_li
 //=========================================================================================================
 void CNotchController::new_setpoint_f(nc_pv_t setpoint_f)
 {
-    m_setpoint_f = setpoint_f;
-    m_lower_boundary = setpoint_f - DEADBAND_SIZE;
-    m_upper_boundary = setpoint_f + DEADBAND_SIZE;
-    m_current_notch = -1;
+    m_setpoint_c = f_to_c(setpoint_f);
+    m_lower_boundary = m_setpoint_c - DEADBAND_SIZE;
+    m_upper_boundary = m_setpoint_c + DEADBAND_SIZE;
+    m_current_notch = RAMPING;
 }
 //=========================================================================================================
 
@@ -84,7 +85,7 @@ void CNotchController::new_setpoint_f(nc_pv_t setpoint_f)
 //         dt = Amount of time that has elapsed since the last time this was called
 //
 //=========================================================================================================
-bool CNotchController::compute(nc_pv_t pv, nc_time_t dt, nc_out_t* p_output)
+bool CNotchController::compute(nc_pv_t pv_c, nc_time_t dt, nc_out_t* p_output)
 {
     // Update the timer
     m_timer += dt;
@@ -98,11 +99,11 @@ bool CNotchController::compute(nc_pv_t pv, nc_time_t dt, nc_out_t* p_output)
     // Restart the timer
     m_started_at += m_duration;
 
-    // If we don't know what our current output is...
-    if (m_current_notch == -1)
+    // If we're in ramping mode...
+    if (m_current_notch == RAMPING)
     {
         // If the temperature is too low, turn the output all the way on
-        if (pv < m_lower_boundary)
+        if (pv_c < m_lower_boundary)
         {
             m_current_notch = MAX_NOTCH;
             *p_output = m_notch_value[m_current_notch];
@@ -110,7 +111,7 @@ bool CNotchController::compute(nc_pv_t pv, nc_time_t dt, nc_out_t* p_output)
         }
 
         // If the temperatue is too high, turn the output all the way off
-        if (pv < m_lower_boundary)
+        if (pv_c < m_lower_boundary)
         {
             m_current_notch = 0;
             *p_output = m_notch_value[m_current_notch];
@@ -123,14 +124,14 @@ bool CNotchController::compute(nc_pv_t pv, nc_time_t dt, nc_out_t* p_output)
 
 
     // If the pv is too low and we have room to move the output up a notch, do so
-    if (pv < m_lower_boundary && m_current_notch < MAX_NOTCH)
+    if (pv_c < m_lower_boundary && m_current_notch < MAX_NOTCH)
     {
         *p_output = m_notch_value[++m_current_notch];
         return true;
     }
 
     // If the pv is too high and we have room to bump the output down a notch, do so
-    if (pv > m_upper_boundary && m_current_notch > 0)
+    if (pv_c > m_upper_boundary && m_current_notch > 0)
     {
         *p_output = m_notch_value[--m_current_notch];
         return true;

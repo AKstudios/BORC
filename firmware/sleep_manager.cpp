@@ -58,12 +58,19 @@ void CSleepMgr::execute_awake_mode()
             m_last_driven_index = ee.manual_index;
         }
 
+        // Tell the temperature controll what its setpoint is
+        TempCtrl.new_setpoint_f(ee.setpoint_f);
+
+        // If it's time simulate the system waking up from the timer, do so
+        if (!m_pid_timer.is_running()) m_pid_timer.start(32000);
+
         // And restart the sleep timer
         start_sleep_timer();
     }
 
-    // If it's time simulate the system waking up from the timer, do so
+    // This is a repeating timer.  If it's expired, simulate waking from sleep
     if (m_pid_timer.is_expired()) on_wakeup_from_timer();
+
 }
 //=========================================================================================================
 
@@ -116,6 +123,7 @@ void CSleepMgr::execute_sleep_mode()
     // set knob wakeup flag to false before going to sleep
     m_wakeup_from_knob = false;
 
+    // Tell the temperature controll what its setpoint is
     TempCtrl.new_setpoint_f(ee.setpoint_f);
 
     Serial.println("sleep");

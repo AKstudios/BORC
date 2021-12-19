@@ -1,8 +1,6 @@
 #include "globals.h"
 
 
-
-
 //=========================================================================================================
 // start() - start setpoint mode
 //=========================================================================================================
@@ -11,8 +9,8 @@ void CSetpointModeMgr::start()
     // set the system mode and interface mode to setpoint mode
     ee.run_mode = System.iface_mode = SETPOINT_MODE;
 
-    // initialize the PID controller
-    PID.init();
+    // Tell the temperature controller that the motor may have moved without its permission
+    TempCtrl.reset();
 
     // display the current setpoint
     Display.display(ee.setpoint_f);
@@ -38,7 +36,6 @@ void CSetpointModeMgr::execute()
                 --ee.setpoint_f;
                 Display.display(ee.setpoint_f);
                 Led.set(BLUE, 1000, true);
-                PID.new_setpoint_f(ee.setpoint_f);
             }
             break;
 
@@ -48,7 +45,6 @@ void CSetpointModeMgr::execute()
                 ++ee.setpoint_f;
                 Display.display(ee.setpoint_f);
                 Led.set(RED, 1000, true);
-                PID.new_setpoint_f(ee.setpoint_f);
             }
             break;
         
