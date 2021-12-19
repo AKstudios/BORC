@@ -62,11 +62,8 @@ void CSleepMgr::execute_awake_mode()
         start_sleep_timer();
     }
 
-    // If it's time to drive the servo to the setpoint position, make it so
-    if (m_pid_timer.is_expired())
-    {
-        if (ee.run_mode == SETPOINT_MODE) drive_servo_to_setpoint();
-    }
+    // If it's time simulate the system waking up from the timer, do so
+    if (m_pid_timer.is_expired()) on_wakeup_from_timer();
 }
 //=========================================================================================================
 
@@ -131,17 +128,16 @@ void CSleepMgr::execute_sleep_mode()
             
             if (m_wakeup_from_knob)
             {
-                wakeup_from_knob();
+                on_wakeup_from_knob();
                 return;
             }
         }
 
         // radio, servo, blah
-        wakeup_from_timer();
+        on_wakeup_from_timer();
     }
 }
 //=========================================================================================================
-
 
 
 
@@ -157,49 +153,40 @@ void CSleepMgr::start_sleep_timer(int timeout_ms)
 
 
 //=========================================================================================================
-// drive_servo_to_setpoint() - Drives the servo motor to the approprate position to try to maintain
-//                             the current setpoint
+// on_wakeup_from_timer() - Called when the system wakes from sleep due to the timer
 //=========================================================================================================
-void CSleepMgr::drive_servo_to_setpoint()
-{
-    // reinitialize the servo driver
-    Servo.reinit();
-
-    // Read the current temperature
-    TempHum.read_temp();
-
-    // compute new position for servo
-    int new_position = int(PID.compute(TempHum.temp, 32));
-        
-    Serial.print("Temp: ");
-    Serial.println(c_to_f(TempHum.temp));
-    Serial.print("Setpoint: ");
-    Serial.println(ee.setpoint_f);
-    Serial.print("New servo position: ");
-    Serial.println(new_position);
-    Serial.println();
-
-    // move the servo to new position
-    Servo.move_to_position(new_position);
-    
-    // Tell awake_mode_execute() that it has no idea where the servo is now
-    m_last_driven_index = 0xFF;
-}
-//=========================================================================================================
-
-
-
-
-//=========================================================================================================
-// wakeup_from_timer() - Called when the system wakes from sleep due to the timer
-//=========================================================================================================
-void CSleepMgr::wakeup_from_timer()
+void CSleepMgr::on_wakeup_from_timer()
 {
     // turn power on to all devices
     PowerMgr.powerOnAll();
 
     // if we're in setpoint mode, run the PID controller and the servo
-    if (ee.run_mode == SETPOINT_MODE) drive_servo_to_setpoint();
+    if (ee.run_mode == SETPOINT_MODE)
+    {
+        // reinitialize the servo driver
+        Servo.reinit();
+
+        // Read the current temperature
+        TempHum.read_temp();
+
+        // compute new position for servo
+        int new_position = int(PID.compute(TempHum.temp, 32));
+        
+        Serial.print("Temp: ");
+        Serial.println(c_to_f(TempHum.temp));
+        Serial.print("Setpoint: ");
+        Serial.println(ee.setpoint_f);
+        Serial.print("New servo position: ");
+        Serial.println(new_position);
+        Serial.println();
+
+        // move the servo to new position
+        Servo.move_to_position(new_position);
+    
+        // Tell awake_mode_execute() that it has no idea where the servo is now
+        m_last_driven_index = 0xFF;
+    }
+
 
     // send data via radio - t, rh, setpoint, debug
 
@@ -220,9 +207,9 @@ void CSleepMgr::on_knob_activity()
 
 
 //=========================================================================================================
-// wakeup_from_knob() - Called when the system is awoken from sleep by activity on the rotary kob
+// on_wakeup_from_knob() - Called when the system is awoken from sleep by activity on the rotary kob
 //=========================================================================================================
-void CSleepMgr::wakeup_from_knob()
+void CSleepMgr::on_wakeup_from_knob()
 {
     Knob.throw_away_next_event();
     PowerMgr.powerOnAll();

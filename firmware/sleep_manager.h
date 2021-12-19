@@ -30,10 +30,10 @@ protected:
     enum {SLEEP_MODE, AWAKE_MODE} m_mode;
 
     // Called when the system wakes up due to knob activity
-    void    wakeup_from_knob();
+    void    on_wakeup_from_knob();
 
     // Called when the system wakes up from sleep due to the timer
-    void    wakeup_from_timer();
+    void    on_wakeup_from_timer();
 
     // starts sleep timer 
     void    start_sleep_timer(int timeout_ms=5000);
@@ -41,9 +41,6 @@ protected:
     // execute() calls one of these
     void    execute_awake_mode();
     void    execute_sleep_mode();
-
-    // Reads the temperature, runs the PID controller, and moves the servo to the right place
-    void    drive_servo_to_setpoint();
 
     // This timer expires when it's time to sleep
     OneShot         m_sleep_timer;
