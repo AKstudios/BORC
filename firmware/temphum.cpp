@@ -56,7 +56,6 @@ void CTempHum::simulate_temp_c(float temperature_c)
     m_simulated_temp_c = temperature_c;
 
     // Any impossible temperature means "we're simulating temperatures"
-    m_is_simulated = (temperature_c <= -99 || temperature_c >= 99);
-
+    m_is_simulated = (temperature_c > -99 && temperature_c < 99);
 }
 //=========================================================================================================
