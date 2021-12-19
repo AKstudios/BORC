@@ -55,6 +55,10 @@ void CNotchController::set_output_limits(nc_out_t lower_limit, nc_out_t upper_li
     for (int i=0; i<MAX_NOTCH; ++i)
     {
         m_notch_value[i] = lower_limit + (nc_out_t)(i * increment + .5);
+        Serial.print("Notch: ");
+        Serial.print(i);
+        Serial.print(" = ");
+        Serial.println(m_notch_value[i]);
     }
 
     // Ensure that the highest notch is exactly the upper limit
