@@ -31,6 +31,9 @@ public:
     // takes a manual index move the servo to it
     bool move_to_index(int index);
 
+    // move to a PWM value and times out if current never drops
+    bool move_to_pwm(int pwm_value, int timeout_ms, bool enforce_limit=true);
+
     // checks whether the servo is moving and returns true or false
     bool is_moving();
 
@@ -41,9 +44,6 @@ protected:
     
     // takes pwm value as argument and makes the servo move
     bool start_move_to_pwm(int pwm_value, bool enforce_limit=true);
-
-    // move to a PWM value and times out if current never drops
-    bool move_to_pwm(int pwm_value, int timeout_ms, bool enforce_limit=true);
 
     // servo may jitter after moving to a position, this code waits for it to stop
     bool wait_for_servo_to_settle();

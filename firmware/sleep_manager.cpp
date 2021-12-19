@@ -123,7 +123,7 @@ void CSleepMgr::execute_sleep_mode()
     // set knob wakeup flag to false before going to sleep
     m_wakeup_from_knob = false;
 
-    // Tell the temperature controll what its setpoint is
+    // Tell the temperature control what its setpoint is
     TempCtrl.new_setpoint_f(ee.setpoint_f);
 
     Serial.println("sleep");
