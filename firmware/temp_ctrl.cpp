@@ -104,7 +104,7 @@ bool CNotchController::compute(nc_pv_t pv_c, nc_time_t dt, nc_out_t* p_output)
     nc_time_t elapsed = m_timer - m_started_at;
 
     // If the timer has not yet expired, do nothing
-    if (elapsed < m_duration) return false;
+    if (elapsed <= m_duration) return false;
 
     // Restart the timer
     m_started_at += m_duration;
