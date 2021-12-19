@@ -6,7 +6,7 @@
 #include <stdint.h>
 
 typedef float    nc_pv_t;
-typedef uint8_t  nc_out_t;
+typedef uint16_t nc_out_t;
 typedef uint16_t nc_time_t;
 
 //=========================================================================================================
