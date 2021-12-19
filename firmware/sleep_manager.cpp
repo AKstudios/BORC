@@ -190,7 +190,7 @@ void CSleepMgr::on_wakeup_from_timer()
             Serial.print("Temp C: ");
             Serial.println(strfloat(temp_c, 0, 2));
             Serial.print("Setpoint: ");
-            Serial.print(strfloat(f_to_c(ee.setpoint_f)));
+            Serial.print(strfloat(f_to_c(ee.setpoint_f), 0, 2));
             Serial.print("  ");
             Serial.println(ee.setpoint_f);
             Serial.print("New servo position: ");
