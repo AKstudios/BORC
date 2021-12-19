@@ -54,7 +54,7 @@ void CNotchController::set_output_limits(nc_out_t lower_limit, nc_out_t upper_li
     // Set the output values of the notches
     for (int i=0; i<MAX_NOTCH; ++i)
     {
-        m_notch_value[i] = (nc_out_t)(i * increment + .5);
+        m_notch_value[i] = lower_limit + (nc_out_t)(i * increment + .5);
     }
 
     // Ensure that the highest notch is exactly the upper limit
