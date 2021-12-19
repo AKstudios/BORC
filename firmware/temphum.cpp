@@ -12,6 +12,9 @@ static Adafruit_SHT31 sht31;
 //=========================================================================================================
 float CTempHum::read_temp_c()
 {   
+    // If we're using temperature simulation, return the simulated temperature
+    if (m_is_simulated) return m_simulated_temp_c;
+
     // intialize sensor
     sht31.begin(TEMP_SENSE_ADDRESS);
 
