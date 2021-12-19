@@ -63,12 +63,14 @@ void loop()
 {
   wdt_reset(); //pat the dog...
 
+  USB.execute();
+
   SerialServer.execute();
 
   SleepMgr.execute();
 
   Led.execute();
-
+  
   switch (System.iface_mode)
   {
     case MANUAL_MODE   : ManualModeMgr.execute();    break;

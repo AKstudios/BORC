@@ -18,6 +18,7 @@
 #include "temphum.h"
 #include "serialserver.h"
 #include "pid_ctrl.h"
+#include "misc_small.h"
 
 extern CRotaryKnob      Knob;
 extern CLedMatrix       Display;
@@ -32,6 +33,7 @@ extern CSetpointModeMgr SetpointModeMgr;
 extern CTempHum         TempHum;
 extern CSerialServer    SerialServer;
 extern CPIDController   PID;
+extern CUSBSensor       USB;
 extern CEEPROM          EEPROM;
 extern CEEPROM::data_t& ee;
 int c_to_f(float c);

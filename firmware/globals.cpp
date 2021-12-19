@@ -13,6 +13,7 @@ CSetpointModeMgr    SetpointModeMgr;
 CTempHum            TempHum;
 CSerialServer       SerialServer;
 CPIDController      PID;
+CUSBSensor          USB;
 CEEPROM             EEPROM;
 CEEPROM::data_t& ee = EEPROM.data;
 
