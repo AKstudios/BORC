@@ -9,8 +9,6 @@
 class CSleepMgr
 {
 public:
-    // setup sleep mode
-    void    init();
 
     // checks timer and goes to sleep
     void    execute();
