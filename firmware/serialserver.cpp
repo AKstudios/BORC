@@ -82,6 +82,9 @@ bool CSerialServer::handle_setpoint()
     // Fetch the Farenheit version of the temperature
     int temp_f = c_to_f(temp_c);
 
+    // Store the new setpoint in EEPROM
+    ee.setpoint_f = temp_f;
+
     // Tell the temperature controller what to use for a setpoint
     TempCtrl.new_setpoint_f(temp_f);
 
