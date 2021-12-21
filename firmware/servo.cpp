@@ -12,8 +12,8 @@ static Adafruit_INA219 ina219(CURRENT_SENSE_ADDRESS);
 // define servo's PWM frequency. Depends on type of servo
 #define SERVO_FREQ  50
 
-// This is the maximum valid PWM value
-#define MAX_VALID_PWM 1023
+// This is the maximum valid PWM value (4095 = 12-bit)
+#define MAX_VALID_PWM 4095
 
 //=========================================================================================================
 // init() - initialize the servo driver
@@ -102,8 +102,8 @@ void CServoDriver::calibrate_bare()
     // set known values to all limits
     const int safe_lo_pwm = (DEFAULT_MIN_LIMIT + DEFAULT_MAX_LIMIT)/2;
     const int safe_hi_pwm = (DEFAULT_MIN_LIMIT + DEFAULT_MAX_LIMIT)/2;
-    const int dangerous_lo_pwm = 273;
-    const int dangerous_hi_pwm = 1023;
+    const int dangerous_lo_pwm = 3345;
+    const int dangerous_hi_pwm = 4095;
     const int step_size = 10;
 
     // wait for the servo to stop moving

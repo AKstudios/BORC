@@ -66,9 +66,17 @@ void CNotchController::set_output_limits(nc_out_t lower_limit, nc_out_t upper_li
         Serial.print(" = ");
         Serial.println(m_notch_value[i]);
     }
-
+    
     // Ensure that the highest notch is exactly the upper limit
     m_notch_value[MAX_NOTCH] = upper_limit;
+
+    // print the last notch
+    Serial.print("Notch: ");
+    Serial.print(MAX_NOTCH);
+    Serial.print(" = ");
+    Serial.println(m_notch_value[MAX_NOTCH]);
+
+
 }
 //=========================================================================================================
 
@@ -164,7 +172,7 @@ cleanup:
     bool change_occured = (m_current_notch != original_notch);
 
     // Change this "#if 0" to a "#if 1" to see debugging data as the notch changes
-    #if 0   
+    #if 1
     if (change_occured)
     {
         if (original_notch == RAMPING)

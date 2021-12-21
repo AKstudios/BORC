@@ -41,7 +41,7 @@ public:
 protected:
 
     // The number of different notches we can set our output to
-    enum        { NOTCH_COUNT = 6 };
+    enum        { NOTCH_COUNT = 2 };
 
     // The index of the highest valid notch
     enum        { MAX_NOTCH = NOTCH_COUNT - 1 };
