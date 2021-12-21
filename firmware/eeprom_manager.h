@@ -71,6 +71,9 @@ public:
         float           kp;
         float           ki;
         float           kd;
+        uint8_t         notches;
+        uint16_t        tcm;
+        float           deadband;
         
     } data, clean;
 

@@ -8,6 +8,18 @@ void CSystem::init()
 {
     // If the EEPROM is blank, use a default setpoint
     if (ee.setpoint_f == 0) ee.setpoint_f = DEFAULT_SETPOINT;
+
+    // If the notch count in EEPROM is blank, 4 is a nice default
+    if (ee.notches == 0) ee.notches = 4;
+
+    // Don't allow the user to set an invalid number of notches
+    if (ee.notches > CNotchController::MAX_NOTCHES) ee.notches = CNotchController::MAX_NOTCHES;
+
+    // If the time-constant multiplier in EEPROM is blank, set a nice default
+    if (ee.tcm == 0) ee.tcm = 2;
+
+    // If the deadband size in EEPROM is blank, set a reasonable default
+    if (ee.deadband == 0) ee.deadband = 1;
 }
 //=========================================================================================================
 

@@ -11,17 +11,14 @@ const int RAMPING = -1;
 //=========================================================================================================
 void CNotchController::init()
 {
+    // This is the index of the highest usable notch
+    m_MAX_NOTCH = ee.notches - 1;
+
     // get controller limits from EEPROM
     set_output_limits(ee.servo_min, ee.servo_max);
 
-    // The timer started at boot
-    m_started_at = 0;
-
-    // The timer starts out expired so that the first call to compute() controls the output
-    m_timer = TIMER_SECONDS + 1;
-
-    // Set the duration of the timer, in seconds
-    m_duration = TIMER_SECONDS;
+    // Declare how long a system sleep time is. 
+    declare_sleep_time(SLEEP_TIME_SECS);
 
     // Assume for the moment that we don't know where our output is
     m_current_notch = RAMPING;
@@ -30,6 +27,24 @@ void CNotchController::init()
     m_setpoint_c = 0;
 }
 //=========================================================================================================
+
+
+//=========================================================================================================
+//  declare_sleep_time() - Informs this object how many seconds are in a single system sleep-period
+//=========================================================================================================
+void CNotchController::declare_sleep_time(uint16_t sleep_time_seconds)
+{
+    // The timer starts right now
+    m_started_at = 0;
+
+    // Set the duration of the timer, in seconds
+    m_duration = sleep_time_seconds * ee.tcm;
+
+    // The timer starts out expired so that the first call to compute() controls the output
+    m_timer = m_duration + 1;
+}
+//=========================================================================================================
+
 
 
 
@@ -55,10 +70,19 @@ void CNotchController::set_output_limits(nc_out_t lower_limit, nc_out_t upper_li
     Serial.println();
 
     // Determine the size of the increment between notches
-    float increment = (upper_limit - lower_limit) / float(NOTCH_COUNT - 1);
+    float increment = (upper_limit - lower_limit) / float(ee.notches - 1);
     
     // Set the output values of the notches
-    for (int i=0; i<MAX_NOTCH; ++i)
+    for (int i=0; i<m_MAX_NOTCH; ++i)
+    {
+        m_notch_value[i] = lower_limit + (nc_out_t)(i * increment + .5);
+    }
+
+    // Ensure that the highest notch is exactly the upper limit
+    m_notch_value[m_MAX_NOTCH] = upper_limit;
+
+    // Set the output values of the notches
+    for (int i=0; i<ee.notches; ++i)
     {
         m_notch_value[i] = lower_limit + (nc_out_t)(i * increment + .5);
         Serial.print("Notch: ");
@@ -66,16 +90,6 @@ void CNotchController::set_output_limits(nc_out_t lower_limit, nc_out_t upper_li
         Serial.print(" = ");
         Serial.println(m_notch_value[i]);
     }
-    
-    // Ensure that the highest notch is exactly the upper limit
-    m_notch_value[MAX_NOTCH] = upper_limit;
-
-    // print the last notch
-    Serial.print("Notch: ");
-    Serial.print(MAX_NOTCH);
-    Serial.print(" = ");
-    Serial.println(m_notch_value[MAX_NOTCH]);
-
 
 }
 //=========================================================================================================
@@ -97,11 +111,16 @@ void CNotchController::new_setpoint_f(nc_pv_t setpoint_f)
         m_setpoint_c = setpoint_c;
         
         // Compute the in-band boundaries
-        m_lower_boundary = setpoint_c - DEADBAND_SIZE;
-        m_upper_boundary = setpoint_c + DEADBAND_SIZE;
+        m_lower_boundary = setpoint_c - ee.deadband;
+        m_upper_boundary = setpoint_c + ee.deadband;
         
         // Switch to ramping mode
         m_current_notch  = RAMPING;
+
+        // Ensure that the timer is expired so that the very next call to compute()
+        // issues a servo movement
+        m_started_at = 0;
+        m_timer = m_duration  + 1;
     }
 }
 //=========================================================================================================
@@ -138,7 +157,7 @@ bool CNotchController::compute(nc_pv_t pv_c, nc_time_t dt, nc_out_t* p_output)
         // If the temperature is too low, turn the output all the way on
         if (pv_c < m_lower_boundary)
         {
-            m_current_notch = MAX_NOTCH;
+            m_current_notch = m_MAX_NOTCH;
             *p_output = m_notch_value[m_current_notch];
         }
 
@@ -155,7 +174,7 @@ bool CNotchController::compute(nc_pv_t pv_c, nc_time_t dt, nc_out_t* p_output)
 
 
     // If the pv is too low and we have room to move the output up a notch, do so
-    if (pv_c < m_lower_boundary && m_current_notch < MAX_NOTCH)
+    if (pv_c < m_lower_boundary && m_current_notch < m_MAX_NOTCH)
     {
         *p_output = m_notch_value[++m_current_notch];
     }

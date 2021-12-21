@@ -38,31 +38,29 @@ public:
     // Call this to compute a new output value. 
     bool    compute(nc_pv_t pv, nc_time_t dt, nc_out_t* p_output);
 
+    // This is the number of notch values our array can hold
+    enum { MAX_NOTCHES = 10};
+
 protected:
 
-    // The number of different notches we can set our output to
-    enum        { NOTCH_COUNT = 2 };
-
-    // The index of the highest valid notch
-    enum        { MAX_NOTCH = NOTCH_COUNT - 1 };
-
-    // How often "compute" emits a new output setting
-    enum        { TIMER_SECONDS = WAKEUP_TIME_SECS * 2};
-
-    // This is the size of the dead-band above and below the setpoint
-    const nc_pv_t DEADBAND_SIZE = 1;
+    // Inform this object how long a single "sleep period" is for this system.  Normally 32 seconds,
+    // except when simulating
+    void    declare_sleep_time(uint16_t sleep_time_seconds);
 
     // These are the limits on the output
     nc_out_t    m_lower_limit, m_upper_limit;
 
     // These are the notches that we can set the output to
-    nc_out_t    m_notch_value[NOTCH_COUNT];
+    nc_out_t    m_notch_value[MAX_NOTCHES];
 
     // A timer
     nc_time_t   m_timer, m_duration, m_started_at;
 
     // This is the currently output notch index
     int8_t      m_current_notch;
+
+    // This is the highest valid notch
+    int8_t     m_MAX_NOTCH;
 
     // These are the lower and upper boundary of the dead-band for the current setpoint
     nc_pv_t     m_lower_boundary, m_upper_boundary;

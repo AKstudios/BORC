@@ -3,6 +3,7 @@
 //=========================================================================================================
 #ifndef _MENU_MANAGER_H_
 #define _MENU_MANAGER_H_
+#include "mstimer.h"
 
 class CMenuMgr
 {
@@ -35,6 +36,9 @@ protected:
     void    dispatch();
 
     void    room_temp_handler();
+
+    // When this timer expires, we automatically exit the menu
+    OneShot m_menu_timer;
     
 };
 //=========================================================================================================

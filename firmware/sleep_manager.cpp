@@ -55,11 +55,11 @@ void CSleepMgr::execute_awake_mode()
             m_last_driven_index = ee.manual_index;
         }
 
-        // Tell the temperature controll what its setpoint is
+        // Tell the temperature controller what its setpoint is
         TempCtrl.new_setpoint_f(ee.setpoint_f);
 
         // If it's time simulate the system waking up from the timer, do so
-        if (!m_pid_timer.is_running()) m_pid_timer.start(WAKEUP_TIME_SECS * 1000); 
+        if (!m_pid_timer.is_running()) m_pid_timer.start(SLEEP_TIME_SECS * 1000); 
 
         // And restart the sleep timer
         start_sleep_timer();
@@ -117,22 +117,21 @@ void CSleepMgr::execute_sleep_mode()
     // write data to EEPROM
     EEPROM.write();
 
-    // set knob wakeup flag to false before going to sleep
-    m_wakeup_from_knob = false;
-
-    // Tell the temperature control what its setpoint is
+    // Tell the temperature controller what its setpoint is
     TempCtrl.new_setpoint_f(ee.setpoint_f);
 
     Serial.println("sleep");
     delay(10);
-    
+
+    // When this flag is set to true by knob activity, it's time to wake up!
+    m_wakeup_from_knob = false;
+
     // stay in a sleep loop unless someone interacts with the knob
     while (true)
     {
         for (int i=0; i<4; i++)
         {
             LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF);
-            
             if (m_wakeup_from_knob)
             {
                 on_wakeup_from_knob();
@@ -179,7 +178,7 @@ void CSleepMgr::on_wakeup_from_timer()
         float temp_c = TempHum.read_temp_c();
 
         // compute new position for servo
-        if (TempCtrl.compute(temp_c, WAKEUP_TIME_SECS, &new_position))
+        if (TempCtrl.compute(temp_c, SLEEP_TIME_SECS, &new_position))
         {
             Serial.print("Temp C: ");
             Serial.println(strfloat(temp_c, 0, 2));

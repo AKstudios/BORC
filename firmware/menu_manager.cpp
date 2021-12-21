@@ -6,6 +6,9 @@
 //=========================================================================================================
 void CMenuMgr::start()
 {   
+    // Ensure that the menu timer isn't running
+    m_menu_timer.stop();
+
     // set the interface mode to menu mode
     System.iface_mode = MENU_MODE;
 
@@ -14,6 +17,9 @@ void CMenuMgr::start()
 
     // display the menu item (2 characters)
     display_item();
+
+    // If we're plugged into USB, start a timer to make the menu timeout
+    if (USB.current_state()) m_menu_timer.start(10000);
 }
 //=========================================================================================================
 
@@ -100,12 +106,20 @@ void CMenuMgr::dispatch()
 //=========================================================================================================
 
 //=========================================================================================================
-// execute() - manual mode execute
+// execute() - menu mode execute
 //=========================================================================================================
 void CMenuMgr::execute()
 {
     knob_event_t event;
 
+    // If the menu timer has expired, the exit the menu
+    if (m_menu_timer.is_expired())
+    {
+        System.return_to_run_mode();
+        return;
+    }
+
+    // Handle events from the rotary knob
     while (Knob.get_event(&event))
     {
         switch (event)
@@ -134,6 +148,9 @@ void CMenuMgr::execute()
             dispatch();
             break;
         }
+
+        // Any knob activity causes us to kick the menu timer
+        m_menu_timer.kick();
     }
 }
 //=========================================================================================================

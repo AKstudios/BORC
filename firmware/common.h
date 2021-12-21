@@ -27,7 +27,7 @@ enum servocal_t : uint8_t
 };
 
 // Number of seconds that define a hardware-sleep period (base time = 32 secs)
-#define WAKEUP_TIME_SECS 5
+#define SLEEP_TIME_SECS 32
 
 // Misc. global variables ------------------------------------------
 #define SERIAL_BAUD               115200

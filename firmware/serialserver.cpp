@@ -163,6 +163,9 @@ bool CSerialServer::handle_sim()
         // Convert the token to float, in degrees C
         float temp_c = atof(token);
 
+        // "sim temp off" means stop simulating
+        if token_is("off") temp_c = -100.0;
+
         // Tell TempHum to simulate this room temp.  99 degrees = "stop simulating"
         TempHum.simulate_temp_c(temp_c);
 
@@ -187,7 +190,6 @@ bool CSerialServer::handle_sim()
 bool CSerialServer::handle_nv()
 {
     const char* token;
-
 
     // Fetch the next token.  If we can't, the user wants us to dump EEPROM
     if (!get_next_token(&token))
@@ -237,6 +239,10 @@ void CSerialServer::show_nv(void* vp)
     const char kd[]           PROGMEM = "kd                 : %s";
     const char servo_min[]    PROGMEM = "servo_min          : %i";
     const char servo_max[]    PROGMEM = "servo_max          : %i";
+    const char notches[]      PROGMEM = "notches            : %i";
+    const char tcm[]          PROGMEM = "tcm                : %i";
+    const char deadband[]     PROGMEM = "deadband           : %s";
+
 
 
     // Get a handy reference to the EEPROM structure the caller wants to dump
@@ -265,6 +271,10 @@ void CSerialServer::show_nv(void* vp)
     replyf(kp,              strfloat(ee.kp, 0, 3));
     replyf(ki,              strfloat(ee.ki, 0, 3));
     replyf(kd,              strfloat(ee.kd, 0, 3));
+    replyf(notches,         ee.notches);
+    replyf(tcm,             ee.tcm);
+    replyf(deadband,        strfloat(ee.deadband, 0, 2));
+
 }
 //=========================================================================================================
 
@@ -306,13 +316,16 @@ bool CSerialServer::handle_help()
     const char line_07  [] PROGMEM = "eeset ki <value>            - Saves PID I constant to EEPROM";
     const char line_08  [] PROGMEM = "eeset kd <value>            - Saves PID D constant to EEPROM";
     const char line_09  [] PROGMEM = "eeset is_servocal <value>   - Saves servo calibration flag";
-    const char line_10  [] PROGMEM = "sim temp <deg_C>            - Simulates the room temperature";
-    const char line_11  [] PROGMEM = "temp                        - Reports the room temperature";
-    const char line_12  [] PROGMEM = "setpoint <deg_c>            - Sets new temp control setpoint";
-    const char line_13  [] PROGMEM = "ui <l | left>               - Simulate knob rotate left";
-    const char line_14  [] PROGMEM = "ui <r | right>              - Simulate knob rotate right";
-    const char line_15  [] PROGMEM = "ui <c | click>              - Simulate knob click";
-    const char line_16  [] PROGMEM = "ui <lp | lpress>            - Simulate knob long press";
+    const char line_10  [] PROGMEM = "eeset notches <value>       - Save new notch count for temp ctrl";
+    const char line_11  [] PROGMEM = "eeset tcm <value>           - Save new time-constant multiplier";
+    const char line_12  [] PROGMEM = "eeset deadband <value>      - Save new temperature deadband size";
+    const char line_13  [] PROGMEM = "sim temp <deg_C>            - Simulates the room temperature";
+    const char line_14  [] PROGMEM = "temp                        - Reports the room temperature";
+    const char line_15  [] PROGMEM = "setpoint <deg_c>            - Sets new temp control setpoint";
+    const char line_16  [] PROGMEM = "ui <l | left>               - Simulate knob rotate left";
+    const char line_17  [] PROGMEM = "ui <r | right>              - Simulate knob rotate right";
+    const char line_18  [] PROGMEM = "ui <c | click>              - Simulate knob click";
+    const char line_19  [] PROGMEM = "ui <lp | lpress>            - Simulate knob long press";
         
 
     replyf(line_01);
@@ -331,6 +344,9 @@ bool CSerialServer::handle_help()
     replyf(line_14);
     replyf(line_15);
     replyf(line_16);
+    replyf(line_17);
+    replyf(line_18);
+    replyf(line_19);
 
     return pass();
 }
@@ -342,6 +358,7 @@ bool CSerialServer::handle_help()
 //                    nvset kp <value>
 //                    nvset ki <value>
 //                    nvset kd <value>
+//                    nvset notches <value>
 //=========================================================================================================
 bool CSerialServer::handle_nvset()
 {
@@ -392,6 +409,28 @@ bool CSerialServer::handle_nvset()
         EEPROM.write();
         return pass();
     }
+
+    if token_is("notches")
+    {
+        ee.notches = int(fvalue);
+        EEPROM.write();
+        return pass();
+    }
+
+    if token_is("tcm")
+    {
+        ee.tcm = int(fvalue);
+        EEPROM.write();
+        return pass();
+    }
+
+    if token_is("deadband")
+    {
+        ee.deadband = fvalue;
+        EEPROM.write();
+        return pass();
+    }
+
 
     // If we get here, there was a syntax error
     return fail_syntax();
