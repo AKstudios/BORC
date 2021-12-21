@@ -20,6 +20,7 @@
 #include "pid_ctrl.h"
 #include "misc_small.h"
 #include "temp_ctrl.h"
+#include "serial_logger.h"
 
 
 extern CRotaryKnob      Knob;
@@ -38,6 +39,7 @@ extern CPIDController   PID;
 extern CUSBSensor       USB;
 extern CEEPROM          EEPROM;
 extern CNotchController TempCtrl;
+extern CSerialLogger    Logger;
 
 extern CEEPROM::data_t& ee;
 

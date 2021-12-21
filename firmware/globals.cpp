@@ -16,6 +16,7 @@ CPIDController      PID;
 CUSBSensor          USB;
 CEEPROM             EEPROM;
 CNotchController    TempCtrl;
+CSerialLogger       Logger;
 
 // pointer to EEPROM dirty data buffer
 CEEPROM::data_t& ee = EEPROM.data;
