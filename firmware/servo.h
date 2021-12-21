@@ -40,8 +40,13 @@ public:
 protected:
 //  public:
 
-    bool m_is_auto_power_control;
+    // Determines whether "move to pwm" will automatically control power to the servo
+    enum pwr_ctrl_t {MANUAL, AUTO} m_power_control;
     
+    // Call these to push and pop power control settings
+    void push_power_control(pwr_ctrl_t new_setting);
+    void pop_power_control();
+
     // takes pwm value as argument and makes the servo move
     bool start_move_to_pwm(int pwm_value, bool enforce_limit=true);
 
@@ -56,6 +61,9 @@ protected:
 
     // keeps track of how many times we see the stop threshold current
     int m_stop_current_counter;
+
+    // A push-able/pop-able stack of power control settings
+    uint16_t m_power_control_stack;
 };
 
 //=========================================================================================================

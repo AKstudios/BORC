@@ -46,7 +46,7 @@ void CServoDriver::init()
     m_stop_current_counter = 0;
 
     // give the system power control of the servo
-    m_is_auto_power_control = true;
+    m_power_control = AUTO;
 
     // if servo isn't calibrated, use defaults
     if (ee.is_servo_calibrated != CAL)
@@ -85,9 +85,8 @@ void CServoDriver::calibrate_bare()
     // assume this is going to work
     bool success = true;
 
-    // save servo power flag and turn it off here
-    bool old_auto_power_control = m_is_auto_power_control;
-    m_is_auto_power_control = false;
+    // Switch to manual power control
+    push_power_control(MANUAL);
     
     // If there's no hardware attached, just use default calibration values
     if (NO_HW) 
@@ -184,8 +183,8 @@ cleanup:
     // manually turn off servo's power
     PowerMgr.powerOff(SERVO_POWER_PIN);
 
-    // restore servo power flag
-    m_is_auto_power_control = old_auto_power_control;
+    // Switch back to the previous power control setting
+    pop_power_control();
 
     // if calibration is successful..
     if (success)
@@ -228,7 +227,7 @@ bool CServoDriver::move_to_pwm(int pwm_value, int timeout_ms, bool enforce_limit
     if (NO_HW) return true;
 
     // turn on servo's power if needed
-    if (m_is_auto_power_control) PowerMgr.powerOn(SERVO_POWER_PIN);
+    if (m_power_control == AUTO) PowerMgr.powerOn(SERVO_POWER_PIN);
 
     // create a oneshot timer
     OneShot servo_timer;
@@ -263,7 +262,7 @@ bool CServoDriver::move_to_pwm(int pwm_value, int timeout_ms, bool enforce_limit
 cleanup:
 
     // turn off servo's power if needed
-    if (m_is_auto_power_control) PowerMgr.powerOff(SERVO_POWER_PIN);
+    if (m_power_control = AUTO) PowerMgr.powerOff(SERVO_POWER_PIN);
 
     // once it's done moving, tell the caller that the servo moved
     return status;
@@ -328,11 +327,8 @@ bool CServoDriver::start_move_to_pwm(int pwm_value, bool enforce_limit)
 bool CServoDriver::move_to_index(int index)
 {   
     int range = ee.servo_max - ee.servo_min;
-
-    // invert the index so 0 means close and 6 means open
-    int effective_index = get_max_index() - index;
     
-    int pwm_value = effective_index * range / get_max_index() + ee.servo_min;
+    int pwm_value = index * range / get_max_index() + ee.servo_min;
 
     return move_to_pwm(pwm_value, 4000, true);
 }
@@ -400,3 +396,34 @@ bool CServoDriver::wait_for_servo_to_settle()
     return false;
 }
 //=========================================================================================================
+
+
+//=========================================================================================================
+// push_power_control() - Saves the current power control setting and sets a new one
+//=========================================================================================================
+void CServoDriver::push_power_control(pwr_ctrl_t new_setting)
+{
+    // Save the existing power control setting
+    m_power_control_stack = (m_power_control_stack << 1) | m_power_control;
+
+    // And start using the new power control setting
+    m_power_control = new_setting;
+}
+//=========================================================================================================
+
+
+//=========================================================================================================
+// pop_power_control() - Restores a previously pushed power control setting
+//=========================================================================================================
+void CServoDriver::pop_power_control()
+{
+    // Start using the power control setting that was at the top of the stack
+    m_power_control = (pwr_ctrl_t)(m_power_control_stack & 1);
+
+    // And pop one entry off the stack
+    m_power_control_stack >>= 1;
+}
+//=========================================================================================================
+
+
+
