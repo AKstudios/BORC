@@ -257,8 +257,6 @@ int avsprintf(char* buffer, const char* fmt, va_list& va)
             float f_value = (float)va_arg(va, double);
             strfloat(f_value, pre_decimal, post_decimal, out);
             out = strchr(buffer, 0);
-
-            printf("*in = %i\n", *in);
             continue;
         }
 
