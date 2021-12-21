@@ -57,6 +57,9 @@ void setup()
 
     // Servo.move_to_pwm(92, 4000, true);
     // Servo.move_to_pwm(542, 4000, true);  
+
+    aprintf("Pi is %1.3f.  %i is the answer.  hex = 0x%02X\n", 3.14, 42, 0xAF);
+    Serial.println("Into the BIG LOOP!");
 }
 //=========================================================================================================
 

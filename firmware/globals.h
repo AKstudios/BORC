@@ -19,6 +19,7 @@
 #include "serialserver.h"
 #include "pid_ctrl.h"
 #include "misc_small.h"
+#include "aprintf.h"
 #include "temp_ctrl.h"
 #include "serial_logger.h"
 
