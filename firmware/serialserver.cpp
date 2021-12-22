@@ -211,7 +211,10 @@ bool CSerialServer::handle_nv()
         Display.fill();
         Led.set(WHITE);
         EEPROM.destroy();
-        return pass();
+        pass();
+        delay(1000);
+        System.reboot();
+        return false;
     }
 
     // If we get here, there was a syntax error

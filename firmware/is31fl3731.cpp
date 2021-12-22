@@ -453,7 +453,7 @@ void IS31FL3731::init(int i2c_address, unsigned char brightness)
 void IS31FL3731::fill()
 {
     // Fill every bit of the bitmap so that every LED turns on
-    memset(m_bitmap, 0, sizeof m_bitmap);
+    memset(m_bitmap, 0xFF, sizeof m_bitmap);
 
     // And display the image
     display_image();
