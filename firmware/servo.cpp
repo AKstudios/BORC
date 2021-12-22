@@ -79,7 +79,7 @@ void CServoDriver::reinit()
 void CServoDriver::calibrate_bare()
 {   
     // show that we're calibrating the servo on the display and LED
-    Display.display("Ca");
+    Display.print("Ca");
     Led.set(PURPLE);
 
     // assume this is going to work

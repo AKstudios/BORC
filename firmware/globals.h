@@ -5,7 +5,6 @@
 #include "common.h"
 #include "changelog.h"
 #include "rotary_knob.h"
-#include "display.h"
 #include "power_manager.h"
 #include "servo.h"
 #include "system.h"
@@ -21,10 +20,11 @@
 #include "aprintf.h"
 #include "temp_ctrl.h"
 #include "serial_logger.h"
+#include "is31fl3731.h"
 
 
 extern CRotaryKnob      Knob;
-extern CLedMatrix       Display;
+extern IS31FL3731       Display;
 extern CPowerManager    PowerMgr;
 extern CServoDriver     Servo;
 extern CSystem          System;

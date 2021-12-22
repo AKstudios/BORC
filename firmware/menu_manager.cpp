@@ -32,25 +32,25 @@ void CMenuMgr::display_item()
     switch (m_menu_item)
     {
         case MI_MANUAL:
-            Display.display("Ma");
+            Display.print("Ma");
             break;
         case MI_SETPOINT:
-            Display.display("Se");
+            Display.print("Se");
             break;
         case MI_CALIBRATE:
-            Display.display("Ca");
+            Display.print("Ca");
             break;
         case MI_ROTATE_D:
-            Display.display("Rd");
+            Display.print("Rd");
             break;
         case MI_ROOMTEMP:
-            Display.display("Rt");
+            Display.print("Rt");
             break;
         case MI_REBOOT:
-            Display.display("Re");
+            Display.print("Re");
             break;
         case MI_CONFIG:
-            Display.display("Co");
+            Display.print("Co");
             break;
     }
 }
@@ -158,7 +158,7 @@ void CMenuMgr::room_temp_handler()
     int temp_f = c_to_f(TempHum.read_temp_c());
 
     // display the current temperature
-    Display.display(temp_f);
+    Display.print(temp_f);
 
     // start a 5 second timer
     timer.start(5000);

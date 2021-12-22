@@ -10,7 +10,7 @@ void CSetpointModeMgr::start()
     ee.run_mode = System.iface_mode = SETPOINT_MODE;
 
     // display the current setpoint
-    Display.display(ee.setpoint_f);
+    Display.print(ee.setpoint_f);
 }
 //=========================================================================================================
 
@@ -31,7 +31,7 @@ void CSetpointModeMgr::execute()
             if (ee.setpoint_f > MIN_SETPOINT)
             {
                 --ee.setpoint_f;
-                Display.display(ee.setpoint_f);
+                Display.print(ee.setpoint_f);
                 Led.set(BLUE, 1000, true);
             }
             break;
@@ -40,7 +40,7 @@ void CSetpointModeMgr::execute()
             if (ee.setpoint_f < MAX_SETPOINT)
             {
                 ++ee.setpoint_f;
-                Display.display(ee.setpoint_f);
+                Display.print(ee.setpoint_f);
                 Led.set(RED, 1000, true);
             }
             break;

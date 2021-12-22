@@ -1,7 +1,7 @@
 #include "globals.h"
 
 CRotaryKnob         Knob;
-CLedMatrix          Display;
+IS31FL3731          Display;
 CPowerManager       PowerMgr;
 CServoDriver        Servo;
 CSystem             System;

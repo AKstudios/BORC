@@ -31,7 +31,7 @@ void setup()
 
     // initialize all devices
     Knob.init(CHANNEL_A, CHANNEL_B, CLICK_PIN);
-    Display.init();
+    Display.init(0x74);
     Servo.init();
     Led.init();
 
