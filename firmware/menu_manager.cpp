@@ -52,9 +52,6 @@ void CMenuMgr::display_item()
         case MI_CONFIG:
             Display.display("Co");
             break;
-        case MI_DESTROY:
-            Display.display("De");
-            break;
     }
 }
 //=========================================================================================================
@@ -87,14 +84,6 @@ void CMenuMgr::dispatch()
             break;
 
         case MI_REBOOT:
-            System.reboot();
-            break;
-        
-        case MI_DESTROY:
-            Display.fill();
-            Led.set(WHITE);
-            EEPROM.destroy();
-            delay(1000);
             System.reboot();
             break;
 

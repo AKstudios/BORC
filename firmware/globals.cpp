@@ -12,7 +12,6 @@ CMenuMgr            MenuMgr;
 CSetpointModeMgr    SetpointModeMgr;
 CTempHum            TempHum;
 CSerialServer       SerialServer;
-CPIDController      PID;
 CUSBSensor          USB;
 CEEPROM             EEPROM;
 CNotchController    TempCtrl;

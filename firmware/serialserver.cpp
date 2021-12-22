@@ -208,6 +208,8 @@ bool CSerialServer::handle_nv()
     // Does the user want to destroy the EEPROM?
     if token_is("destroy")
     {
+        Display.fill();
+        Led.set(WHITE);
         EEPROM.destroy();
         return pass();
     }
@@ -234,9 +236,6 @@ void CSerialServer::show_nv(void* vp)
     const char setpoint[]     PROGMEM = "setpoint           : %i";
     const char orientation[]  PROGMEM = "orientation        : %i";
     const char is_servocal[]  PROGMEM = "is_servo_cal       : %i";
-    const char kp[]           PROGMEM = "kp                 : %s";
-    const char ki[]           PROGMEM = "ki                 : %s";
-    const char kd[]           PROGMEM = "kd                 : %s";
     const char servo_min[]    PROGMEM = "servo_min          : %i";
     const char servo_max[]    PROGMEM = "servo_max          : %i";
     const char notches[]      PROGMEM = "notches            : %i";
@@ -268,9 +267,6 @@ void CSerialServer::show_nv(void* vp)
     replyf(is_servocal,     ee.is_servo_calibrated);
     replyf(servo_min,       ee.servo_min);
     replyf(servo_max,       ee.servo_max);
-    replyf(kp,              strfloat(ee.kp, 0, 3));
-    replyf(ki,              strfloat(ee.ki, 0, 3));
-    replyf(kd,              strfloat(ee.kd, 0, 3));
     replyf(notches,         ee.notches);
     replyf(tcm,             ee.tcm);
     replyf(deadband,        strfloat(ee.deadband, 0, 2));
@@ -312,20 +308,17 @@ bool CSerialServer::handle_help()
     const char line_03  [] PROGMEM = "ee destroy                  - Erases EEPROM";
     const char line_04  [] PROGMEM = "fwrev                       - Displays firmware revision";
     const char line_05  [] PROGMEM = "reboot                      - Soft reboots device";
-    const char line_06  [] PROGMEM = "eeset kp <value>            - Saves PID P constant to EEPROM";
-    const char line_07  [] PROGMEM = "eeset ki <value>            - Saves PID I constant to EEPROM";
-    const char line_08  [] PROGMEM = "eeset kd <value>            - Saves PID D constant to EEPROM";
-    const char line_09  [] PROGMEM = "eeset is_servocal <value>   - Saves servo calibration flag";
-    const char line_10  [] PROGMEM = "eeset notches <value>       - Save new notch count for temp ctrl";
-    const char line_11  [] PROGMEM = "eeset tcm <value>           - Save new time-constant multiplier";
-    const char line_12  [] PROGMEM = "eeset deadband <value>      - Save new temperature deadband size";
-    const char line_13  [] PROGMEM = "sim temp <deg_C>            - Simulates the room temperature";
-    const char line_14  [] PROGMEM = "temp                        - Reports the room temperature";
-    const char line_15  [] PROGMEM = "setpoint <deg_c>            - Sets new temp control setpoint";
-    const char line_16  [] PROGMEM = "ui <l | left>               - Simulate knob rotate left";
-    const char line_17  [] PROGMEM = "ui <r | right>              - Simulate knob rotate right";
-    const char line_18  [] PROGMEM = "ui <c | click>              - Simulate knob click";
-    const char line_19  [] PROGMEM = "ui <lp | lpress>            - Simulate knob long press";
+    const char line_06  [] PROGMEM = "eeset is_servocal <value>   - Saves servo calibration flag";
+    const char line_07  [] PROGMEM = "eeset notches <value>       - Save new notch count for temp ctrl";
+    const char line_08  [] PROGMEM = "eeset tcm <value>           - Save new time-constant multiplier";
+    const char line_09  [] PROGMEM = "eeset deadband <value>      - Save new temperature deadband size";
+    const char line_10  [] PROGMEM = "sim temp <deg_C>            - Simulates the room temperature";
+    const char line_11  [] PROGMEM = "temp                        - Reports the room temperature";
+    const char line_12  [] PROGMEM = "setpoint <deg_c>            - Sets new temp control setpoint";
+    const char line_13  [] PROGMEM = "ui <l | left>               - Simulate knob rotate left";
+    const char line_14  [] PROGMEM = "ui <r | right>              - Simulate knob rotate right";
+    const char line_15  [] PROGMEM = "ui <c | click>              - Simulate knob click";
+    const char line_16  [] PROGMEM = "ui <lp | lpress>            - Simulate knob long press";
         
 
     replyf(line_01);
@@ -344,9 +337,6 @@ bool CSerialServer::handle_help()
     replyf(line_14);
     replyf(line_15);
     replyf(line_16);
-    replyf(line_17);
-    replyf(line_18);
-    replyf(line_19);
 
     return pass();
 }
@@ -375,33 +365,6 @@ bool CSerialServer::handle_nvset()
 
     // We want to examine the name token
     token = name;
-
-    // Handle "nvset kp"
-    if token_is("kp")
-    {
-        ee.kp = fvalue;
-        EEPROM.write();
-        PID.set_constants(ee.kp, ee.ki, ee.kd);
-        return pass();
-    }
-
-    // Handle "nvset ki"
-    if token_is("ki")
-    {
-        ee.ki = fvalue;
-        EEPROM.write();
-        PID.set_constants(ee.kp, ee.ki, ee.kd);
-        return pass();
-    }
-
-    // Handle "nvset kd"
-    if token_is("kd")
-    {
-        ee.kd = fvalue;
-        EEPROM.write();
-        PID.set_constants(ee.kp, ee.ki, ee.kd);
-        return pass();
-    }
 
     if token_is("is_servocal")
     {

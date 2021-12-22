@@ -59,14 +59,14 @@ void CSleepMgr::execute_awake_mode()
         TempCtrl.new_setpoint_f(ee.setpoint_f);
 
         // If it's time simulate the system waking up from the timer, do so
-        if (!m_pid_timer.is_running()) m_pid_timer.start(SLEEP_TIME_SECS * 1000); 
+        if (!m_ctrl_timer.is_running()) m_ctrl_timer.start(SLEEP_TIME_SECS * 1000); 
 
         // And restart the sleep timer
         start_sleep_timer();
     }
 
     // This is a repeating timer.  If it's expired, simulate waking from sleep
-    if (m_pid_timer.is_expired()) on_wakeup_from_timer();
+    if (m_ctrl_timer.is_expired()) on_wakeup_from_timer();
 
 }
 //=========================================================================================================
@@ -168,7 +168,7 @@ void CSleepMgr::on_wakeup_from_timer()
     // turn power on to all devices
     PowerMgr.powerOnAll();
 
-    // if we're in setpoint mode, run the PID controller and the servo
+    // if we're in setpoint mode, run the temp controller and the servo
     if (ee.run_mode == SETPOINT_MODE)
     {
         // reinitialize the servo driver

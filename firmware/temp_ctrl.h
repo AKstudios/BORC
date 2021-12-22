@@ -60,7 +60,7 @@ protected:
     int8_t      m_current_notch;
 
     // This is the highest valid notch
-    int8_t     m_MAX_NOTCH;
+    int8_t      m_MAX_NOTCH;
 
     // These are the lower and upper boundary of the dead-band for the current setpoint
     nc_pv_t     m_lower_boundary, m_upper_boundary;

@@ -49,7 +49,7 @@ protected:
     OneShot         m_sleep_timer;
 
     // This timer is used to move the servo every 32 seconds when we're in AWAKE_MODE
-    msTimer         m_pid_timer;
+    msTimer         m_ctrl_timer;
 
     // This is the last manual_index we know we drove the motor to
     uint8_t         m_last_driven_index;

@@ -17,7 +17,6 @@
 #include "eeprom_manager.h"
 #include "temphum.h"
 #include "serialserver.h"
-#include "pid_ctrl.h"
 #include "misc_small.h"
 #include "aprintf.h"
 #include "temp_ctrl.h"
@@ -36,7 +35,6 @@ extern CMenuMgr         MenuMgr;
 extern CSetpointModeMgr SetpointModeMgr;
 extern CTempHum         TempHum;
 extern CSerialServer    SerialServer;
-extern CPIDController   PID;
 extern CUSBSensor       USB;
 extern CEEPROM          EEPROM;
 extern CNotchController TempCtrl;
