@@ -21,10 +21,10 @@ void CSetpointModeMgr::start()
 void CSetpointModeMgr::execute()
 {
     knob_event_t event;
+    static OneShot vbar_timer;
 
     while (Knob.get_event(&event))
     {
-        
         switch (event)
         {
         case KNOB_LEFT:
@@ -33,6 +33,11 @@ void CSetpointModeMgr::execute()
                 --ee.setpoint_f;
                 Display.print(ee.setpoint_f);
                 Led.set(BLUE, 1000, true);
+            }
+            else
+            {
+                Display.vertical_bar(0, true);
+                vbar_timer.start(500);                
             }
             break;
 
@@ -43,11 +48,21 @@ void CSetpointModeMgr::execute()
                 Display.print(ee.setpoint_f);
                 Led.set(RED, 1000, true);
             }
+            else
+            {
+                Display.vertical_bar(14, true);
+                vbar_timer.start(500);                
+            }
             break;
-        
+
         case KNOB_LPRESS:
             MenuMgr.start();
             break;
         }
+
     }
+
+    // If the vertical bar timer is expired, redisplay the text to remove the bar
+    if (vbar_timer.is_expired()) Display.print(ee.setpoint_f);
 }
+//=========================================================================================================
