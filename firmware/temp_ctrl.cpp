@@ -24,7 +24,7 @@ void CNotchController::init()
     m_current_notch = RAMPING;
 
     // And we don't have a setpoint yet
-    m_setpoint_c = 0;
+    m_setpoint_f = 0;
 }
 //=========================================================================================================
 
@@ -100,18 +100,15 @@ void CNotchController::set_output_limits(nc_out_t lower_limit, nc_out_t upper_li
 //=========================================================================================================
 void CNotchController::new_setpoint_f(nc_pv_t setpoint_f)
 {
-    // What setpoint are we being asked to set?
-    float setpoint_c = f_to_c(setpoint_f);
-
     // If that's different than our current setpoint, spring into action
-    if (setpoint_c != m_setpoint_c)
+    if (setpoint_f != m_setpoint_f)
     {
         // Save the setpoint for posterity
-        m_setpoint_c = setpoint_c;
+        m_setpoint_f = setpoint_f;
         
         // Compute the in-band boundaries
-        m_lower_boundary = setpoint_c - ee.deadband;
-        m_upper_boundary = setpoint_c + ee.deadband;
+        m_lower_boundary = setpoint_f - ee.deadband;
+        m_upper_boundary = setpoint_f + ee.deadband;
         
         // Switch to ramping mode
         m_current_notch  = RAMPING;

@@ -66,7 +66,7 @@ protected:
     nc_pv_t     m_lower_boundary, m_upper_boundary;
 
     // This is the most recently set setpoint
-    nc_pv_t     m_setpoint_c;
+    nc_pv_t     m_setpoint_f;
 
 };
 

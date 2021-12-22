@@ -8,20 +8,23 @@ public:
     // Constructor
     CTempHum() {m_is_simulated = false;}
 
-    // read the temperature and return in celsius
-    float   read_temp_c();
-
     // read humidity and return in %
     float   read_hum();
 
+    // Return the temperature in F
+    float   read_temp_f();
+
     // Call this to simulate room temperatures
-    void    simulate_temp_c(float temperature);
+    void    simulate_temp_f(float temperature);
 
 protected:
 
+    // read the temperature and return in celsius
+    float   read_temp_c();
+
     bool    m_is_simulated;
 
-    float   m_simulated_temp_c;
+    float   m_simulated_temp_f;
 
 };
 

@@ -175,17 +175,15 @@ void CSleepMgr::on_wakeup_from_timer()
         Servo.reinit();
 
         // Read the current temperature
-        float temp_c = TempHum.read_temp_c();
+        float temp_f = TempHum.read_temp_f();
 
         // compute new position for servo
-        if (TempCtrl.compute(temp_c, SLEEP_TIME_SECS, &new_position))
+        if (TempCtrl.compute(temp_f, SLEEP_TIME_SECS, &new_position))
         {
-            Serial.print("Temp C: ");
-            Serial.println(strfloat(temp_c, 0, 2));
+            Serial.print("Temp F: ");
+            Serial.println(strfloat(temp_f, 0, 2));
             Serial.print("Setpoint: ");
-            Serial.print(strfloat(f_to_c(ee.setpoint_f), 0, 2));
-            Serial.print("  ");
-            Serial.println(ee.setpoint_f);
+            Serial.println(strfloat(ee.setpoint_f, 0, 2));
             Serial.print("New servo position: ");
             Serial.println(new_position);
             Serial.println();

@@ -43,7 +43,7 @@ extern CSerialLogger    Logger;
 extern CEEPROM::data_t& ee;
 
 int c_to_f(float c);
-float f_to_c(int f);
+//float f_to_c(int f);
 
 
 #endif

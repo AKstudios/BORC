@@ -96,14 +96,11 @@ bool CSerialServer::handle_fwrev()
 //=========================================================================================================
 bool CSerialServer::handle_temp()
 {
-    // Fetch the current temperature in C
-    float temp_c = TempHum.read_temp_c();
-
-    // Fetch the Farenheit version of the temperature
-    int temp_f = c_to_f(temp_c);
-
+    // Fetch the current temperature in F
+    float temp_f = TempHum.read_temp_f();
+    
     // Report them both to the user
-    return pass("%s %i (temp)", strfloat(temp_c, 0, 2), temp_f);
+    return pass("%s (temp)", strfloat(temp_f, 0, 2));
 }
 //=========================================================================================================
 
@@ -119,12 +116,9 @@ bool CSerialServer::handle_setpoint()
     // Fetch the temperature we want to use as a setpoint
     if (!get_next_token(&token)) return fail_syntax();
 
-    // Fetch the current temperature in C
-    float temp_c = atof(token);
+    // Fetch the current temperature in F
+    float temp_f = atof(token);
     
-    // Fetch the Farenheit version of the temperature
-    int temp_f = c_to_f(temp_c);
-
     // Store the new setpoint in EEPROM
     ee.setpoint_f = temp_f;
 
@@ -135,7 +129,7 @@ bool CSerialServer::handle_setpoint()
     SetpointModeMgr.start();
 
     // Report them both to the user
-    return pass("%s %i (setpoint)", strfloat(temp_c, 0, 2), temp_f);
+    return pass("%s (setpoint)", strfloat(temp_f, 0, 2));
 }
 //=========================================================================================================
 
@@ -160,17 +154,17 @@ bool CSerialServer::handle_sim()
         // Fetch the temperature they want to use
         if (!get_next_token(&token)) return fail_syntax();
 
-        // Convert the token to float, in degrees C
-        float temp_c = atof(token);
+        // Convert the token to float, in degrees F
+        float temp_f = atof(token);
 
         // "sim temp off" means stop simulating
-        if token_is("off") temp_c = -100.0;
+        if token_is("off") temp_f = -100.0;
 
         // Tell TempHum to simulate this room temp.  99 degrees = "stop simulating"
-        TempHum.simulate_temp_c(temp_c);
+        TempHum.simulate_temp_f(temp_f);
 
         // Tell the user that all is well.
-        return pass("%s %i (sim_temp)", strfloat(temp_c, 0, 2), c_to_f(temp_c));
+        return pass("%s (sim_temp)", strfloat(temp_f, 0, 2));
     }
 
     // If we get here, we have no idea what the user is talking about
@@ -315,9 +309,9 @@ bool CSerialServer::handle_help()
     const char line_07  [] PROGMEM = "eeset notches <value>       - Save new notch count for temp ctrl";
     const char line_08  [] PROGMEM = "eeset tcm <value>           - Save new time-constant multiplier";
     const char line_09  [] PROGMEM = "eeset deadband <value>      - Save new temperature deadband size";
-    const char line_10  [] PROGMEM = "sim temp <deg_C>            - Simulates the room temperature";
+    const char line_10  [] PROGMEM = "sim temp <deg_F>            - Simulates the room temperature";
     const char line_11  [] PROGMEM = "temp                        - Reports the room temperature";
-    const char line_12  [] PROGMEM = "setpoint <deg_c>            - Sets new temp control setpoint";
+    const char line_12  [] PROGMEM = "setpoint <deg_F>            - Sets new temp control setpoint";
     const char line_13  [] PROGMEM = "ui <l | left>               - Simulate knob rotate left";
     const char line_14  [] PROGMEM = "ui <r | right>              - Simulate knob rotate right";
     const char line_15  [] PROGMEM = "ui <c | click>              - Simulate knob click";
