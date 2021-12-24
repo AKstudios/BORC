@@ -14,13 +14,13 @@
 #include "menu_manager.h"
 #include "setpoint_mode.h"
 #include "eeprom_manager.h"
-#include "temphum.h"
 #include "serialserver.h"
 #include "misc_small.h"
 #include "aprintf.h"
 #include "temp_ctrl.h"
 #include "serial_logger.h"
 #include "is31fl3731.h"
+#include "sht31.h"
 
 
 extern CRotaryKnob      Knob;
@@ -33,7 +33,7 @@ extern CSleepMgr        SleepMgr;
 extern CLedMgr          Led;
 extern CMenuMgr         MenuMgr;
 extern CSetpointModeMgr SetpointModeMgr;
-extern CTempHum         TempHum;
+extern CSHT31           SHT31;
 extern CSerialServer    SerialServer;
 extern CUSBSensor       USB;
 extern CEEPROM          EEPROM;

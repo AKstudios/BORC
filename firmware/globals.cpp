@@ -10,7 +10,7 @@ CSleepMgr           SleepMgr;
 CLedMgr             Led;
 CMenuMgr            MenuMgr;
 CSetpointModeMgr    SetpointModeMgr;
-CTempHum            TempHum;
+CSHT31              SHT31(TEMP_SENSE_ADDRESS);
 CSerialServer       SerialServer;
 CUSBSensor          USB;
 CEEPROM             EEPROM;

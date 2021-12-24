@@ -130,6 +130,7 @@ void CMenuMgr::execute()
             break;
 
         case KNOB_LPRESS:
+            m_menu_timer.stop();
             System.return_to_run_mode();
             break;
         
@@ -151,14 +152,14 @@ void CMenuMgr::execute()
 void CMenuMgr::room_temp_handler()
 {   
     knob_event_t event;
-
+    float temp_f;
     OneShot timer;
 
-    // get temp from sensor and convert to farenheit
-    float temp_f = TempHum.read_temp_f();
-
-    // display the current temperature
-    Display.print(temp_f);
+    // Read and display the temperature
+    if (SHT31.read_f(&temp_f))
+        Display.print(temp_f);
+    else
+        Display.print('*', '*');
 
     // start a 5 second timer
     timer.start(5000);

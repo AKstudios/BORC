@@ -96,8 +96,10 @@ bool CSerialServer::handle_fwrev()
 //=========================================================================================================
 bool CSerialServer::handle_temp()
 {
+    float temp_f = 0.0;
+
     // Fetch the current temperature in F
-    float temp_f = TempHum.read_temp_f();
+    SHT31.read_f(&temp_f);
     
     // Report them both to the user
     return pass("%s (temp)", strfloat(temp_f, 0, 2));
@@ -158,10 +160,10 @@ bool CSerialServer::handle_sim()
         float temp_f = atof(token);
 
         // "sim temp off" means stop simulating
-        if token_is("off") temp_f = -100.0;
+        if token_is("off") temp_f = CSHT31::SIM_TEMP_OFF;
 
-        // Tell TempHum to simulate this room temp.  99 degrees = "stop simulating"
-        TempHum.simulate_temp_f(temp_f);
+        // Tell the sensor to simulate this room temp.  -99 degrees = "stop simulating"
+        SHT31.simulate_temp(temp_f);
 
         // Tell the user that all is well.
         return pass("%s (sim_temp)", strfloat(temp_f, 0, 2));

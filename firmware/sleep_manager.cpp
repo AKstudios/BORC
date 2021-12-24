@@ -164,6 +164,7 @@ void CSleepMgr::start_sleep_timer(int timeout_ms)
 void CSleepMgr::on_wakeup_from_timer()
 {
     nc_out_t new_position;
+    float temp_f;
 
     // turn power on to all devices
     PowerMgr.powerOnAll();
@@ -175,10 +176,10 @@ void CSleepMgr::on_wakeup_from_timer()
         Servo.reinit();
 
         // Read the current temperature
-        float temp_f = TempHum.read_temp_f();
-
+        bool sensor_ok = SHT31.read_f(&temp_f);
+        
         // compute new position for servo
-        if (TempCtrl.compute(temp_f, SLEEP_TIME_SECS, &new_position))
+        if (sensor_ok && TempCtrl.compute(temp_f, SLEEP_TIME_SECS, &new_position))
         {
             Serial.print("Temp F: ");
             Serial.println(strfloat(temp_f, 0, 2));

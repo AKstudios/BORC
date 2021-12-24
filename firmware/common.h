@@ -35,8 +35,13 @@ enum servocal_t : uint8_t
 // I2C Addresses ---------------------------------------------------
 #define CURRENT_SENSE_ADDRESS     0x41
 #define SERVO_DRIVER_ADDRESS      0x40
-#define TEMP_SENSE_ADDRESS        0x45
+#if NO_HW
+  #define TEMP_SENSE_ADDRESS      0x44
+#else
+  #define TEMP_SENSE_ADDRESS      0x45
+#endif
 #define LED_MATRIX_ADDRESS        0x74
+
 
 // Pin mapping -----------------------------------------------------
 #define CLICK_PIN                 0

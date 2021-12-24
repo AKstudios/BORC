@@ -35,9 +35,6 @@ void setup()
     Servo.init();
     Led.init();
 
-    // If we don't have any hardware, simulate normal room temperature
-    if (NO_HW) TempHum.simulate_temp_f(75.00);
-
     // Initilize the Temperature controller
     TempCtrl.init();
 
@@ -52,8 +49,11 @@ void setup()
     // if (ee.is_servo_calibrated == NOTCAL)  Servo.calibrate_bare();
 
     // read temp and hum from sensor
-    Serial.println(TempHum.read_temp_f());
-    Serial.println(TempHum.read_hum());
+    float temp_f; int rh;
+    if (SHT31.read_f(&temp_f, &rh))
+    {
+      aprintf("Temperature: %1.2f, RH: %i\n", temp_f, rh);
+    }
 
     // Servo.move_to_pwm(92, 4000, true);
     // Servo.move_to_pwm(542, 4000, true);  

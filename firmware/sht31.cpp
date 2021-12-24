@@ -1,8 +1,8 @@
 //=========================================================================================================
-// fast_sht31.cpp - Implements an efficient class for reading the SHT31 temperature/humidity sensor
+// sht31.cpp - Implements an efficient class for reading the SHT31 temperature/humidity sensor
 //=========================================================================================================
 #include <avr/pgmspace.h>
-#include "fast_sht31.h"
+#include "sht31.h"
 
 // Include the TWI library with C linkage
 extern "C"
@@ -14,7 +14,7 @@ extern "C"
 //=========================================================================================================
 // 8-bit CRC lookup table for polynomial 0x31
 //=========================================================================================================
-const uint8_t crc8_table[] PROGMEM =
+static const uint8_t crc8_table[] PROGMEM =
 {
     0x00, 0x31, 0x62, 0x53, 0xC4, 0xF5, 0xA6, 0x97, 0xB9, 0x88, 0xDB, 0xEA, 0x7D, 0x4C, 0x1F, 0x2E,
     0x43, 0x72, 0x21, 0x10, 0x87, 0xB6, 0xE5, 0xD4, 0xFA, 0xCB, 0x98, 0xA9, 0x3E, 0x0F, 0x5C, 0x6D,
@@ -39,7 +39,7 @@ const uint8_t crc8_table[] PROGMEM =
 //=========================================================================================================
 // fast_crc8() - Uses the lookup table to generate an 8-bit CRC
 //=========================================================================================================
-uint8_t fast_crc8(const uint8_t* in, uint8_t count)
+static uint8_t fast_crc8(const uint8_t* in, uint8_t count)
 {
     uint8_t crc = 0xFF;
     while (count--) crc = pgm_read_byte(crc8_table + (crc ^ *in++));
@@ -62,13 +62,13 @@ uint8_t fast_crc8(const uint8_t* in, uint8_t count)
 //
 // Which simplifies to:
 //
-// 100ths of a degree C = (17500 * raw) >> 16 - 4500;
+// 100ths of a degree C = (17500 * raw) >> 16 - 4500
 //
 //=========================================================================================================
 static float raw_to_c(uint32_t raw_temp)
 {
     // Compute the temperature in 100ths of a degree C
-    uint16_t hundreths = ((17500 * raw_temp) >> 16) - 4500;
+    int16_t hundreths = ((17500 * raw_temp) >> 16) - 4500;
 
     // Return the temperature in degrees C
     return hundreths * .01F;
@@ -91,13 +91,13 @@ static float raw_to_c(uint32_t raw_temp)
 //
 // Which simplifies to:
 //
-// 100ths of a degree F = (31500 * raw) >> 16 - 4900;
+// 100ths of a degree F = (31500 * raw) >> 16 - 4900
 //
 //=========================================================================================================
 static float raw_to_f(uint32_t raw_temp)
 {
     // Compute the temperature in 100ths of a degree F
-    uint16_t hundreths = ((31500 * raw_temp) >> 16) - 4900;
+    int16_t hundreths = ((31500 * raw_temp) >> 16) - 4900;
 
     // Return the temperature in degrees F
     return hundreths * .01F;
@@ -120,7 +120,7 @@ static int raw_to_rh(uint32_t raw_rh)
 //=========================================================================================================
 CSHT31::CSHT31(uint8_t i2c_address, sht31_rep_t repeatability)
 {
-    // Save our I2C address for posterify
+    // Save our I2C address for posterity
     m_i2c_address = i2c_address;
 
     // Save the command we're going to use to start a measurement
@@ -145,7 +145,7 @@ bool CSHT31::read_raw(uint16_t* p_raw_temp, uint16_t* p_raw_rh)
     const int MSG_LENGTH = sizeof(msg);
 
     // We're going to make 3 attempts to read the device
-    int attempts = 3;
+    uint8_t attempts = 3;
 
     // So long as we haven't exhausted all attempts...
     while (attempts--)

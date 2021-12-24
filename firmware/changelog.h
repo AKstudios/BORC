@@ -11,7 +11,9 @@
 //
 // 1001  22-Dec-21  ASA/DWW  First Release
 //
-// xxxx  22-Dec-21  DWW      Made entire system use Farenheit instead of a mix of F and C
+// xxxx  22-Dec-21  DWW      Made entire system use Farenheit instead of a mix of F and C.
+//                           Fixed minor timer bug in Menu Manager
+//                           Replaced "TempHum" with our own SHT31 interface class
 //=========================================================================================================
 #define FW_VERSION "xxxx"
 

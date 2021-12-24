@@ -1,8 +1,8 @@
 //=========================================================================================================
-// fast_sht31.h - Defines an efficient class for reading the SHT31 temperature/humidity sensor
+// sht31.h - Defines an efficient class for reading the SHT31 temperature/humidity sensor
 //=========================================================================================================
-#ifndef _FAST_SHT31_H_
-#define _FAST_SHT31_H_
+#ifndef _SHT31_H_
+#define _SHT31_H_
 #include <stdint.h>
 
 
