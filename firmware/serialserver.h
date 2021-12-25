@@ -26,6 +26,8 @@ protected:
     bool    handle_temp();
     bool    handle_setpoint();
     bool    handle_ui();
+    bool    handle_clog();
+    bool    handle_servo();
     // ------------------------------------------------------------------
 
     void    show_nv(void*);

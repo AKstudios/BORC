@@ -15,7 +15,8 @@ enum data_item_t
     DI_DATA = 0,
     DI_TIME_UNIT,
     DI_TEMP_F,
-    DI_SETPOINT_F
+    DI_SETPOINT_F,
+    DI_CURRENT
 };
 //=========================================================================================================
 

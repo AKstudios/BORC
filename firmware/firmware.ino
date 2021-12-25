@@ -30,6 +30,7 @@ void setup()
     PowerMgr.powerOnAll(); 
 
     // initialize all devices
+    INA219.begin();
     Knob.init(CHANNEL_A, CHANNEL_B, CLICK_PIN);
     Display.init(LED_MATRIX_ADDRESS);
     Servo.init();

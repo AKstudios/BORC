@@ -3,11 +3,9 @@
 //=========================================================================================================
 #include "globals.h"
 #include <Adafruit_PWMServoDriver.h>  //https://github.com/adafruit/Adafruit-PWM-Servo-Driver-Library
-#include <Adafruit_INA219.h>          //https://github.com/adafruit/Adafruit_INA219
 
 // initialize all library objects
 static Adafruit_PWMServoDriver pwm(SERVO_DRIVER_ADDRESS);
-static Adafruit_INA219 ina219(CURRENT_SENSE_ADDRESS);
 
 // define servo's PWM frequency. Depends on type of servo
 #define SERVO_FREQ  50
@@ -28,9 +26,6 @@ void CServoDriver::init()
 
     // initialize servo driver
     pwm.begin();
-
-    // initialize current sensor
-    ina219.begin();
 
     // set servo frequency
     pwm.setPWMFreq(SERVO_FREQ);
@@ -62,15 +57,11 @@ void CServoDriver::init()
 //=========================================================================================================
 void CServoDriver::reinit()
 {
-    
     // initialize servo driver
     pwm.begin();
 
     // set servo frequency
     pwm.setPWMFreq(SERVO_FREQ);
-
-    // initialize current sensor
-    ina219.begin();
 }
 
 //=========================================================================================================
@@ -118,6 +109,9 @@ void CServoDriver::calibrate_bare()
     // until we find the limit..
     while (true)
     {   
+        // Perform current logging
+        CurLogger.execute();
+
         // move our target down by a step
         current_target -= step_size;
 
@@ -154,6 +148,9 @@ void CServoDriver::calibrate_bare()
     // until we find the limit..
     while (true)
     {   
+        // Perform current logging
+        CurLogger.execute();
+
         // move our target up by a step
         current_target += step_size;
 
@@ -224,7 +221,7 @@ bool CServoDriver::move_to_pwm(int pwm_value, int timeout_ms, bool enforce_limit
     bool status = true;
 
     // If we don't have any hardware attached, we're done
-    if (NO_HW) return true;
+    //DWif (NO_HW) return true;
 
     // turn on servo's power if needed
     if (m_power_control == AUTO) PowerMgr.powerOn(SERVO_POWER_PIN);
@@ -247,6 +244,9 @@ bool CServoDriver::move_to_pwm(int pwm_value, int timeout_ms, bool enforce_limit
     // sit in a loop until the timer expires while servo moves
     while (is_moving())
     {   
+        // Perform current logging
+        CurLogger.execute();
+
         // check the timer
         if (servo_timer.is_expired())
         {   
@@ -263,6 +263,9 @@ cleanup:
 
     // turn off servo's power if needed
     if (m_power_control = AUTO) PowerMgr.powerOff(SERVO_POWER_PIN);
+
+    // Perform current logging
+    CurLogger.execute();
 
     // once it's done moving, tell the caller that the servo moved
     return status;
@@ -296,23 +299,29 @@ bool CServoDriver::start_move_to_pwm(int pwm_value, bool enforce_limit)
     // set PWM value for the servo to move
     pwm.setPWM(0, 0, MAX_VALID_PWM - pwm_value);
 
+    // Perform current logging
+    CurLogger.execute();
+
     // start the oneshot timer, it shouldn't take more than 1 second to start a move
     servo_timer.start(1000);
 
     // sit in a loop waiting for the servo to start moving
     while (!servo_timer.is_expired())
     { 
-      // fetch the servo current
-      float current = ina219.getCurrent_mA();
+        // Perform current logging
+        CurLogger.execute();
 
-      // here we're checking to see if current is above the threshold three times in a row
-      if (current > m_start_moving_threshold)
-      {
-        if (++current_counter >= 3) return true;
-      }
+        // fetch the servo current
+        float current = INA219.getCurrent_mA();
+
+        // here we're checking to see if current is above the threshold three times in a row
+        if (current > m_start_moving_threshold)
+        {
+            if (++current_counter >= 3) return true;
+        }
       
-      // otherwise, start over
-      else current_counter = 0;
+        // otherwise, start over
+        else current_counter = 0;
     }
 
     // if we get here it never started moving
@@ -340,8 +349,11 @@ bool CServoDriver::move_to_index(int index)
 //=========================================================================================================
 bool CServoDriver::is_moving()
 {   
+    // Perform current logging
+    CurLogger.execute();
+
     // get current draw of servo
-    float current = ina219.getCurrent_mA();
+    float current = INA219.getCurrent_mA();
     
     // does the current level look like we stopped moving?
     if (current < m_stop_moving_threshold)
@@ -356,7 +368,7 @@ bool CServoDriver::is_moving()
     }
 
     // otherwise start counting from 0 again
-    else    m_stop_current_counter = 0;
+    else m_stop_current_counter = 0;
 
     // tell the caller we're still moving
     return true;
@@ -379,17 +391,20 @@ bool CServoDriver::wait_for_servo_to_settle()
     // sit in a loop waiting for the servo to stop jittering
     while (!servo_timer.is_expired())
     {
-      // fetch the servo current
-      float current = ina219.getCurrent_mA();
+        // Perform current logging
+        CurLogger.execute();
 
-      // here we're checking to see if current is below 20mA multiple times in a row
-      if (current < 20)
-      {
-          if (++current_counter >= 200) return true;
-      }
+        // fetch the servo current
+        float current = INA219.getCurrent_mA();
+
+        // here we're checking to see if current is below 20mA multiple times in a row
+        if (current < 20)
+        {
+            if (++current_counter >= 200) return true;
+        }
       
-      // otherwise, start over
-      else current_counter = 0;
+        // otherwise, start over
+        else current_counter = 0;
     }
 
     // if we reach here, servo never really settled

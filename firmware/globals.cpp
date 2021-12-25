@@ -11,11 +11,13 @@ CLedMgr             Led;
 CMenuMgr            MenuMgr;
 CSetpointModeMgr    SetpointModeMgr;
 CSHT31              SHT31(TEMP_SENSE_ADDRESS);
+Adafruit_INA219     INA219(CURRENT_SENSE_ADDRESS);
 CSerialServer       SerialServer;
 CUSBSensor          USB;
 CEEPROM             EEPROM;
 CNotchController    TempCtrl;
 CSerialLogger       Logger;
+CCurrentLogger      CurLogger;
 
 // pointer to EEPROM dirty data buffer
 CEEPROM::data_t& ee = EEPROM.data;

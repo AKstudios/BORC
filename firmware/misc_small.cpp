@@ -48,6 +48,66 @@ void CUSBSensor::on_change_of_state()
 
 //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
 //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
-//      
+//                                    Current Logger
 //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
 //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
+
+
+//=========================================================================================================
+// start() - Enables current logging
+//=========================================================================================================
+void CCurrentLogger::start(uint16_t duration_seconds = 0)
+{
+    // Current logging is now enabled
+    m_is_enabled = true;
+
+    // If logging should automatically shut-off after a specified number of seconds...
+    if (duration_seconds)
+    {
+        // Keep track of how many seconds should elapsed before auto-shutoff
+        m_duration = duration_seconds;
+        
+        // Zero seconds have elapsed
+        m_second_counter = 0;
+
+        // Start a repeating timer that expires once a second
+        m_second_timer.start(1000);
+    }
+}
+//=========================================================================================================
+
+
+//=========================================================================================================
+// stop() - Stops current logging
+//=========================================================================================================
+void CCurrentLogger::stop()
+{
+    m_is_enabled = false;    
+}
+//=========================================================================================================
+
+
+//=========================================================================================================
+// execute() - Logs the current and also manages the timer
+//=========================================================================================================
+void CCurrentLogger::execute()
+{
+    // If logging isn't enabled, do nothing
+    if (!m_is_enabled) return;
+
+    // If the auto-shutoff time has elapsed, disable logging
+    if (m_second_timer.is_expired() && ++m_second_counter >= m_duration)
+    {
+        m_is_enabled = false;
+        return;
+    }
+    
+    // Fetch the current in mA
+    int current = (int)INA219.getCurrent_mA();
+
+    // Log the current in mA
+    Logger.log(DI_CURRENT, current);
+}
+//=========================================================================================================
+
+

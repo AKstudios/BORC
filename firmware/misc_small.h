@@ -40,9 +40,48 @@ protected:
 
 //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
 //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
-//                                 
+//                                     Current Logger
 //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
 //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
+
+
+//=========================================================================================================
+// CCurrentLogger() - Logs motor current
+//=========================================================================================================
+class CCurrentLogger
+{
+public:
+
+    // Constructor - Disables logging
+    CCurrentLogger() {m_is_enabled = false;}
+
+    // Call this to start logging.  Passing a non-zero "seconds" automatically turns off the logger
+    // after the specified number of seconds have elapsed
+    void    start(uint16_t seconds = 0);
+    
+    // Call this to stop logging current
+    void    stop();
+
+    // Call this every time you want current-logging to happen
+    void    execute();
+
+protected:
+
+    // A repeating timer of 1 second duration
+    msTimer     m_second_timer;
+
+    // Counts the number of elapsed seconds
+    uint16_t    m_second_counter;
+
+    // If this is true, current-logging is enabled
+    bool        m_is_enabled;
+
+    // Duration, in seconds that the logger should remain enabled
+    uint16_t    m_duration;
+
+
+};
+//=========================================================================================================
 
 
 

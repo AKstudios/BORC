@@ -33,10 +33,74 @@ void CSerialServer::on_command(const char* token)
     else if token_is("temp")     handle_temp();
     else if token_is("setpoint") handle_setpoint();
     else if token_is("ui")       handle_ui();
+    else if token_is("clog")     handle_clog();
+    else if token_is("servo")    handle_servo();
 
     else fail_syntax();
 }
 //=========================================================================================================
+
+//=========================================================================================================
+// handle_servo() - Drive the servo to the specified position
+//=========================================================================================================
+bool CSerialServer::handle_servo()
+{
+    const char* token;
+
+    // Fetch the next token, it will be a servo position
+    if (!get_next_token(&token)) return fail_syntax();
+
+    // Fetch the PWM value that specifies our desired servo position
+    int pwm = atoi(token);
+
+    // Tell the servo to move to that position
+    Servo.move_to_pwm(pwm, 5000);
+
+    // Tell the client that all is well
+    return pass();
+}
+//=========================================================================================================
+
+
+
+
+//=========================================================================================================
+// handle_clog() - Turn current logging on or off
+//=========================================================================================================
+bool CSerialServer::handle_clog()
+{
+    const char* token;
+    const char* ascii_seconds;
+
+    // Fetch the next token, it will tell whether to start or stop logging
+    if (!get_next_token(&token)) return fail_syntax();
+
+    // And fetch the token that tells how how many seconds to start for.  (it may not exist)
+    get_next_token(&ascii_seconds);
+
+    // Convert the number of seconds from ASCII to binary
+    int seconds = atoi(ascii_seconds);
+
+    // Are we starting the logger?
+    if token_is("start")
+    {
+        CurLogger.start(seconds);
+        return pass();
+    }
+
+    // Are we stopping the logger
+    if token_is("stop")
+    {
+        CurLogger.stop();
+        return pass();
+    }
+
+    // If we get here, we have no idea what the user is asking for
+    return fail_syntax();
+}
+//=========================================================================================================
+
+
 
 
 //=========================================================================================================
@@ -318,7 +382,8 @@ bool CSerialServer::handle_help()
     const char line_14  [] PROGMEM = "ui <r | right>              - Simulate knob rotate right";
     const char line_15  [] PROGMEM = "ui <c | click>              - Simulate knob click";
     const char line_16  [] PROGMEM = "ui <lp | lpress>            - Simulate knob long press";
-        
+    const char line_17  [] PROGMEM = "clog <start [value] | stop> - Turn the current logger on or off";
+    const char line_18  [] PROGMEM = "servo <pwm_position>        - Move the servo to the specified position";
 
     replyf(line_01);
     replyf(line_02);
@@ -336,6 +401,8 @@ bool CSerialServer::handle_help()
     replyf(line_14);
     replyf(line_15);
     replyf(line_16);
+    replyf(line_17);
+    replyf(line_18);
 
     return pass();
 }
