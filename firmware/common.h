@@ -2,6 +2,7 @@
 #define _COMMON_H_
 #include <stdint.h>
 
+
 // If we're compiling on an Atmega-2560, assume we don't have real hardware attached
 #if defined(__AVR_ATmega2560__)
     #define NO_HW 1
@@ -33,14 +34,19 @@ enum servocal_t : uint8_t
 #define SERIAL_BAUD               115200
 
 // I2C Addresses ---------------------------------------------------
-#define CURRENT_SENSE_ADDRESS     0x41
-#define SERVO_DRIVER_ADDRESS      0x40
+
 #if NO_HW
+  #define CURRENT_SENSE_ADDRESS   0x40
   #define TEMP_SENSE_ADDRESS      0x44
-#else
-  #define TEMP_SENSE_ADDRESS      0x45
-#endif
+  #define SERVO_DRIVER_ADDRESS    0x00
 #define LED_MATRIX_ADDRESS        0x74
+#else
+  #define CURRENT_SENSE_ADDRESS   0x41  
+  #define TEMP_SENSE_ADDRESS      0x45  
+  #define SERVO_DRIVER_ADDRESS    0x40
+  #define LED_MATRIX_ADDRESS      0x74
+#endif
+
 
 
 // Pin mapping -----------------------------------------------------

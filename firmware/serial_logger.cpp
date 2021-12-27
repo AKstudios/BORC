@@ -42,7 +42,7 @@ void CSerialLogger::log(data_item_t item, uint32_t value)
     uint32_t now = (m_time_unit == TU_MILLIS ? millis() : micros()) - m_clock_start;
 
     // Format our output
-    out += snprintf(out, sizeof(buffer), "$:,%10d", now);
+    out += snprintf(out, sizeof(buffer), "$:,%10lu", now);
     out += snprintf(out, sizeof(buffer), ", %10s", data_name[item]);
     out += snprintf(out, sizeof(buffer), ", %u", value);
 

@@ -21,7 +21,7 @@
 #include "serial_logger.h"
 #include "is31fl3731.h"
 #include "sht31.h"
-#include <Adafruit_INA219.h>          //https://github.com/adafruit/Adafruit_INA219
+#include "ina219.h"
 
 
 extern CRotaryKnob      Knob;
@@ -40,7 +40,7 @@ extern CUSBSensor       USB;
 extern CEEPROM          EEPROM;
 extern CNotchController TempCtrl;
 extern CSerialLogger    Logger;
-extern Adafruit_INA219  INA219;
+extern CINA219          INA219;
 extern CCurrentLogger   CurLogger;
 
 extern CEEPROM::data_t& ee;

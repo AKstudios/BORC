@@ -1,6 +1,7 @@
 #include "globals.h"
 #include "common.h"
 #include <avr/wdt.h>
+#include "i2c.h"
 
 
 //=========================================================================================================
@@ -11,7 +12,11 @@ void setup()
     Serial.begin(115200);
     Serial.println("begin");
 
+    // Use a system-wide I2C bus speed of 400 Khz
+    twi_setFrequency(400000);
+
     // blink aqua for 1 second to show device booted
+    Led.init();
     Led.set(AQUA, 1000, true);
 
     // << WE WANT THIS TO BE AVAILABLE WHEN THE OTHER .init() ROUTINES ARE CALLED >>>
@@ -30,11 +35,10 @@ void setup()
     PowerMgr.powerOnAll(); 
 
     // initialize all devices
-    INA219.begin();
+    INA219.init(CURRENT_SENSE_ADDRESS);
     Knob.init(CHANNEL_A, CHANNEL_B, CLICK_PIN);
     Display.init(LED_MATRIX_ADDRESS);
     Servo.init();
-    Led.init();
 
     // Initilize the Temperature controller
     TempCtrl.init();
@@ -44,11 +48,14 @@ void setup()
 
     // set system mode to the actual run mode
     System.return_to_run_mode();
-
   
     // if the servo hasn't been successfully calibrated, do so
     // if (ee.is_servo_calibrated == NOTCAL)  Servo.calibrate_bare();
 
+
+    //-------------------------------------------------------
+    //              FROM HERE DOWN IS DEBUG CODE
+    //-------------------------------------------------------
     // read temp and hum from sensor
     float temp_f; int rh;
     if (SHT31.read_f(&temp_f, &rh))

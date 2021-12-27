@@ -63,9 +63,11 @@ public:
     void    stop();
 
     // Call this every time you want current-logging to happen
-    void    execute();
+    void    execute(int current = READ);
 
 protected:
+
+    enum {READ = -9999};
 
     // A repeating timer of 1 second duration
     msTimer     m_second_timer;

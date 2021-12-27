@@ -2,9 +2,10 @@
 // is31fl3731.cpp - Implents a two-character display driver for the IS31FL3731 Led Matrix
 //=============================================================================================
 #include <string.h>
+#include <avr/pgmspace.h>
 #include "is31fl3731.h"
-#include <Wire.h>
-#include <arduino.h>
+#include "i2c.h"
+
 
 #define FRAME_SELECT_REG  0xFD
 #define CONFIG_FRAME      0x0B
@@ -323,10 +324,7 @@ static void IS31FL3731::map_led_to_pwm_reg()
 //=============================================================================================
 void IS31FL3731::transmit(const uint8_t* data, size_t length)
 {
-    Wire.flush();
-    Wire.beginTransmission(m_i2c_address);
-    Wire.write(data, length);
-    Wire.endTransmission();
+    twi_writeTo(m_i2c_address, data, length, false, true);
 }
 //=============================================================================================
 
@@ -412,9 +410,6 @@ void IS31FL3731::init(int i2c_address, unsigned char brightness)
 
     // Clear the bitmap.  This is the equivalent of a "clear the screen"
     memset(m_bitmap, 0, sizeof m_bitmap);
-
-    // Ensure that the Wire library is running
-    Wire.begin();
 
     // Select frame #9, which is actually the control registers
     write_reg(FRAME_SELECT_REG, CONFIG_FRAME);

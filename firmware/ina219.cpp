@@ -1,17 +1,9 @@
 //=========================================================================================================
 // ina219.cpp - Implements a driver an INA219 current sensor via the I2C bus
-//
-// Some nice AdaFruit demonstration code for this part is here:
-//
-// https://github.com/adafruit/Adafruit_INA219/blob/master/Adafruit_INA219.cpp
 //=========================================================================================================
 #include "ina219.h"
+#include "i2c.h"
 
-// Include the two-wire-interface API with C linkage
-extern "C"
-{
-    #include "utility/twi.h"    
-}
 
 #define CONFIG_REGISTER        0
 #define SHUNT_VOLTAGE_REGISTER 1

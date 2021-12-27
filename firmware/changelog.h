@@ -14,6 +14,11 @@
 // xxxx  22-Dec-21  DWW      Made entire system use Farenheit instead of a mix of F and C.
 //                           Fixed minor timer bug in Menu Manager
 //                           Replaced "TempHum" with our own SHT31 interface class
+//                           Replaced Adafruit INA219 driver with our own
+//                           Added "clog" command for current logging
+//                           Added "servo" command to move the servo to a position
+//                           Replaced all "Wire.XXX()" calls with the twi_XXX() API
+//                           Now setting a system-wide I2C bus-speed of 400 Khz
 //=========================================================================================================
 #define FW_VERSION "xxxx"
 

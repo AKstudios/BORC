@@ -82,6 +82,7 @@ void CCurrentLogger::start(uint16_t duration_seconds = 0)
 //=========================================================================================================
 void CCurrentLogger::stop()
 {
+    // We're no longer logging current
     m_is_enabled = false;    
 }
 //=========================================================================================================
@@ -90,7 +91,7 @@ void CCurrentLogger::stop()
 //=========================================================================================================
 // execute() - Logs the current and also manages the timer
 //=========================================================================================================
-void CCurrentLogger::execute()
+void CCurrentLogger::execute(int current)
 {
     // If logging isn't enabled, do nothing
     if (!m_is_enabled) return;
@@ -103,7 +104,7 @@ void CCurrentLogger::execute()
     }
     
     // Fetch the current in mA
-    int current = (int)INA219.getCurrent_mA();
+    if (current == READ) current = INA219.get_current_ma();
 
     // Log the current in mA
     Logger.log(DI_CURRENT, current);
