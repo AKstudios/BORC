@@ -50,14 +50,6 @@ bool CINA219::init(unsigned char i2c_address)
     // This will cause the INA219 to reset to its default settings
     if (!write(CONFIG_REGISTER, 0x8000)) return false;
 
-    // Read the configuration register
-    if (!read(CONFIG_REGISTER, &config)) return false;
-
-    // Set the configuration bits that say "average 32 readings"
-    config &= MODE_AVG_MASK;
-    config |= MODE_AVG_32;
-    if (!write(CONFIG_REGISTER, config)) return false;
-
     // And tell the caller whether we are able to write the calibration constant to the register
     return write(CALIBRATION_REGISTER, CAL_CONSTANT);
 }
