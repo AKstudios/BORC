@@ -262,7 +262,7 @@ bool CServoDriver::move_to_pwm(int pwm_value, int timeout_ms, bool enforce_limit
 cleanup:
 
     // turn off servo's power if needed
-    if (m_power_control = AUTO) PowerMgr.powerOff(SERVO_POWER_PIN);
+    if (m_power_control == AUTO) PowerMgr.powerOff(SERVO_POWER_PIN);
 
     // Perform current logging
     CurLogger.execute();

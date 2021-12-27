@@ -324,7 +324,7 @@ static void IS31FL3731::map_led_to_pwm_reg()
 //=============================================================================================
 void IS31FL3731::transmit(const uint8_t* data, size_t length)
 {
-    twi_writeTo(m_i2c_address, data, length, false, true);
+    twi_writeTo(m_i2c_address, data, length, true, true);
 }
 //=============================================================================================
 
