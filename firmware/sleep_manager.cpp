@@ -130,8 +130,19 @@ void CSleepMgr::execute_sleep_mode()
     while (true)
     {
         for (int i=0; i<4; i++)
-        {
+        {   
+            // deep sleep for 8 seconds
             LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF);
+
+            // if battery is low, flash red LED
+            if (Battery.is_low())
+            {
+                Led.set(RED, 0);
+                delay(10);
+                Led.set(OFF, 0);
+            }
+                
+            // if someone interacts with knob, wake up here
             if (m_wakeup_from_knob)
             {
                 on_wakeup_from_knob();
@@ -198,7 +209,7 @@ void CSleepMgr::on_wakeup_from_timer()
 
     }
 
-    // send data via radio - t, rh, setpoint, debug
+    // send data via radio here - t, rh, setpoint, debug, etc.
 
 }
 //=========================================================================================================
