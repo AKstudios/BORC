@@ -143,11 +143,7 @@ int CBattSensor::read_voltage()
 //=========================================================================================================
 bool CBattSensor::is_low()
 {   
-    // get the current battery voltage
-    int battery_voltage = read_voltage();
-
     // check if voltage is under threshold and return status
-    if (battery_voltage <= 3650) return true;
-    else return false;
+    return (read_voltage() <= 3650);
 }
 //=========================================================================================================
