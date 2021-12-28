@@ -3,13 +3,8 @@
 #include <stdint.h>
 
 
-// If we're compiling on an Atmega-2560, assume we don't have real hardware attached
-#if defined(__AVR_ATmega2560__)
-    #define NO_HW 1
-#else
-    #define NO_HW 0
-#endif
-
+// Set to 1 for compiling on systems with very limited hardware
+#define NO_HW 0
 
 // system mode
 enum mode_t : uint8_t
@@ -39,7 +34,7 @@ enum servocal_t : uint8_t
   #define CURRENT_SENSE_ADDRESS   0x40
   #define TEMP_SENSE_ADDRESS      0x44
   #define SERVO_DRIVER_ADDRESS    0x00
-#define LED_MATRIX_ADDRESS        0x74
+  #define LED_MATRIX_ADDRESS      0x74
 #else
   #define CURRENT_SENSE_ADDRESS   0x41  
   #define TEMP_SENSE_ADDRESS      0x45  
