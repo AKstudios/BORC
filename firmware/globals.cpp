@@ -18,6 +18,7 @@ CEEPROM             EEPROM;
 CNotchController    TempCtrl;
 CSerialLogger       Logger;
 CCurrentLogger      CurLogger;
+CBattSensor         Battery;
 
 // pointer to EEPROM dirty data buffer
 CEEPROM::data_t& ee = EEPROM.data;

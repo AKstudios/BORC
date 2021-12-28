@@ -42,6 +42,7 @@ extern CNotchController TempCtrl;
 extern CSerialLogger    Logger;
 extern CINA219          INA219;
 extern CCurrentLogger   CurLogger;
+extern CBattSensor      Battery;
 
 extern CEEPROM::data_t& ee;
 

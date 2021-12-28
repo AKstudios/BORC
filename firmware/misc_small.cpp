@@ -112,3 +112,42 @@ void CCurrentLogger::execute(int current)
 //=========================================================================================================
 
 
+//<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
+//<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
+//                                           BATTERY SENSOR
+//<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
+//<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
+
+
+
+//=========================================================================================================
+// read_voltage() - Call this to find out the current battery voltage in mV
+//=========================================================================================================
+int CBattSensor::read_voltage()
+{
+    // Read the raw ADC reading of battery
+    unsigned long adc_reading = analogRead(VBAT_SENSE);
+
+    // .. and convert it into a voltage reading
+    // (assuming system voltage is 3.3V and voltage divider splits input voltage in half)
+    int voltage_mv = (adc_reading * 2 * 3300) / 1023;
+
+    // tell the caller the battery voltage
+    return voltage_mv;
+}
+//=========================================================================================================
+
+
+//=========================================================================================================
+// is_low() - return true if the battery voltage is under acceptable threshold
+//=========================================================================================================
+bool CBattSensor::is_low()
+{   
+    // get the current battery voltage
+    int battery_voltage = read_voltage();
+
+    // check if voltage is under threshold and return status
+    if (battery_voltage <= 3650) return true;
+    else return false;
+}
+//=========================================================================================================
