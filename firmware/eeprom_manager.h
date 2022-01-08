@@ -71,6 +71,9 @@ public:
         uint8_t         notches;
         uint16_t        tcm;
         float           deadband;
+        uint8_t         encrypt[16];
+        uint16_t        node;
+        uint8_t         network;
         
     } data, clean;
 

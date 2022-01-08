@@ -175,25 +175,24 @@ void CSleepMgr::start_sleep_timer(int timeout_ms)
 void CSleepMgr::on_wakeup_from_timer()
 {
     nc_out_t new_position;
-    float temp_f;
 
     // turn power on to all devices
     PowerMgr.powerOnAll();
+
+    // Read the current temperature
+    bool sensor_ok = SHT31.read_f(&System.temp_f);
 
     // if we're in setpoint mode, run the temp controller and the servo
     if (ee.run_mode == SETPOINT_MODE)
     {
         // reinitialize the servo driver
         Servo.reinit();
-
-        // Read the current temperature
-        bool sensor_ok = SHT31.read_f(&temp_f);
         
         // compute new position for servo
-        if (sensor_ok && TempCtrl.compute(temp_f, SLEEP_TIME_SECS, &new_position))
+        if (sensor_ok && TempCtrl.compute(System.temp_f, SLEEP_TIME_SECS, &new_position))
         {
             Serial.print("Temp F: ");
-            Serial.println(strfloat(temp_f, 0, 2));
+            Serial.println(strfloat(System.temp_f, 0, 2));
             Serial.print("Setpoint: ");
             Serial.println(strfloat(ee.setpoint_f, 0, 2));
             Serial.print("New servo position: ");
@@ -206,11 +205,10 @@ void CSleepMgr::on_wakeup_from_timer()
             // Tell awake_mode_execute() that it has no idea where the servo is now
             m_last_driven_index = 0xFF;
         }
-
     }
 
-    // send data via radio here - t, rh, setpoint, debug, etc.
-
+    // Transmit a packet of telemetry data back to the gateway
+    Radio.transmit_telemetry();
 }
 //=========================================================================================================
 

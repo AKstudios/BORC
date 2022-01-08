@@ -28,6 +28,8 @@ protected:
     bool    handle_ui();
     bool    handle_clog();
     bool    handle_servo();
+    bool    handle_encrypt();
+    bool    handle_transmit();
     // ------------------------------------------------------------------
 
     void    show_nv(void*);

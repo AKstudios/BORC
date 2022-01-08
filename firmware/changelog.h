@@ -19,6 +19,11 @@
 //                           Added "servo" command to move the servo to a position
 //                           Replaced all "Wire.XXX()" calls with the twi_XXX() API
 //                           Now setting a system-wide I2C bus-speed of 400 Khz
+//                           Added command eeset encrypt "16_byte_encr_key"
+//                           Added command eeset network <network_id>
+//                           Added command eeset node <node_id>
+//                           Added command "transmit"
+//                           On wakeup, we now transmit a telemetry packet to the gateway
 //=========================================================================================================
 #define FW_VERSION "xxxx"
 

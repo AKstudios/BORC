@@ -152,12 +152,11 @@ void CMenuMgr::execute()
 void CMenuMgr::room_temp_handler()
 {   
     knob_event_t event;
-    float temp_f;
     OneShot timer;
 
     // Read and display the temperature
-    if (SHT31.read_f(&temp_f))
-        Display.print(temp_f);
+    if (SHT31.read_f(&System.temp_f))
+        Display.print(System.temp_f);
     else
         Display.print('*', '*');
 

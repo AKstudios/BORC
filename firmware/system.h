@@ -23,6 +23,9 @@ public:
     // what mode is the interface in - what does playing with the knob do?
     mode_t iface_mode;
 
+    // The most recently read temperature in degrees F
+    float   temp_f;
+
 };
 
 #endif

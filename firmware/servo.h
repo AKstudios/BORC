@@ -37,6 +37,9 @@ public:
     // checks whether the servo is moving and returns true or false
     bool is_moving();
 
+    // Return the current PWM value the servo motor is parked at
+    uint16_t current_pwm() {return m_current_pwm;}
+
 protected:
 //  public:
 

@@ -22,6 +22,7 @@
 #include "is31fl3731.h"
 #include "sht31.h"
 #include "ina219.h"
+#include "radio.h"
 
 
 extern CRotaryKnob      Knob;
@@ -43,11 +44,11 @@ extern CSerialLogger    Logger;
 extern CINA219          INA219;
 extern CCurrentLogger   CurLogger;
 extern CBattSensor      Battery;
+extern CRadio           Radio;
 
 extern CEEPROM::data_t& ee;
 
 int c_to_f(float c);
-//float f_to_c(int f);
 
 
 #endif

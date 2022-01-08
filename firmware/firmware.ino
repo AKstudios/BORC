@@ -27,6 +27,9 @@ void setup()
 
     // << WE WANT THIS TO BE AVAILABLE WHEN THE OTHER .init() ROUTINES ARE CALLED >>>
     System.init();
+    
+    // Fetch the current temperature
+    SHT31.read_f(&System.temp_f);
 
     // initialize the power manager
     PowerMgr.init();
@@ -39,6 +42,7 @@ void setup()
     Knob.init(CHANNEL_A, CHANNEL_B, CLICK_PIN);
     Display.init(LED_MATRIX_ADDRESS);
     Servo.init();
+    Radio.init();
 
     // Initilize the Temperature controller
     TempCtrl.init();

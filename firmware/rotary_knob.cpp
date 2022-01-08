@@ -14,7 +14,8 @@
 //=========================================================================================================
 // ISRs for rotate and button-click
 //=========================================================================================================
-ISR(INT1_vect)   { Knob.on_rotate_interrupt(); }
+//ISR(INT1_vect)   { Knob.on_rotate_interrupt(); }
+int1_isr()       { Knob.on_rotate_interrupt(); }
 ISR(PCINT1_vect) { Knob.on_click_interrupt();  }
 //=========================================================================================================
 
@@ -199,7 +200,8 @@ void CRotaryKnob::init(int A_pin, int B_pin, int click_pin)
     if (!NO_HW)
     {
         // Configure the INT interrupt for the A-channel pin
-        configure_INT(A_pin, false);
+        //configure_INT(A_pin, false);
+        attachInterrupt(1, int1_isr, RISING);
 
         // Configure the PCINT interrupt for the click-pin
         configure_PCINT(click_pin);

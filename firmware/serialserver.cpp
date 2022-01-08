@@ -35,10 +35,12 @@ void CSerialServer::on_command(const char* token)
     else if token_is("ui")       handle_ui();
     else if token_is("clog")     handle_clog();
     else if token_is("servo")    handle_servo();
+    else if token_is("transmit") handle_transmit();
 
     else fail_syntax();
 }
 //=========================================================================================================
+
 
 //=========================================================================================================
 // handle_servo() - Drive the servo to the specified position
@@ -200,7 +202,16 @@ bool CSerialServer::handle_setpoint()
 //=========================================================================================================
 
 
-
+//=========================================================================================================
+// handle_transmit() - Transmits a telemetry packet via radio to the gateway
+//=========================================================================================================
+bool CSerialServer::handle_transmit()
+{
+    SHT31.read_f(&System.temp_f);
+    Radio.transmit_telemetry();
+    return pass();
+}
+//=========================================================================================================
 
 
 //=========================================================================================================
@@ -290,6 +301,7 @@ bool CSerialServer::handle_nv()
 //=========================================================================================================
 void CSerialServer::show_nv(void* vp)
 {
+    char encryption_key[20];
     const char* space = " ";
 
     const char run_mode_m[]   PROGMEM = "run_mode           : 0 - MANUAL";
@@ -304,11 +316,17 @@ void CSerialServer::show_nv(void* vp)
     const char notches[]      PROGMEM = "notches            : %i";
     const char tcm[]          PROGMEM = "tcm                : %i";
     const char deadband[]     PROGMEM = "deadband           : %s";
-
-
+    const char network[]      PROGMEM = "network            : %i";
+    const char node[]         PROGMEM = "node               : %i";
+    const char encrypt[]      PROGMEM = "encrypt            : %s";
 
     // Get a handy reference to the EEPROM structure the caller wants to dump
     CEEPROM::data_t& ee = *(CEEPROM::data_t*)vp;
+
+    // Fetch the encryption key as a nul-terminated string
+    int key_size = sizeof(ee.encrypt);
+    memcpy(encryption_key, ee.encrypt, key_size);
+    encryption_key[key_size] = 0;
 
     // Display the run mode, decoded into plain English
     switch (ee.run_mode)
@@ -333,6 +351,10 @@ void CSerialServer::show_nv(void* vp)
     replyf(notches,         ee.notches);
     replyf(tcm,             ee.tcm);
     replyf(deadband,        strfloat(ee.deadband, 0, 2));
+    replyf(network,         ee.network);
+    replyf(node,            ee.node);
+    replyf(encrypt,         encryption_key);
+    
 
 }
 //=========================================================================================================
@@ -366,24 +388,28 @@ bool CSerialServer::handle_reboot()
 bool CSerialServer::handle_help()
 {
     
-    const char line_01  [] PROGMEM = "ee                          - Displays EEPROM contents";
-    const char line_02  [] PROGMEM = "ee dirty                    - Displays EEPROM shadow RAM";
-    const char line_03  [] PROGMEM = "ee destroy                  - Erases EEPROM";
-    const char line_04  [] PROGMEM = "fwrev                       - Displays firmware revision";
-    const char line_05  [] PROGMEM = "reboot                      - Soft reboots device";
-    const char line_06  [] PROGMEM = "eeset is_servocal <value>   - Saves servo calibration flag";
-    const char line_07  [] PROGMEM = "eeset notches <value>       - Save new notch count for temp ctrl";
-    const char line_08  [] PROGMEM = "eeset tcm <value>           - Save new time-constant multiplier";
-    const char line_09  [] PROGMEM = "eeset deadband <value>      - Save new temperature deadband size";
-    const char line_10  [] PROGMEM = "sim temp <deg_F>            - Simulates the room temperature";
-    const char line_11  [] PROGMEM = "temp                        - Reports the room temperature";
-    const char line_12  [] PROGMEM = "setpoint <deg_F>            - Sets new temp control setpoint";
-    const char line_13  [] PROGMEM = "ui <l | left>               - Simulate knob rotate left";
-    const char line_14  [] PROGMEM = "ui <r | right>              - Simulate knob rotate right";
-    const char line_15  [] PROGMEM = "ui <c | click>              - Simulate knob click";
-    const char line_16  [] PROGMEM = "ui <lp | lpress>            - Simulate knob long press";
-    const char line_17  [] PROGMEM = "clog <start [value] | stop> - Turn the current logger on or off";
-    const char line_18  [] PROGMEM = "servo <pwm_position>        - Move the servo to the specified position";
+    const char line_01 [] PROGMEM = "ee                          - Displays EEPROM contents";
+    const char line_02 [] PROGMEM = "ee dirty                    - Displays EEPROM shadow RAM";
+    const char line_03 [] PROGMEM = "ee destroy                  - Erases EEPROM";
+    const char line_04 [] PROGMEM = "fwrev                       - Displays firmware revision";
+    const char line_05 [] PROGMEM = "reboot                      - Soft reboots device";
+    const char line_06 [] PROGMEM = "eeset is_servocal <value>   - Saves servo calibration flag";
+    const char line_07 [] PROGMEM = "eeset notches <value>       - Save new notch count for temp ctrl";
+    const char line_08 [] PROGMEM = "eeset tcm <value>           - Save new time-constant multiplier";
+    const char line_09 [] PROGMEM = "eeset deadband <value>      - Save new temperature deadband size";
+    const char line_10 [] PROGMEM = "eeset network <network_id>  - Save new network ID, 0 thru 255";
+    const char line_11 [] PROGMEM = "eeset node <node_id>        - Save new node ID, 0 thru 1023";
+    const char line_12 [] PROGMEM = "eeset encrypt <16_byte_key> - Save new 16 byte encryption key";
+    const char line_13 [] PROGMEM = "sim temp <deg_F>            - Simulates the room temperature";
+    const char line_14 [] PROGMEM = "temp                        - Reports the room temperature";
+    const char line_15 [] PROGMEM = "setpoint <deg_F>            - Sets new temp control setpoint";
+    const char line_16 [] PROGMEM = "ui <l | left>               - Simulate knob rotate left";
+    const char line_17 [] PROGMEM = "ui <r | right>              - Simulate knob rotate right";
+    const char line_18 [] PROGMEM = "ui <c | click>              - Simulate knob click";
+    const char line_19 [] PROGMEM = "ui <lp | lpress>            - Simulate knob long press";
+    const char line_20 [] PROGMEM = "clog <start [value] | stop> - Turn the current logger on or off";
+    const char line_21 [] PROGMEM = "servo <pwm_position>        - Move the servo to the specified position";
+    const char line_22 [] PROGMEM = "transmit                    - Transmit telemetry packet via radio";
 
     replyf(line_01);
     replyf(line_02);
@@ -403,6 +429,10 @@ bool CSerialServer::handle_help()
     replyf(line_16);
     replyf(line_17);
     replyf(line_18);
+    replyf(line_19);
+    replyf(line_20);
+    replyf(line_21);
+    replyf(line_22);
 
     return pass();
 }
@@ -410,11 +440,7 @@ bool CSerialServer::handle_help()
 
 
 //=========================================================================================================
-// handle_nvset() - Handles these commands:
-//                    nvset kp <value>
-//                    nvset ki <value>
-//                    nvset kd <value>
-//                    nvset notches <value>
+// handle_nvset() - Handles the commands that store data into EEPROM
 //=========================================================================================================
 bool CSerialServer::handle_nvset()
 {
@@ -456,6 +482,27 @@ bool CSerialServer::handle_nvset()
     if token_is("deadband")
     {
         ee.deadband = fvalue;
+        EEPROM.write();
+        return pass();
+    }
+
+    if token_is("network")
+    {
+        ee.network = int(fvalue);
+        EEPROM.write();
+        return pass();
+    }
+    
+    if token_is("node")
+    {
+        ee.node = int(fvalue);
+        EEPROM.write();
+        return pass();
+    }
+
+    if token_is("encrypt")
+    {
+        memcpy(ee.encrypt, value, sizeof(ee.encrypt));
         EEPROM.write();
         return pass();
     }
