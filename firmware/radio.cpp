@@ -13,7 +13,7 @@ RFM69_ATC radio;
 struct telemetry_t
 {
     uint8_t     version;
-    uint8_t     temp_f;
+    uint16_t    temp_f;
     uint8_t     setpoint_f;
     uint16_t    battery;
     uint16_t    servo_pwm;
@@ -31,6 +31,9 @@ void CRadio::init()
 
     // Set the encryption key
      radio.encrypt(ee.encrypt);
+
+    // must include this only for RFM69HW/HCW!
+     radio.setHighPower(); 
 }
 //=========================================================================================================
 
@@ -45,9 +48,9 @@ void CRadio::transmit_telemetry()
 
     // Fill in the data in the telemetry packet
     telemetry.version    = 1;
-    telemetry.temp_f     = (int)(System.temp_f + .5);
+    telemetry.temp_f     = (int)(System.temp_f * 100);
     telemetry.setpoint_f = ee.setpoint_f;
-    telemetry.battery    = analogRead(VBUS_SENSE);
+    telemetry.battery    = Battery.read_voltage();
     telemetry.servo_pwm  = Servo.current_pwm();
 
     // Send the packet to the gateway
