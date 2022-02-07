@@ -12,6 +12,12 @@ void setup()
     Serial.begin(115200);
     Serial.println("begin");
 
+    // get unique ID from SPI flash
+    Flash.readUniqueId();
+    for (uint8_t i=0;i<8;i++)
+      Serial.print(Flash.UNIQUEID[i], HEX);
+    Serial.println();
+
     // Use a system-wide I2C bus speed of 400 Khz
     twi_setFrequency(400000);
 

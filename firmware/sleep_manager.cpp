@@ -179,8 +179,8 @@ void CSleepMgr::on_wakeup_from_timer()
     // turn power on to all devices
     PowerMgr.powerOnAll();
 
-    // Read the current temperature
-    bool sensor_ok = SHT31.read_f(&System.temp_f);
+    // Read the current temperature & humidity
+    bool sensor_ok = SHT31.read_f(&System.temp_f, &System.hum);
 
     // if we're in setpoint mode, run the temp controller and the servo
     if (ee.run_mode == SETPOINT_MODE)

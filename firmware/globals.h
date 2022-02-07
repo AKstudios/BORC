@@ -23,6 +23,7 @@
 #include "sht31.h"
 #include "ina219.h"
 #include "radio.h"
+#include <SPIFlash.h>  //https://github.com/LowPowerLab/SPIFlash          
 
 
 extern CRotaryKnob      Knob;
@@ -45,6 +46,7 @@ extern CINA219          INA219;
 extern CCurrentLogger   CurLogger;
 extern CBattSensor      Battery;
 extern CRadio           Radio;
+extern SPIFlash         Flash;
 
 extern CEEPROM::data_t& ee;
 

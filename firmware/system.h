@@ -6,26 +6,28 @@ class CSystem
 {
 public:
 
-    void init();
+    void    init();
 
     //  soft reboots the system
-    void reboot();
+    void    reboot();
 
     // Places the interface mode in either manual mode or setpoint mode
-    void return_to_run_mode();
+    void    return_to_run_mode();
 
     // changes system orientation
-    void rotate();
+    void    rotate();
 
     // set system-wide orientation
-    void set_orientation(bool orientation);
+    void    set_orientation(bool orientation);
 
     // what mode is the interface in - what does playing with the knob do?
-    mode_t iface_mode;
+    mode_t  iface_mode;
 
     // The most recently read temperature in degrees F
     float   temp_f;
 
+    // The most recently read humidity in %
+    int     hum;
 };
 
 #endif

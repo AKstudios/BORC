@@ -11,7 +11,7 @@
 //
 // 1001  22-Dec-21  ASA/DWW  First Release
 //
-// xxxx  22-Dec-21  DWW      Made entire system use Farenheit instead of a mix of F and C.
+// 1002  22-Dec-21  DWW      Made entire system use Farenheit instead of a mix of F and C.
 //                           Fixed minor timer bug in Menu Manager
 //                           Replaced "TempHum" with our own SHT31 interface class
 //                           Replaced Adafruit INA219 driver with our own
@@ -24,7 +24,11 @@
 //                           Added command eeset node <node_id>
 //                           Added command "transmit"
 //                           On wakeup, we now transmit a telemetry packet to the gateway
+//
+// 1003  07-Jan-22  ASA      Added temp, hum, manual index in radio telemetry struct (now rearranged)
+//                           Humidity now stored in System variable called "hum"
+//                           Firmware now reads unique 64bit ID from SPI Flash for testing
 //=========================================================================================================
-#define FW_VERSION "xxxx"
+#define FW_VERSION "1003"
 
 #endif

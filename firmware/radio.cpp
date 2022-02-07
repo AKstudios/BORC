@@ -13,8 +13,10 @@ RFM69_ATC radio;
 struct telemetry_t
 {
     uint8_t     version;
-    uint16_t    temp_f;
     uint8_t     setpoint_f;
+    uint8_t     manual_index;
+    uint8_t     hum;
+    uint16_t    temp_f;
     uint16_t    battery;
     uint16_t    servo_pwm;
 };
@@ -47,11 +49,13 @@ void CRadio::transmit_telemetry()
     telemetry_t telemetry;
 
     // Fill in the data in the telemetry packet
-    telemetry.version    = 1;
-    telemetry.temp_f     = (int)(System.temp_f * 100);
-    telemetry.setpoint_f = ee.setpoint_f;
-    telemetry.battery    = Battery.read_voltage();
-    telemetry.servo_pwm  = Servo.current_pwm();
+    telemetry.version       = 1;
+    telemetry.temp_f        = (int)(System.temp_f * 100);
+    telemetry.hum           = (int)System.hum;
+    telemetry.manual_index  = ee.manual_index;
+    telemetry.setpoint_f    = ee.setpoint_f;
+    telemetry.battery       = Battery.read_voltage();
+    telemetry.servo_pwm     = Servo.current_pwm();
 
     // Send the packet to the gateway
     radio.send(1, &telemetry, sizeof(telemetry));

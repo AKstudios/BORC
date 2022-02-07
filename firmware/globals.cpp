@@ -20,6 +20,7 @@ CSerialLogger       Logger;
 CCurrentLogger      CurLogger;
 CBattSensor         Battery;
 CRadio              Radio;
+SPIFlash            Flash(FLASH_SS, 0xEF30); //EF30 for 4mbit  Windbond chip (W25X40CL);
 
 // pointer to EEPROM dirty data buffer
 CEEPROM::data_t& ee = EEPROM.data;
