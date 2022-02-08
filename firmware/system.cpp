@@ -20,6 +20,9 @@ void CSystem::init()
 
     // If the deadband size in EEPROM is blank, set a reasonable default
     if (ee.deadband == 0) ee.deadband = 1;
+
+    // get the System Unique ID
+    memcpy(System.uid, Flash.readUniqueId(), sizeof(System.uid));
 }
 //=========================================================================================================
 

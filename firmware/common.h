@@ -22,6 +22,13 @@ enum servocal_t : uint8_t
     DONTCAL = 2
 };
 
+// radio packet type
+enum packet_type_t  : uint8_t
+{
+    CONFIG_PACKET  = 0,
+    DATA_PACKET    = 1
+};
+
 // Number of seconds that define a hardware-sleep period (base time = 32 secs)
 #define SLEEP_TIME_SECS 32
 

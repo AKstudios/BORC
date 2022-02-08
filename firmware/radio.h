@@ -3,6 +3,7 @@
 //=========================================================================================================
 #ifndef _RADIO_H_
 #define _RADIO_H_
+#include "common.h"
 
 class CRadio
 {
@@ -13,6 +14,9 @@ public:
 
     // Transmits a telemetry packet to the gateway
     void    transmit_telemetry();
+
+    // Transmits a config packet to the gateway
+    void    transmit_config();
 };
 
 #endif

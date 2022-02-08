@@ -32,8 +32,8 @@ public:
     CSHT31(uint8_t i2c_address, sht31_rep_t repeatability = SHT31_HIGH);
 
     // Call this to read the temperature.  Either pointer can be "nullptr" to skip the calculation
-    bool     read_c(float* p_temp, int* p_rh = nullptr);
-    bool     read_f(float* p_temp, int* p_rh = nullptr);
+    bool     read_c(float* p_temp, float* p_rh = nullptr);
+    bool     read_f(float* p_temp, float* p_rh = nullptr);
     
     // Passing in a temperature less than or equal to -99 will turn off simulation
     void     simulate_temp(float temp);

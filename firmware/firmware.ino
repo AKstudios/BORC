@@ -12,12 +12,6 @@ void setup()
     Serial.begin(115200);
     Serial.println("begin");
 
-    // get unique ID from SPI flash
-    Flash.readUniqueId();
-    for (uint8_t i=0;i<8;i++)
-      Serial.print(Flash.UNIQUEID[i], HEX);
-    Serial.println();
-
     // Use a system-wide I2C bus speed of 400 Khz
     twi_setFrequency(400000);
 
@@ -67,10 +61,10 @@ void setup()
     //              FROM HERE DOWN IS DEBUG CODE
     //-------------------------------------------------------
     // read temp and hum from sensor
-    float temp_f; int rh;
+    float temp_f, rh;
     if (SHT31.read_f(&temp_f, &rh))
     {
-      aprintf("Temperature: %1.2f, RH: %i\n", temp_f, rh);
+      aprintf("Temperature: %1.2f, RH: %1.2f\n", temp_f, rh);
     }
 
     // Servo.move_to_pwm(92, 4000, true);

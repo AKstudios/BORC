@@ -23,11 +23,11 @@ public:
     // what mode is the interface in - what does playing with the knob do?
     mode_t  iface_mode;
 
-    // The most recently read temperature in degrees F
-    float   temp_f;
+    // The most recently read temperature in degrees F & humidity in %
+    float   temp_f, hum;
 
-    // The most recently read humidity in %
-    int     hum;
+    // Unique System ID
+    uint8_t uid[8];
 };
 
 #endif

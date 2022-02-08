@@ -108,9 +108,13 @@ static float raw_to_f(uint32_t raw_temp)
 //=========================================================================================================
 // raw_to_rh() - Converts a raw reading into relative humidity
 //=========================================================================================================
-static int raw_to_rh(uint32_t raw_rh)
-{
-    return (raw_rh * 100) >> 16;
+static float raw_to_rh(uint32_t raw_rh)
+{   
+    // Compute the humidity in 100ths of a percent
+    int16_t hundreths = (raw_rh * 10000) >> 16;
+
+    // Return the humidity in %
+    return hundreths * .01F;
 }
 //=========================================================================================================
 
@@ -178,7 +182,7 @@ bool CSHT31::read_raw(uint16_t* p_raw_temp, uint16_t* p_raw_rh)
 //=========================================================================================================
 // read_c() - Reads the censor and returns the temperature in degrees C
 //=========================================================================================================
-bool CSHT31::read_c(float *p_temp, int *p_rh)
+bool CSHT31::read_c(float *p_temp, float *p_rh)
 {
     uint16_t raw_temp, raw_rh;
 
@@ -207,7 +211,7 @@ bool CSHT31::read_c(float *p_temp, int *p_rh)
 //=========================================================================================================
 // read_f() - Reads the censor and returns the temperature in degrees F
 //=========================================================================================================
-bool CSHT31::read_f(float* p_temp, int* p_rh)
+bool CSHT31::read_f(float* p_temp, float* p_rh)
 {
     uint16_t raw_temp, raw_rh;
 
