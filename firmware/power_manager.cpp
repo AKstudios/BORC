@@ -53,11 +53,14 @@ void CPowerManager::powerOff(int pin_number)
 //=========================================================================================================
 void CPowerManager::powerOnAll()
 {
-  // digitalWrite(SERVO_POWER_PIN, HIGH);
-  digitalWrite(DRIVER_POWER_PIN, HIGH);
-  digitalWrite(LED_SCREEN_POWER_PIN, HIGH);
-  digitalWrite(TEMP_SENSOR_POWER_PIN, HIGH);
-  digitalWrite(CURRENT_SENSE_POWER_PIN, HIGH);
+  for (int i=0; i<sizeof(pin); i++)
+  {
+    pinMode(pin[i], OUTPUT);
+    
+    // turn power on for all pins except servo power pin
+    if(pin[i] == SERVO_POWER_PIN) continue;
+    digitalWrite(pin[i], HIGH);
+  }
 }
 //=========================================================================================================
 
@@ -67,11 +70,11 @@ void CPowerManager::powerOnAll()
 //=========================================================================================================
 void CPowerManager::powerOffAll()
 {
-  digitalWrite(SERVO_POWER_PIN, LOW);
-  digitalWrite(DRIVER_POWER_PIN, LOW);
-  digitalWrite(LED_SCREEN_POWER_PIN, LOW);
-  digitalWrite(TEMP_SENSOR_POWER_PIN, LOW);
-  digitalWrite(CURRENT_SENSE_POWER_PIN, LOW);
+  for (int i=0; i<sizeof(pin); i++)
+  {
+    pinMode(pin[i], INPUT);
+    digitalWrite(pin[i], LOW);
+  }
 }
 //=========================================================================================================
 
