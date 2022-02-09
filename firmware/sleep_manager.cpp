@@ -111,8 +111,8 @@ void CSleepMgr::execute_sleep_mode()
     PowerMgr.powerOffAll();
 
     // put the radio and SPI flash to sleep
-    // radio.sleep();
-    // flash.sleep();
+    Radio.sleep();
+    Flash.sleep();
 
     // write data to EEPROM
     EEPROM.write();

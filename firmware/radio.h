@@ -17,6 +17,9 @@ public:
 
     // Transmits a config packet to the gateway
     void    transmit_config();
+
+    // Puts the radio into sleep mode
+    void    sleep();
 };
 
 #endif
