@@ -100,7 +100,7 @@ void CSleepMgr::execute_sleep_mode()
         Servo.move_to_index(ee.manual_index);
         m_last_driven_index = ee.manual_index;
     }
-
+    
     // clear display
     Display.clear();
 
@@ -179,6 +179,11 @@ void CSleepMgr::on_wakeup_from_timer()
     // turn power on to all devices
     PowerMgr.powerOnAll();
 
+    // !! VERY IMPORTANT !! - wake up flash after sleep to prevent the device from hanging up!
+    // this is needed before putting flash to sleep again. Calling Flash.sleep() twice without calling
+    // Flash.wakeup() will hang the device as per the flash's datasheet.
+    Flash.wakeup();
+
     // Read the current temperature & humidity
     bool sensor_ok = SHT31.read_f(&System.temp_f, &System.hum);
 
@@ -209,7 +214,14 @@ void CSleepMgr::on_wakeup_from_timer()
 
     // Transmit a packet of telemetry data back to the gateway
     Radio.transmit_telemetry();
-    // Radio.transmit_config();
+    
+    // put the radio and SPI flash to sleep
+    Radio.sleep();
+    Flash.sleep();
+
+    // Only power down all devices in sleep mode to reduce sleep current draw
+    if (m_mode != AWAKE_MODE)
+        PowerMgr.powerOffAll();
 }
 //=========================================================================================================
 
@@ -236,6 +248,11 @@ void CSleepMgr::on_wakeup_from_knob()
     Servo.reinit();
     System.return_to_run_mode();
     start_sleep_timer();
+
+    // !! VERY IMPORTANT !! - wake up flash after sleep to prevent the device from hanging up!
+    // this is needed before putting flash to sleep again. Calling Flash.sleep() twice without calling
+    // Flash.wakeup() will hang the device as per the flash's datasheet.
+    Flash.wakeup();
 }
 //=========================================================================================================
 
@@ -245,3 +262,4 @@ void CSleepMgr::on_wakeup_from_knob()
 //=========================================================================================================
 void CSleepMgr::kick_sleep_timer() {m_sleep_timer.kick();}
 //=========================================================================================================
+
