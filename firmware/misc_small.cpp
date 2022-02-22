@@ -144,6 +144,15 @@ int CBattSensor::read_voltage()
 bool CBattSensor::is_low()
 {   
     // check if voltage is under threshold and return status
-    return (read_voltage() <= 3650);
+    if (read_voltage() <= 3650)
+    {
+        System.error_byte |= BATT_ERR;
+        return true;
+    }
+    else
+    {
+        System.error_byte &= ~BATT_ERR;
+        return false;
+    }
 }
 //=========================================================================================================

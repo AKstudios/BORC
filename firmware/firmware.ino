@@ -56,6 +56,8 @@ void setup()
     // if the servo hasn't been successfully calibrated, do so
     // if (ee.is_servo_calibrated == NOTCAL)  Servo.calibrate_bare();
 
+    // Transmit a packet of telemetry on bootup
+    Radio.transmit_telemetry();
 
     //-------------------------------------------------------
     //              FROM HERE DOWN IS DEBUG CODE

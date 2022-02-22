@@ -28,6 +28,9 @@ public:
 
     // Unique System ID
     uint8_t uid[8];
+
+    // error byte that indicates errors with each bit. 0x00 indicates all systems are good
+    uint8_t error_byte;
 };
 
 #endif

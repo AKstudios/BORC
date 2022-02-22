@@ -4,6 +4,7 @@
 #include <string.h>
 #include <avr/pgmspace.h>
 #include "is31fl3731.h"
+#include "globals.h"
 #include "i2c.h"
 
 
@@ -324,7 +325,8 @@ static void IS31FL3731::map_led_to_pwm_reg()
 //=============================================================================================
 void IS31FL3731::transmit(const uint8_t* data, size_t length)
 {
-    twi_writeTo(m_i2c_address, data, length, true, true);
+    if (twi_writeTo(m_i2c_address, data, length, true, true) != 0)
+        System.error_byte |= LED_DRV_ERR;
 }
 //=============================================================================================
 

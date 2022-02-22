@@ -25,8 +25,9 @@ enum servocal_t : uint8_t
 // radio packet type
 enum packet_type_t  : uint8_t
 {
-    CONFIG_PACKET  = 0,
-    DATA_PACKET    = 1
+    CONFIG_PACKET       = 0,
+    TELEMETRY_PACKET    = 1,
+    RESPONSE_PACKET     = 2
 };
 
 // Number of seconds that define a hardware-sleep period (base time = 32 secs)
@@ -69,13 +70,14 @@ enum packet_type_t  : uint8_t
 #define VBAT_SENSE                A7
 
 // Define error code bits ------------------------------------------
-#define BATT_ERR                  0   // battery low/bad voltage
-#define TEMP_SENSE_ERR            1   // temp sensor not working
-#define LED_DRV_ERR               2   // LED driver not working
-#define CURRENT_SENSE_ERR         3   // current sensor not working
-#define SERVO_POWER_ERR           4   // servo voltage not correct
-#define FLASH_ERR                 5   // SPI flash error
-#define RADIO_ERR                 6   // Radio error
-#define SERVO_ERR                 7   // servo error (0 current or very high current)
+#define BATT_ERR                  (1 << 0)   // battery low/bad voltage
+#define TEMP_SENSE_ERR            (1 << 1)   // temp sensor not working
+#define LED_DRV_ERR               (1 << 2)   // LED driver not working
+#define CURRENT_SENSE_ERR         (1 << 3)   // current sensor not working
+#define SERVO_POWER_ERR           (1 << 4)   // servo voltage not correct
+#define FLASH_ERR                 (1 << 5)   // SPI flash error
+#define RADIO_ERR                 (1 << 6)   // Radio error
+#define SERVO_ERR                 (1 << 7)   // servo error (didn't move)
+
 
 #endif

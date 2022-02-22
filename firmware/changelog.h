@@ -28,7 +28,13 @@
 // 1003  07-Jan-22  ASA      Added temp, hum, manual index in radio telemetry struct (now rearranged)
 //                           Humidity now stored in System variable called "hum"
 //                           Firmware now reads unique 64bit ID from SPI Flash for testing
+//
+// 1004  21-Feb-22  ASA      Added error byte, transaction ID and firmware version to telemetry and config packets
+//                           Error byte now checks, sets and clear bits based on various systems
+//                           Pinmodes before sleep ensures lowest sleep current (~20uA)
+//                           Telemetry packet now expects a response
+//                           Added config mode - sends config packets and waits for response
 //=========================================================================================================
-#define FW_VERSION "1003"
+#define FW_VERSION 1004
 
 #endif

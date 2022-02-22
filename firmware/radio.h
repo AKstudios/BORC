@@ -16,10 +16,18 @@ public:
     void    transmit_telemetry();
 
     // Transmits a config packet to the gateway
-    void    transmit_config();
+    void    transmit_config(int no_of_attempts);
 
     // Puts the radio into sleep mode
     void    sleep();
+
+private:
+    // transaction ID to keep track of telemetry packets
+    // a transaction ID of 0 indicates a bootup
+    uint8_t m_transaction_id;
+
+    // Handles an incoming radio packet to the BORC
+    void    handle_incoming_radio_packet(const unsigned char* raw);
 };
 
 #endif

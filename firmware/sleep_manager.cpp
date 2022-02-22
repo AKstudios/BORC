@@ -212,12 +212,20 @@ void CSleepMgr::on_wakeup_from_timer()
         }
     }
 
-    // Transmit a packet of telemetry data back to the gateway
-    Radio.transmit_telemetry();
+    // if radio works properly
+    if (!(System.error_byte & RADIO_ERR))
+    {
+        // Transmit a packet of telemetry data back to the gateway
+        Radio.transmit_telemetry();
+        Radio.transmit_config(3);
     
-    // put the radio and SPI flash to sleep
-    Radio.sleep();
-    Flash.sleep();
+        // put the radio to sleep
+        Radio.sleep();
+    }
+
+    // if SPI flash works properly
+    if (!(System.error_byte & FLASH_ERR))
+        Flash.sleep();
 
     // Only power down all devices in sleep mode to reduce sleep current draw
     if (m_mode != AWAKE_MODE)

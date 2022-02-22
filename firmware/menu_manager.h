@@ -36,6 +36,8 @@ protected:
 
     void    room_temp_handler();
 
+    void    config_mode_handler();
+
     // When this timer expires, we automatically exit the menu
     OneShot m_menu_timer;
     

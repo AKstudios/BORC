@@ -6,6 +6,9 @@
 //=========================================================================================================
 void CSystem::init()
 {
+    // initialize error byte with no errors
+    System.error_byte = 0x00; 
+
     // If the EEPROM is blank, use a default setpoint
     if (ee.setpoint_f == 0) ee.setpoint_f = DEFAULT_SETPOINT;
 
@@ -22,8 +25,23 @@ void CSystem::init()
     if (ee.deadband == 0) ee.deadband = 1;
 
     // Initialize the flash and get the System Unique ID
-    Flash.initialize();
-    memcpy(System.uid, Flash.readUniqueId(), sizeof(System.uid));
+    if (Flash.initialize())
+    {
+      memcpy(System.uid, Flash.readUniqueId(), sizeof(System.uid));
+      
+      // flash initialization was successful, clear error bit
+      System.error_byte &= ~FLASH_ERR;
+    }
+
+    // if flash initialization was not successful..
+    else
+    { 
+      // save Unique ID as 00000000
+      memcpy(System.uid, '00000000', sizeof(System.uid));
+
+      // and set error bit
+      System.error_byte |= FLASH_ERR;
+    }
 }
 //=========================================================================================================
 

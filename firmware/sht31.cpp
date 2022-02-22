@@ -3,6 +3,7 @@
 //=========================================================================================================
 #include <avr/pgmspace.h>
 #include "sht31.h"
+#include "globals.h"
 
 // Include the TWI library with C linkage
 extern "C"
@@ -141,7 +142,10 @@ CSHT31::CSHT31(uint8_t i2c_address, sht31_rep_t repeatability)
 // read_raw() - Reads the raw temperature and relative humidity from the device
 //=========================================================================================================
 bool CSHT31::read_raw(uint16_t* p_raw_temp, uint16_t* p_raw_rh)
-{
+{   
+    // Clear the error bit to begin with
+    System.error_byte &= ~TEMP_SENSE_ERR;
+
     // This structure contains fields for the MSB, LSB, and CRC for both temp and humidity
     struct { uint8_t t_msb, t_lsb, t_crc, h_msb, h_lsb, h_crc; } msg;
 
@@ -173,6 +177,8 @@ bool CSHT31::read_raw(uint16_t* p_raw_temp, uint16_t* p_raw_rh)
     }
 
     // If we get here, we simply couldn't read the device
+    // Set the error bit and tell the caller
+    System.error_byte |= TEMP_SENSE_ERR;
     return false;
 }
 //=========================================================================================================

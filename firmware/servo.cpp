@@ -279,6 +279,16 @@ cleanup:
 //=========================================================================================================
 bool CServoDriver::start_move_to_pwm(int pwm_value, bool enforce_limit)
 {   
+    // Start by checking bus voltage
+    // int16_t bus_mv, shunt_mv;
+    // INA219.get_bus_mv(&bus_mv);
+    // INA219.get_shunt_mv(&shunt_mv);
+    
+    // // If servo power voltage is out of range, set error bit
+    // Serial.println(shunt_mv);
+    // if (bus_mv < 2500 || bus_mv > 6000)
+    //     System.error_byte |= SERVO_POWER_ERR;
+
     // save the target pwm of where we want to move
     m_target_pwm = pwm_value;
     
@@ -316,15 +326,21 @@ bool CServoDriver::start_move_to_pwm(int pwm_value, bool enforce_limit)
 
         // here we're checking to see if current is above the threshold three times in a row
         if (current > m_start_moving_threshold)
-        {
-            if (++current_counter >= 3) return true;
+        {   
+            if (++current_counter >= 3)
+            {
+                // if we get here, there are no errors
+                System.error_byte &= ~SERVO_ERR;
+                return true;
+            }
         }
       
         // otherwise, start over
         else current_counter = 0;
     }
 
-    // if we get here it never started moving
+    // if we get here it never started moving. Set error byte and tell the caller
+    System.error_byte |= SERVO_ERR;
     return false;
 }
 //=========================================================================================================

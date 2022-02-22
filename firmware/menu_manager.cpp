@@ -88,8 +88,8 @@ void CMenuMgr::dispatch()
             break;
 
         case MI_CONFIG:
+            config_mode_handler();
             break;
-
     }
 }
 //=========================================================================================================
@@ -175,5 +175,19 @@ void CMenuMgr::room_temp_handler()
 
     // redisplay our menu item
     display_item();
+}
+//=========================================================================================================
+
+
+//=========================================================================================================
+// config_mode_handler() - Handle config mode
+//=========================================================================================================
+void CMenuMgr::config_mode_handler()
+{ 
+    // show that we're in config mode
+    Display.print("Co");
+
+    // transmit config packets and wait for response - do 10 tries
+    Radio.transmit_config(10);
 }
 //=========================================================================================================
