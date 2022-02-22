@@ -58,6 +58,7 @@ void setup()
 
     // Transmit a packet of telemetry on bootup
     Radio.transmit_telemetry();
+    Radio.transmit_config(3);
 
     //-------------------------------------------------------
     //              FROM HERE DOWN IS DEBUG CODE

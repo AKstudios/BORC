@@ -199,7 +199,8 @@ void CRadio::handle_incoming_radio_packet(const unsigned char* raw)
     // define the radio bits (RB) we want handled in the tasks bit field
     #define RB_SETPOINT        (1 << 0)
     #define RB_MANUAL_INDEX    (1 << 1)
-    #define RB_NODE_PARAMS     (1 << 2)
+    #define RB_REBOOT          (1 << 2)
+    #define RB_NODE_PARAMS     (1 << 3)
     
     // maps the from_gateway_t structure onto "packet"
     map_struct(from_gateway_t, packet);
@@ -207,7 +208,7 @@ void CRadio::handle_incoming_radio_packet(const unsigned char* raw)
     // make sure the packet type is a response from the gateway to BORC
     if (packet.packet_type == RESPONSE_PACKET)
     {   
-        // if any bit is set, set the system variables accordingly
+        // if setpoint bit is set
         if (packet.tasks_bit_field & RB_SETPOINT)
         {
             // set the system mode and interface mode to setpoint mode
@@ -216,7 +217,8 @@ void CRadio::handle_incoming_radio_packet(const unsigned char* raw)
             // set the actual setpoint
             ee.setpoint_f = packet.setpoint_f;
         }
-            
+        
+        // if manual index bit is set
         if (packet.tasks_bit_field & RB_MANUAL_INDEX)
         {
             // set the system mode and interface mode to manual mode
@@ -226,7 +228,15 @@ void CRadio::handle_incoming_radio_packet(const unsigned char* raw)
             // set the manual index
             ee.manual_index = packet.manual_index;
         }
-            
+
+        // if reboot bit is set
+        if (packet.tasks_bit_field & RB_REBOOT)
+        {   
+            // soft reboot system
+            System.reboot();
+        }
+        
+        // if node params bit is set
         if (packet.tasks_bit_field & RB_NODE_PARAMS)
         {   
             // set new radio parameters in the EEPROM

@@ -217,7 +217,7 @@ void CSleepMgr::on_wakeup_from_timer()
     {
         // Transmit a packet of telemetry data back to the gateway
         Radio.transmit_telemetry();
-        Radio.transmit_config(3);
+        // Radio.transmit_config(3);
     
         // put the radio to sleep
         Radio.sleep();
