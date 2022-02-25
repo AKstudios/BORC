@@ -253,6 +253,7 @@ void CSleepMgr::on_wakeup_from_knob()
 {
     Knob.throw_away_next_event();
     PowerMgr.powerOnAll();
+    Display.reinit();
     Servo.reinit();
     System.return_to_run_mode();
     start_sleep_timer();

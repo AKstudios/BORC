@@ -13,6 +13,9 @@ public:
     // Call this once at program startup to initialize the device
     void    init(int i2c_address, unsigned char brightness = 255);
 
+    // Call this after power on
+    void    reinit();
+
     // Call this to set the brightness of an "on" LED
     void    set_brightness(unsigned char brightness, bool update_display = false);
 

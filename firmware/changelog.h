@@ -34,7 +34,10 @@
 //                           Pinmodes before sleep ensures lowest sleep current (~20uA)
 //                           Telemetry packet now expects a response
 //                           Added config mode - sends config packets and waits for response
+//
+// 1005  25-Feb-22  ASA      Reinitialize display after waking up from sleep so it doens't wonk out
+//                           
 //=========================================================================================================
-#define FW_VERSION 1004
+#define FW_VERSION 1005
 
 #endif
